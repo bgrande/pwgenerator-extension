@@ -1,7 +1,8 @@
 var pwFieldList = [ 'pass', 'Pass', 'passwd', 'Passwd', 'password', 'Password', 'PASSWORD', 'pw', 'PW', 'passwort', 'Passwort', 'ap_password', 'login_password', 'user_password', 'user_pass', 'pwd', 'rpass' ],
     userFieldList = [ 'mail', 'Mail', 'email', 'Email', 'EMail', 'e-mail', 'E-Mail', 'eMail', 'login', 'Login', 'user', 'User', 'username', 'Username', 'ap_email', 'userid', 'Userid', 'userId', 'UserId', 'login_email', 'user_login' ],
     imgURL = chrome.extension.getURL("./images/close.png"),
-    settings = getVaultSettings();
+    settings = getVaultSettings(),
+    overlayClosed = false;
 
 var getElementFromList = function (list) {
     var i, element;
@@ -170,7 +171,9 @@ var activateOverlay = function (password, login) {
         passphrase.value = password.value;
     }
 
-    passphrase.focus();
+    if (!overlayClosed) {
+        passphrase.focus();
+    }
 };
 
 var createOverlay = function (imgUrl, password, login, settings) {
@@ -189,6 +192,7 @@ var createOverlay = function (imgUrl, password, login, settings) {
 
         on($('vault-close-' + password.id), 'click', function (e) {
             toggleOverlay($('vault-generator-overlay-' + password.id), false);
+            overlayClosed = true;
         });
     } else {
         activateOverlay(password, login);
