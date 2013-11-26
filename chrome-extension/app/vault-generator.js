@@ -193,6 +193,7 @@ var createOverlay = function (imgUrl, password, login, settings) {
         on($('vault-close-' + password.id), 'click', function (e) {
             toggleOverlay($('vault-generator-overlay-' + password.id), false);
             overlayClosed = true;
+            password.focus();
         });
     } else {
         activateOverlay(password, login);
