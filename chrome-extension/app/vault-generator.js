@@ -215,9 +215,9 @@ var login = getElementFromList(userFieldList),
 
 var passwords = document.querySelectorAll("input[type=password]");
 
-if (passwords.length > 1) {
+if (passwords.length > 0) {
     // deactivate autosend for multiple password fields
-    settings.autosend = false;
+    settings.autosend = passwords.length === 1;
 
     for (var i = 0; i < passwords.length; i++) {
         initGenerator(imgURL, passwords[i], login, settings);
