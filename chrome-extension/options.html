@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Vault Options</title>
+    <script type="text/javascript" src="./lib/core.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/options.css">
+  </head>
+  <body>
+
+    <div class="form">
+      <div class="sub">
+        <div class="length">
+          <label for="vlength">Password length <span>e.g. 12</span></label>
+          <input type="text" class="text" name="vlength" id="vlength" value="20" autocomplete="off">
+        </div>
+
+        <div class="repeat">
+          <label for="repeat">Max repetition <span>e.g. 2</span></label>
+          <input type="text" class="text" name="repeat" id="repeat" value="" autocomplete="off">
+        </div>
+
+        <div class="autosend">
+          <label for="autosend">Automatically send form after insert</label>
+          <input type="checkbox" name="autosend" id="autosend" value="1" checked="checked" autocomplete="off">
+        </div>
+
+        <div class="servicename">
+          <label for="servicename">By default use loginname as servicename</label>
+          <input type="checkbox" name="servicename" id="servicename" value="1" checked="checked" autocomplete="off">
+        </div>
+
+        <div class="field">
+          <table>
+            <thead>
+              <tr>
+                <td></td>
+                <th scope="col">a&ndash;z</th>
+                <th scope="col">A&ndash;Z</th>
+                <th scope="col">0&ndash;9</th>
+                <th scope="col">- / _</th>
+                <th scope="col">SPACE</th>
+                <th scope="col">!@#$%</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">
+                  <label for="required">Required</label>
+                  (<input type="text" class="text" name="required" id="required" value="2" autocomplete="off">)
+                </th>
+                <td><input type="radio" name="lower" value="required"></td>
+                <td><input type="radio" name="upper" value="required"></td>
+                <td><input type="radio" name="number" value="required"></td>
+                <td><input type="radio" name="dash" value="required"></td>
+                <td><input type="radio" name="space" value="required"></td>
+                <td><input type="radio" name="symbol" value="required"></td>
+              </tr>
+              <tr>
+                <th scope="row">Allowed</th>
+                <td><input type="radio" name="lower" value="allowed" checked="checked"></td>
+                <td><input type="radio" name="upper" value="allowed" checked="checked"></td>
+                <td><input type="radio" name="number" value="allowed" checked="checked"></td>
+                <td><input type="radio" name="dash" value="allowed" checked="checked"></td>
+                <td><input type="radio" name="space" value="allowed" checked="checked"></td>
+                <td><input type="radio" name="symbol" value="allowed" checked="checked"></td>
+              </tr>
+              <tr>
+                <th scope="row">Forbidden</th>
+                <td><input type="radio" name="lower" value="forbidden"></td>
+                <td><input type="radio" name="upper" value="forbidden"></td>
+                <td><input type="radio" name="number" value="forbidden"></td>
+                <td><input type="radio" name="dash" value="forbidden"></td>
+                <td><input type="radio" name="space" value="forbidden"></td>
+                <td><input type="radio" name="symbol" value="forbidden"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="generator">
+      <div class="sub" id="option-status">
+          Options Saved!
+      </div>
+      <div class="sub">
+        <button id="save-options">Save</button>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="./app/options.js"></script>
+
+  </body>
+</html>
+
