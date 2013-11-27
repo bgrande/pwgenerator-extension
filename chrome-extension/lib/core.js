@@ -7,10 +7,16 @@ var on = function (element, event, listener) {
         return;
     }
 
-    if (element.addEventListener) {
-        element.addEventListener(event, listener, false);
-    } else {
-        element.attachEvent('on' + event, listener);
+    if ('string' === typeof event) {
+        event = [event];
+    }
+
+    for (var i = 0; i < event.length; i++) {
+        if (element.addEventListener) {
+            element.addEventListener(event[i], listener, false);
+        } else {
+            element.attachEvent('on' + event[i], listener);
+        }
     }
 };
 

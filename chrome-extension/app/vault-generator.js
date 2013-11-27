@@ -184,16 +184,19 @@ var createOverlay = function (imgUrl, password, login, settings) {
             vaultButtonSubmit(settings, password);
         });
 
-        on($('vault-passphrase-' + password.id), 'keydown', function (e) {
+        on($('vault-passphrase-' + password.id), 'keyup', function (e) {
             if (e.keyCode === 13) {
                 vaultButtonSubmit(settings, password);
             }
         });
 
-        on($('vault-close-' + password.id), 'click', function (e) {
-            toggleOverlay($('vault-generator-overlay-' + password.id), false);
-            overlayClosed = true;
-            password.focus();
+        on($('vault-close-' + password.id), ['click', 'keyup'], function (e) {
+            // @todo make escape (27) work...
+            if (e.type === 'click' || e.keyCode === 27) {
+                toggleOverlay($('vault-generator-overlay-' + password.id), false);
+                overlayClosed = true;
+                password.focus();
+            }
         });
     } else {
         activateOverlay(password, login);
@@ -204,7 +207,11 @@ var initGenerator = function (imgUrl, password, login, settings) {
     createOverlay(imgUrl, password, login, settings);
 
     on(password, 'focus', function (e) {
-        activateOverlay(password, login);
+        if (!overlayClosed) {
+            activateOverlay(password, login);
+        } else {
+            overlayClosed = false;
+        }
     });
 
     // make sure the overlay will be loaded even if the password field is already active
