@@ -21,28 +21,33 @@ var on = function (element, event, listener) {
 };
 
 var DEFAULT_SETTINGS = {
-        length: 14,
+        length: 20,
         repeat: 0,
-        autosend: true,
+        autosend: false,
         servicename: true
     },
     settings = {};
 
-// @todo it works asynchronously... so we need to access the data when it's there later on or use the chrome storage api
+// @todo use promises to retrieve options?
 var getLocalStorageByKey = function (key) {
-    chrome.extension.sendMessage({method: "getLocalStorage", key: key}, function (response) {
-        settings[key] = response.data;
+    return chrome.storage.local.get(key, function (items) {
+        settings[key] = items[key];
     });
 };
 
-var getVaultSettings = function () {
+function getVaultSettings() {
     var settings     = {},
         charSettings = [];
 
-    getLocalStorageByKey('plength');
-    getLocalStorageByKey('repeat');
-    getLocalStorageByKey('autosend');
-    getLocalStorageByKey('servicename');
+    setTimeout(function() {
+        console.log(settings);
+    }, 300);
+
+    console.log(getLocalStorageByKey('plength'));
+    console.log(getLocalStorageByKey('repeat'));
+    console.log(getLocalStorageByKey('autosend'));
+    console.log(getLocalStorageByKey('servicename'));
+
 
     settings.length      = undefined !== settings.plength ? settings.plength : DEFAULT_SETTINGS.length;
     settings.repeat      = undefined !== settings.repeat ? settings.repeat : DEFAULT_SETTINGS.repeat;
@@ -56,4 +61,4 @@ var getVaultSettings = function () {
     }
 
     return settings;
-};
+}
