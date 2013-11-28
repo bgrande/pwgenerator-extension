@@ -8,5 +8,11 @@ Right now chrome only
 
 Issues
 =======
-* options can be stored but not be retrieved synchronously
+* options are not retrieved completely
 * standard options are incomplete
+* check the overlay id naming -> might cause conflicts if there is no password input field id
+
+Todo
+======
+* use option servicename
+* find a better way to get the service/loginname

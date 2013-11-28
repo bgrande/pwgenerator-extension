@@ -27,47 +27,30 @@ function saveOptions() {
         status             = $('option-status'),
         passRepeat,
         value,
-        type;
+        settings = {};
 
     passRepeat = !repeat.value ? 0: parseInt(repeat.value, 10);
 
     for (var i = 0, n = TYPES.length; i < n; i++) {
-        value = getRadio(TYPES[i]),
-        type = {};
+        value = getRadio(TYPES[i]);
 
         if (value === 'forbidden') {
-            type[TYPES[i]] = 0;
+            settings[TYPES[i]] = 0;
         } else if (value === 'required') {
-            type[TYPES[i]] = requiredLength;
+            settings[TYPES[i]] = requiredLength;
         }
-
-        chrome.storage.local.set(type);
-
-        chrome.storage.local.get(TYPES[i], function(items) {
-            console.log(items);
-        });
-
     }
 
-    chrome.storage.local.set({
-        'plength': passLength,
-        'repeat': passRepeat,
-        'autosend': autosendChecked,
-        'servicename': servicenameChecked
-    });
-    // save to local chrome storage
-    localStorage['plength']     = passLength;
-    localStorage['repeat']      = passRepeat;
-    localStorage['autosend']    = autosendChecked;
-    localStorage['servicename'] = servicenameChecked;
+    settings.length = passLength;
+    settings.repeat = passRepeat;
+    settings.autosend = autosendChecked;
+    settings.servicename = servicenameChecked;
 
-console.log(chrome.storage.local.get('plength', function(items) {
-    console.log(items);
-}), chrome.storage.local.get('repeat', function(items) {
-    console.log(items);
-}), chrome.storage.local.get('autosend', function(items) {
-    console.log(items);
-}), chrome.storage.local.get('servicename', function(items) {
+    chrome.storage.local.set({
+        settings: JSON.stringify(settings)
+    });
+
+console.log(chrome.storage.local.get('settings', function(items) {
     console.log(items);
 }));
 

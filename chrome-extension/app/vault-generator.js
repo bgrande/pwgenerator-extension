@@ -1,8 +1,14 @@
 var pwFieldList = [ 'pass', 'Pass', 'passwd', 'Passwd', 'password', 'Password', 'PASSWORD', 'pw', 'PW', 'passwort', 'Passwort', 'ap_password', 'login_password', 'user_password', 'user_pass', 'pwd', 'rpass' ],
     userFieldList = [ 'mail', 'Mail', 'email', 'Email', 'EMail', 'e-mail', 'E-Mail', 'eMail', 'login', 'Login', 'user', 'User', 'username', 'Username', 'ap_email', 'userid', 'Userid', 'userId', 'UserId', 'login_email', 'user_login' ],
     imgURL = chrome.extension.getURL("./images/close.png"),
-    settings = getVaultSettings(),
-    overlayClosed = false;
+    overlayClosed = false,
+    DEFAULT_SETTINGS = {
+        length: 20,
+        repeat: 0,
+        autosend: false,
+        servicename: true
+    },
+    settings;
 
 var getElementFromList = function (list) {
     var i, element;
@@ -227,15 +233,30 @@ var login = getElementFromList(userFieldList),
 
 var passwords = document.querySelectorAll("input[type=password]");
 
-if (passwords.length > 0) {
-    // deactivate autosend for multiple password fields
-    settings.autosend = passwords.length === 1;
+chrome.storage.local.get('settings', function (items) {
+    if (passwords.length > 0) {
+        settings = JSON.parse(items.settings);
 
-    for (var i = 0; i < passwords.length; i++) {
-        initGenerator(imgURL, passwords[i], login, settings);
+        settings.length      = undefined !== settings.length ? settings.length : DEFAULT_SETTINGS.length;
+        settings.repeat      = undefined !== settings.repeat ? settings.repeat : DEFAULT_SETTINGS.repeat;
+        settings.autosend    = undefined !== settings.autosend ? settings.autosend: DEFAULT_SETTINGS.autosend;
+        settings.servicename = undefined !== settings.servicename ? settings.servicename: DEFAULT_SETTINGS.servicename;
+
+        // @todo also set default options for radio options
+
+        console.log('2', settings);
+
+        if (settings !== null) {
+            // deactivate autosend for multiple password fields
+            settings.autosend = passwords.length === 1;
+
+            for (var i = 0; i < passwords.length; i++) {
+                initGenerator(imgURL, passwords[i], login, settings);
+            }
+        }
+    } else if (passwords.length === 0 && password) {
+        initGenerator(imgURL, password, login, settings);
     }
-} else if (passwords.length === 0 && password) {
-    initGenerator(imgURL, password, login, settings);
-}
+});
 
 // @todo is there a better way to get the servicename/login?
