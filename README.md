@@ -13,11 +13,12 @@ Needed Chrome Permissions
 
 Issues
 =======
-2) standard options are incomplete
-4) make escape work to close overlay field if not needed
+1) standard options are incomplete
+2) make escape work to close overlay field if not needed
+3) if extension gets deactivated or deleted the overlays should be removed from every page
 
 Todo
 ======
-2) use option servicename within content script
-3) find a better way to get/recognize the service/loginname
-4) use extension icon to activate generator overlay on input field
+1) use option servicename within content script
+2) find a better way to get/recognize the service/loginname
+3) use extension icon to activate generator overlay on input field
