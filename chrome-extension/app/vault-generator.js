@@ -56,8 +56,7 @@ var getPasswordIdentifier = function (password) {
         return password.id;
     }
     if (password.name) {
-        // @todo remove possible trailing '-'
-        return password.name.replace(/\[|\]/g, '-');
+        return password.name.replace(/\[|\]/g, '-').replace(/-+$/, '');
     }
 
     return null;
