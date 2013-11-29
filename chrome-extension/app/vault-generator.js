@@ -51,6 +51,17 @@ var generatePassword = function(serviceValue, phraseValue, settings) {
     }
 };
 
+var getPasswordIdentifier = function (password) {
+    if (password.id) {
+        return password.id;
+    }
+    if (password.name) {
+        return password.name;
+    }
+
+    return null;
+};
+
 var addOverlayDiv = function (imgUrl, password, login, settings) {
     // @todo separate into element generation methods?
     var overlayDiv = document.createElement('div'),
@@ -63,20 +74,21 @@ var addOverlayDiv = function (imgUrl, password, login, settings) {
         serviceElement = document.createElement('input'),
         pwElementLabel = document.createElement('label'),
         pwElement = document.createElement('input'),
-        submitButton = document.createElement('input');
+        submitButton = document.createElement('input'),
+        pwId = getPasswordIdentifier(password);
 
-    closeImg.id = 'vault-close-icon-' + password.id;
+    closeImg.id = 'vault-close-icon-' + pwId;
     closeImg.className = 'vault-close-icon';
     closeImg.src = imgUrl;
     closeImg.alt = 'Close Overlay';
 
-    closeSpan.id = 'vault-close-' + password.id;
+    closeSpan.id = 'vault-close-' + pwId;
     closeSpan.className = 'vault-close';
     closeSpan.title = 'Close Overlay';
     closeSpan.appendChild(closeImg);
 
     serviceElementLabel.innerText = 'Service name';
-    serviceElement.id = 'vault-servicename-' + password.id;
+    serviceElement.id = 'vault-servicename-' + pwId;
     serviceElement.className = 'vault-servicename';
     serviceElement.type = 'text';
     if (undefined !== login) {
@@ -85,7 +97,7 @@ var addOverlayDiv = function (imgUrl, password, login, settings) {
     serviceElement.placeholder = 'twitter';
 
     pwElementLabel.innerText = 'Passphrase';
-    pwElement.id = 'vault-passphrase-' + password.id;
+    pwElement.id = 'vault-passphrase-' + pwId;
     pwElement.className = 'vault-passphrase';
     pwElement.type = 'password';
     pwElement.value = password.value;
@@ -99,7 +111,7 @@ var addOverlayDiv = function (imgUrl, password, login, settings) {
     serviceDiv.appendChild(serviceElementLabel);
     serviceDiv.appendChild(serviceElement);
 
-    submitButton.id = 'vault-generate-' + password.id;
+    submitButton.id = 'vault-generate-' + pwId;
     submitButton.className = 'vault-generate';
     submitButton.type = 'button';
     submitButton.value = 'Generate';
@@ -107,7 +119,7 @@ var addOverlayDiv = function (imgUrl, password, login, settings) {
         submitButton.value = 'Generate\n& Login';
     }
 
-    overlayDiv.id = 'vault-generator-overlay-' + password.id;
+    overlayDiv.id = 'vault-generator-overlay-' + pwId;
     overlayDiv.className = 'vault-generator-overlay';
 
     dialogDiv.className = 'vault-generator-dialog';
@@ -120,7 +132,7 @@ var addOverlayDiv = function (imgUrl, password, login, settings) {
 
     password.parentNode.appendChild(overlayDiv);
 
-    on($('vault-passphrase-' + password.id), 'focus', function (e) {
+    on($('vault-passphrase-' + pwId), 'focus', function (e) {
         if (!this.value) {
             this.value = password.value;
         }
@@ -134,6 +146,9 @@ var getLoginForm = function (password) {
             if (password.id === document.forms[i][o].id) {
                 return i;
             }
+            if (password.name === document.forms[i][o].name) {
+                return i;
+            }
         }
     }
 
@@ -141,17 +156,18 @@ var getLoginForm = function (password) {
 };
 
 var vaultButtonSubmit = function (settings, password) {
-    var passPhrase = $('vault-passphrase-' + password.id),
+    var pwId = getPasswordIdentifier(password),
+        passPhrase = $('vault-passphrase-' + pwId),
         phraseValue  = passPhrase.value,
-        serviceValue = $('vault-servicename-' + password.id).value,
+        serviceValue = $('vault-servicename-' + pwId).value,
         newPassword,
         loginFormNumber;
 
     newPassword = generatePassword(serviceValue, phraseValue, settings);
-
+console.log(newPassword);
     password.value = newPassword;
 
-    toggleOverlay($('vault-generator-overlay-' + password.id), false);
+    toggleOverlay($('vault-generator-overlay-' + pwId), false);
 
     if (settings.autosend) {
         loginFormNumber = getLoginForm(password);
@@ -164,10 +180,11 @@ var vaultButtonSubmit = function (settings, password) {
 };
 
 var activateOverlay = function (password, login) {
-    var passphrase = $('vault-passphrase-' + password.id),
-        servicename = $('vault-servicename-' + password.id);
+    var pwId = getPasswordIdentifier(password),
+        passphrase = $('vault-passphrase-' + pwId),
+        servicename = $('vault-servicename-' + pwId);
 
-    toggleOverlay($('vault-generator-overlay-' + password.id), true);
+    toggleOverlay($('vault-generator-overlay-' + pwId), true);
 
     if (servicename && !servicename.value && undefined !== login) {
         servicename.value = login.value;
@@ -183,23 +200,25 @@ var activateOverlay = function (password, login) {
 };
 
 var createOverlay = function (imgUrl, password, login, settings) {
-    if (!$('vault-generator-overlay-' + password.id)) {
+    var pwId = getPasswordIdentifier(password);
+
+    if (!$('vault-generator-overlay-' + pwId)) {
         addOverlayDiv(imgUrl, password, login, settings);
 
-        on($('vault-generate-' + password.id), 'click', function (e) {
+        on($('vault-generate-' + pwId), 'click', function (e) {
             vaultButtonSubmit(settings, password);
         });
 
-        on($('vault-passphrase-' + password.id), 'keyup', function (e) {
+        on($('vault-passphrase-' + pwId), 'keyup', function (e) {
             if (e.keyCode === 13) {
                 vaultButtonSubmit(settings, password);
             }
         });
 
-        on($('vault-close-' + password.id), ['click', 'keyup'], function (e) {
+        on($('vault-close-' + pwId), ['click', 'keyup'], function (e) {
             // @todo make escape (27) work...
             if (e.type === 'click' || e.keyCode === 27) {
-                toggleOverlay($('vault-generator-overlay-' + password.id), false);
+                toggleOverlay($('vault-generator-overlay-' + pwId), false);
                 overlayClosed = true;
                 password.focus();
             }

@@ -14,7 +14,6 @@ Needed Chrome Permissions
 Issues
 =======
 2) standard options are incomplete
-3) check the overlay id naming -> might cause conflicts if there is no password input field id
 4) make escape work to close overlay field if not needed
 
 Todo
