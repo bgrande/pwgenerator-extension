@@ -29,22 +29,22 @@
 }
 
 .vault-generate {
-    height: 80%;
-    width: 18%;
+    height: 39px;
+    width: 75px !important;
     font-weight: bold;
     float: right;
-    margin-left: 5px;
+    margin-left: 5px !important;
     cursor: pointer;
     position: absolute;
     bottom: 6px;
 }
 
 .vault-servicename, .vault-passphrase {
-    width: 150px;
+    width: 150px !important;
     height: 16px;
     border: 1px solid #333333;
-    padding: 2px;
-    margin-top: 2px;
+    padding: 2px !important;
+    margin-top: 2px !important;
 }
 
 .vault-close {
