@@ -16,9 +16,10 @@ Issues
 1) standard options are incomplete
 2) make escape work to close overlay field if not needed
 3) if extension gets deactivated or deleted the overlays should be removed from every page
+4) overlay does not work on some pages (f.e. twitter login page)
 
 Todo
 ======
 1) use option servicename within content script
-2) find a better way to get/recognize the service/loginname
+2) find a better way to get/recognize the service/loginname and/or use more possible input types
 3) use extension icon to activate generator overlay on input field
