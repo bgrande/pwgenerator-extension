@@ -1,13 +1,7 @@
 var pwFieldList = [ 'pass', 'Pass', 'passwd', 'Passwd', 'password', 'Password', 'PASSWORD', 'pw', 'PW', 'passwort', 'Passwort', 'ap_password', 'login_password', 'user_password', 'user_pass', 'pwd', 'rpass' ],
-    userFieldList = [ 'mail', 'Mail', 'email', 'Email', 'EMail', 'e-mail', 'E-Mail', 'eMail', 'login', 'Login', 'user', 'User', 'username', 'Username', 'ap_email', 'userid', 'Userid', 'userId', 'UserId', 'login_email', 'user_login' ],
+    userFieldList = [ 'mail', 'Mail', 'email', 'Email', 'EMail', 'e-mail', 'E-Mail', 'eMail', 'login', 'Login', 'user', 'User', 'username', 'Username', 'ap_email', 'userid', 'Userid', 'userId', 'UserId', 'login_email', 'user_login', 'signin-email' ],
     imgURL = chrome.extension.getURL("./images/close.png"),
     overlayClosed = false,
-    DEFAULT_SETTINGS = {
-        length: 20,
-        repeat: 0,
-        autosend: false,
-        servicename: true
-    },
     settings;
 
 var getElementFromList = function (list) {
@@ -164,7 +158,7 @@ var vaultButtonSubmit = function (settings, password) {
         loginFormNumber;
 
     newPassword = generatePassword(serviceValue, phraseValue, settings);
-console.log(newPassword);
+//console.log(newPassword);
     password.value = newPassword;
 
     toggleOverlay($('vault-generator-overlay-' + pwId), false);
@@ -261,17 +255,15 @@ chrome.storage.local.get('settings', function (items) {
         settings.autosend    = undefined !== settings.autosend ? settings.autosend: DEFAULT_SETTINGS.autosend;
         settings.servicename = undefined !== settings.servicename ? settings.servicename: DEFAULT_SETTINGS.servicename;
 
-        // @todo also set default options for radio options
+        for (i = 0; i < TYPES.length; i++) {
+            settings[TYPES[i]] = undefined !== settings[TYPES[i]] ? settings[TYPES[i]] : DEFAULT_SETTINGS[TYPES[i]];
+        }
 
-        console.log('2', settings);
+        // deactivate autosend for multiple password fields
+        settings.autosend = passwords.length === 1;
 
-        if (settings !== null) {
-            // deactivate autosend for multiple password fields
-            settings.autosend = passwords.length === 1;
-
-            for (var i = 0; i < passwords.length; i++) {
-                initGenerator(imgURL, passwords[i], login, settings);
-            }
+        for (var i = 0; i < passwords.length; i++) {
+            initGenerator(imgURL, passwords[i], login, settings);
         }
     } else if (passwords.length === 0 && password) {
         initGenerator(imgURL, password, login, settings);

@@ -19,3 +19,17 @@ var on = function (element, event, listener) {
         }
     }
 };
+
+var DEFAULT_SETTINGS = {
+        length: 20,
+        repeat: 0,
+        autosend: false,
+        servicename: true,
+        lower: undefined,
+        upper: undefined,
+        number: undefined,
+        dash: undefined,
+        space: undefined,
+        symbol: undefined
+    },
+    TYPES = 'lower upper number dash space symbol'.split(' ');

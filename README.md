@@ -13,10 +13,9 @@ Needed Chrome Permissions
 
 Issues
 =======
-1) standard options are incomplete
-2) make escape work to close overlay field if not needed
-3) if extension gets deactivated or deleted the overlays should be removed from every page
-4) overlay does not work on some pages (f.e. twitter login page)
+1) make escape work to close overlay field if not needed
+2) if extension gets deactivated or deleted the overlays should be removed from every page
+3) overlay does not work on some pages (f.e. twitter login page)
 
 Todo
 ======

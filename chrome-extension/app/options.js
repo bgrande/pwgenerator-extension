@@ -2,8 +2,7 @@ var required    = $('required'),
     length      = $('vlength'),
     repeat      = $('repeat'),
     autosend    = $('autosend'),
-    servicename = $('servicename'),
-    TYPES       = 'lower upper number dash space symbol'.split(' ');
+    servicename = $('servicename');
 
 var getRadio = function (name) {
   var inputs = document.getElementsByTagName('input'), input;
@@ -19,8 +18,8 @@ var getRadio = function (name) {
 };
 
 var setRadio = function (name, value) {
-    var inputs = document.getElementsByTagName('input'), input;
-    for (var i = 0, n = inputs.length; i < n; i++) {
+    var inputs = document.getElementsByTagName('input'), input, i;
+    for (i = 0; i < inputs.length; i++) {
         input = inputs[i];
         if (input.type === 'radio' && input.name === name) {
             switch (input.value) {
@@ -40,8 +39,7 @@ var setRadio = function (name, value) {
 
 // retrieve already stored
 chrome.storage.local.get('settings', function (items) {
-    var settings = JSON.parse(items.settings),
-        i;
+    var settings = JSON.parse(items.settings), i;
 
     for (i = 0; i < TYPES.length; i++) {
         setRadio(TYPES[i], settings[TYPES[i]]);
@@ -62,11 +60,12 @@ function saveOptions() {
         status             = $('option-status'),
         passRepeat,
         value,
-        settings = {};
+        settings = {},
+        i;
 
     passRepeat = !repeat.value ? 0: parseInt(repeat.value, 10);
 
-    for (var i = 0, n = TYPES.length; i < n; i++) {
+    for (i = 0; i < TYPES.length; i++) {
         value = getRadio(TYPES[i]);
 
         if (value === 'forbidden') {
