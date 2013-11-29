@@ -13,14 +13,12 @@ Needed Chrome Permissions
 
 Issues
 =======
-1) options are not retrieved completely
 2) standard options are incomplete
 3) check the overlay id naming -> might cause conflicts if there is no password input field id
 4) make escape work to close overlay field if not needed
 
 Todo
 ======
-1) show/load already saved options at options page
 2) use option servicename within content script
 3) find a better way to get/recognize the service/loginname
 4) use extension icon to activate generator overlay on input field
