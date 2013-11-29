@@ -237,7 +237,7 @@ chrome.storage.local.get('settings', function (items) {
     if (passwords.length > 0) {
         settings = JSON.parse(items.settings);
 
-        settings.length      = undefined !== settings.length ? settings.length : DEFAULT_SETTINGS.length;
+        settings.length      = undefined !== settings.plength ? settings.plength : DEFAULT_SETTINGS.length;
         settings.repeat      = undefined !== settings.repeat ? settings.repeat : DEFAULT_SETTINGS.repeat;
         settings.autosend    = undefined !== settings.autosend ? settings.autosend: DEFAULT_SETTINGS.autosend;
         settings.servicename = undefined !== settings.servicename ? settings.servicename: DEFAULT_SETTINGS.servicename;

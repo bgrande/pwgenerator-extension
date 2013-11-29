@@ -48,10 +48,10 @@ chrome.storage.local.get('settings', function (items) {
     }
 
     repeat.value = settings.repeat;
-    length.value = settings.length;
+    length.value = settings.plength;
     required.value = settings.requiredLength;
     autosend.checked = settings.autosend;
-    servicename.checked = settings.autosend;
+    servicename.checked = settings.servicename;
 });
 
 function saveOptions() {
@@ -76,7 +76,7 @@ function saveOptions() {
         }
     }
 
-    settings.length = passLength;
+    settings.plength = passLength;
     settings.repeat = passRepeat;
     settings.autosend = autosendChecked;
     settings.servicename = servicenameChecked;
