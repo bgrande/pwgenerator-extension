@@ -11,17 +11,16 @@ Needed Chrome Permissions
 * activeTab
 * website access for http and https
 
-
 Issues
 =======
-* options are not retrieved completely
-* standard options are incomplete
-* check the overlay id naming -> might cause conflicts if there is no password input field id
-* make escape work to close overlay field if not needed
+1) options are not retrieved completely
+2) standard options are incomplete
+3) check the overlay id naming -> might cause conflicts if there is no password input field id
+4) make escape work to close overlay field if not needed
 
 Todo
 ======
-* use option servicename within content script
-* find a better way to get/recognize the service/loginname
-* show/load already saved options at options page
-* use extension icon to activate generator overlay on input field
+1) show/load already saved options at options page
+2) use option servicename within content script
+3) find a better way to get/recognize the service/loginname
+4) use extension icon to activate generator overlay on input field
