@@ -82,12 +82,12 @@ chrome.storage.local.get('settings', function (items) {
 });
 
 function saveOptions() {
-    var passLength         = parseInt(length.value, 10),
-        requiredLength     = parseInt(required.value, 10),
-        autosendChecked    = autosend.checked,
-        servicenameChecked = servicename.checked,
-        defServicenameVal  = defServicename.value,
-        status             = $('option-status'),
+    var passLength        = parseInt(length.value, 10),
+        requiredLength    = parseInt(required.value, 10),
+        autosendChecked   = autosend.checked,
+        defServicenameVal = defServicename.value,
+        status            = $('option-status'),
+        servicenameVal    = undefined,
         passRepeat,
         value,
         settings = {},
@@ -105,10 +105,18 @@ function saveOptions() {
         }
     }
 
+    if (servicename.checked) {
+        servicenameVal = servicename.value;
+    } else if (prefix.checked) {
+        servicenameVal = prefix.value;
+    } else if (suffix.checked) {
+        servicenameVal = suffix.value;
+    }
+
     settings.plength = passLength;
     settings.repeat = passRepeat;
     settings.autosend = autosendChecked;
-    settings.servicename = servicenameChecked;
+    settings.servicename = servicenameVal;
     settings.requiredLength = requiredLength;
     settings.defServicename = defServicenameVal;
 
