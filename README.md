@@ -16,6 +16,7 @@ Issues
 1) make escape work to close overlay field if not needed
 2) if extension gets deactivated or deleted the overlays should be removed from every page
 3) overlay does not work on some pages (f.e. twitter login page) or only after page reload (f.e. facebook password change page)
+4) fix overlay style on some pages
 
 Todo
 ======
