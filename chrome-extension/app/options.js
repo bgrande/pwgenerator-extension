@@ -2,7 +2,10 @@ var required    = $('required'),
     length      = $('vlength'),
     repeat      = $('repeat'),
     autosend    = $('autosend'),
-    servicename = $('servicename');
+    servicename = $('servicename'),
+    prefix      = $('prefix'),
+    suffix      = $('suffix'),
+    defServicename = $('def-servicename');
 
 var getRadio = function (name) {
   var inputs = document.getElementsByTagName('input'), input;
@@ -45,11 +48,37 @@ chrome.storage.local.get('settings', function (items) {
         setRadio(TYPES[i], settings[TYPES[i]]);
     }
 
-    repeat.value = settings.repeat;
-    length.value = settings.plength;
-    required.value = settings.requiredLength;
-    autosend.checked = settings.autosend;
-    servicename.checked = settings.servicename;
+    if (settings.repeat) {
+        repeat.value = settings.repeat;
+    }
+
+    if (settings.plength) {
+        length.value = settings.plength;
+    }
+
+    if (settings.requiredLength) {
+        required.value = settings.requiredLength;
+    }
+
+    if (settings.autosend) {
+        autosend.checked = settings.autosend;
+    }
+
+    switch (settings.servicename) {
+        case 'login':
+            servicename.checked = true;
+            break;
+        case 'prefix':
+            prefix.checked = true;
+            break;
+        case 'suffix':
+            suffix.checked = true;
+            break;
+    }
+
+    if (settings.defServicename) {
+        defServicename.value = settings.defServicename;
+    }
 });
 
 function saveOptions() {
@@ -57,6 +86,7 @@ function saveOptions() {
         requiredLength     = parseInt(required.value, 10),
         autosendChecked    = autosend.checked,
         servicenameChecked = servicename.checked,
+        defServicenameVal  = defServicename.value,
         status             = $('option-status'),
         passRepeat,
         value,
@@ -80,6 +110,7 @@ function saveOptions() {
     settings.autosend = autosendChecked;
     settings.servicename = servicenameChecked;
     settings.requiredLength = requiredLength;
+    settings.defServicename = defServicenameVal;
 
     chrome.storage.local.set({
         settings: JSON.stringify(settings)

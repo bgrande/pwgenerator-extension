@@ -84,13 +84,17 @@ input.text, input.password {
   font-family: Monaco, Courier New, monospace;
 }
 
-.autosend, .servicename {
+.autosend, .servicename, {
     width: 100%;
 }
-.autosend label, #autosend, .servicename label, #servicename {
+.autosend label, #autosend, .servicename label, #servicename, #def-servicename {
     display: inline;
     width: auto;
     margin-right: 3%;
+}
+
+#def-servicename {
+    width: 38%;
 }
 
 table label {
@@ -137,7 +141,7 @@ table th:first-child, table td:first-child {
 
 @media (max-width: 800px) {
   body { font-size: 14px; }
-  .sub { margin: none; width: auto; }
+  .sub { margin: 0; width: auto; }
 }
 
 #option-status {

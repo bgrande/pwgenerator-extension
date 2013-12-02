@@ -21,13 +21,32 @@
         </div>
 
         <div class="autosend">
-          <label for="autosend">Automatically send form after insert</label>
-          <input type="checkbox" name="autosend" id="autosend" value="1" checked="checked" autocomplete="off">
+            <input type="checkbox" name="autosend" id="autosend" value="1" checked="checked" autocomplete="off">
+            <label for="autosend">Automatically send form after insert</label>
+        </div>
+
+        <div>
+            &nbsp;
         </div>
 
         <div class="servicename">
-          <label for="servicename">By default use loginname as servicename</label>
-          <input type="checkbox" name="servicename" id="servicename" value="1" checked="checked" autocomplete="off">
+            <input type="radio" name="servicename" id="servicename" value="login" checked="checked" autocomplete="off">
+            <label for="servicename">Use loginname as Servicename</label>
+        </div>
+
+        <div class="servicename">
+          <label for="def-servicename">Use </label>
+          <input type="text" class="text" name="def-servicename" id="def-servicename" value="" autocomplete="off">
+
+          <input type="radio" name="servicename" id="prefix" value="prefix" autocomplete="off">
+          <label for="prefix">as prefix</label>
+
+          <input type="radio" name="servicename" id="suffix" value="suffix" autocomplete="off">
+          <label for="suffix">as suffix</label>
+        </div>
+
+        <div>
+            &nbsp;
         </div>
 
         <div class="field">
