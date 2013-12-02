@@ -19,6 +19,6 @@ Issues
 
 Todo
 ======
-1) use option servicename within content script
+1) use option servicename/prefix/suffix within content script
 2) find a better way to get/recognize the service/loginname and/or use more possible input types
 3) use extension icon to activate generator overlay on input field
