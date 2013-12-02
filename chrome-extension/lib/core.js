@@ -1,8 +1,12 @@
 var $ = function (selector) {
+    'use strict';
+
     return document.getElementById(selector);
 };
 
 var on = function (element, event, listener) {
+    'use strict';
+    
     if (!element) {
         return;
     }

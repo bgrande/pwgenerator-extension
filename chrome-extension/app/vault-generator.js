@@ -136,7 +136,7 @@ var addOverlayDiv = function (imgUrl, password, login, settings) {
 
     password.parentNode.appendChild(overlayDiv);
 
-    on($('vault-passphrase-' + pwId), 'focus', function (e) {
+    on($('vault-passphrase-' + pwId), 'focus', function () {
         if (!this.value) {
             this.value = password.value;
         }
@@ -233,6 +233,8 @@ var activateOverlay = function (password, login, settings) {
             }
             break;
     }
+
+    return null;
 };
 
 var createOverlay = function (imgUrl, password, login, settings) {
@@ -271,7 +273,7 @@ var initGenerator = function (imgUrl, password, login, settings) {
 
     createOverlay(imgUrl, password, login, settings);
 
-    on(password, 'focus', function (e) {
+    on(password, 'focus', function () {
         if (!overlayClosed) {
             activateOverlay(password, login, settings);
         } else {

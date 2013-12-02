@@ -8,20 +8,24 @@ var required    = $('required'),
     defServicename = $('def-servicename');
 
 var getRadio = function (name) {
-  var inputs = document.getElementsByTagName('input'), input;
+    'use strict';
+    var inputs = document.getElementsByTagName('input'), input;
 
-  for (var i = 0, n = inputs.length; i < n; i++) {
-    input = inputs[i];
-    if (input.type === 'radio' && input.name === name && input.checked) {
-        return input.value;
+    for (var i = 0, n = inputs.length; i < n; i++) {
+        input = inputs[i];
+        if (input.type === 'radio' && input.name === name && input.checked) {
+            return input.value;
+        }
     }
-  }
 
-  return null;
+    return null;
 };
 
 var setRadio = function (name, value) {
+    'use strict';
+
     var inputs = document.getElementsByTagName('input'), input, i;
+    
     for (i = 0; i < inputs.length; i++) {
         input = inputs[i];
         if (input.type === 'radio' && input.name === name) {
@@ -82,6 +86,8 @@ chrome.storage.local.get('settings', function (items) {
 });
 
 function saveOptions() {
+    'use strict';
+
     var passLength        = parseInt(length.value, 10),
         requiredLength    = parseInt(required.value, 10),
         autosendChecked   = autosend.checked,
@@ -131,6 +137,6 @@ function saveOptions() {
     }, 1600);
 }
 
-on($('save-options'), 'click', function (e) {
+on($('save-options'), 'click', function () {
     saveOptions();
 });
