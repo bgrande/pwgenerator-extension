@@ -20,6 +20,5 @@ Issues
 
 Todo
 ======
-1) use domain name as suffix for prefix or prefix for suffix
-2) find a better way to get/recognize the service/loginname and/or use more possible input types
-3) use extension icon to activate generator overlay on input field
+1) find a better way to get/recognize the service/loginname and/or use more possible input types
+2) use extension icon to activate generator overlay on input field

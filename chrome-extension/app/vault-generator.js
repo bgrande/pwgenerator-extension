@@ -192,7 +192,8 @@ var activateOverlay = function (password, login, settings) {
 
     var pwId = getPasswordIdentifier(password),
         passphrase = $('vault-passphrase-' + pwId),
-        servicename = $('vault-servicename-' + pwId);
+        servicename = $('vault-servicename-' + pwId),
+        domainname = document.domain;
 
     toggleOverlay($('vault-generator-overlay-' + pwId), true);
 
@@ -208,6 +209,8 @@ var activateOverlay = function (password, login, settings) {
         return null;
     }
 
+
+
     switch (settings.servicename) {
         case 'login':
             if (undefined === login) {
@@ -218,18 +221,20 @@ var activateOverlay = function (password, login, settings) {
                 servicename.value = login.value;
             } else if (login.textContent) {
                 servicename.value = login.textContent;
+            } else {
+                servicename.value = domainname;
             }
             break;
 
         case 'prefix':
             if (settings.defServicename) {
-                servicename.value = settings.defServicename + servicename.value;
+                servicename.value = settings.defServicename + domainname;
             }
             break;
 
         case 'suffix':
             if (settings.defServicename) {
-                servicename.value = servicename.value + settings.defServicename;
+                servicename.value = domainname + settings.defServicename;
             }
             break;
     }
