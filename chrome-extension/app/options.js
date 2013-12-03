@@ -9,6 +9,7 @@ var required    = $('required'),
 
 var getRadio = function (name) {
     'use strict';
+    
     var inputs = document.getElementsByTagName('input'), input;
 
     for (var i = 0, n = inputs.length; i < n; i++) {
@@ -25,7 +26,7 @@ var setRadio = function (name, value) {
     'use strict';
 
     var inputs = document.getElementsByTagName('input'), input, i;
-    
+
     for (i = 0; i < inputs.length; i++) {
         input = inputs[i];
         if (input.type === 'radio' && input.name === name) {
@@ -44,7 +45,7 @@ var setRadio = function (name, value) {
     }
 };
 
-// retrieve already stored
+// retrieve already stored options
 chrome.storage.local.get('settings', function (items) {
     var settings = JSON.parse(items.settings), i;
 
@@ -85,7 +86,7 @@ chrome.storage.local.get('settings', function (items) {
     }
 });
 
-function saveOptions() {
+var saveOptions = function () {
     'use strict';
 
     var passLength        = parseInt(length.value, 10),
@@ -135,7 +136,7 @@ function saveOptions() {
     setTimeout(function () {
         status.style.display = 'none';
     }, 1600);
-}
+};
 
 on($('save-options'), 'click', function () {
     saveOptions();

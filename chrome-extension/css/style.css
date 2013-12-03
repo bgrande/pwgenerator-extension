@@ -2,7 +2,7 @@
     position: absolute;
     opacity: 0.8;
     background-color: #cccccc;
-    z-index: 5;
+    z-index: 999;
     width: 400px;
     border: 1px solid #333333;
     padding: 6px;

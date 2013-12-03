@@ -1,6 +1,6 @@
 {
   "name": "Vault-Generator",
-  "version": "0.8.8",
+  "version": "0.8.9",
   "manifest_version": 2,
 
   "description": "Generates safe passwords for the web on the fly",
@@ -22,9 +22,9 @@
         "19": "images/icon19.png",
         "32": "images/icon32.png"
     },
-    "default_title": "Generate Password"
     // @todo browser_action to catch cases where password and/or user field cannot/could not be guessed
-    //"default_popup": "vault.html"
+    //"default_popup": "vault.html",
+    "default_title": "Generate Password"
   },
   "content_scripts": [
       {
@@ -32,14 +32,14 @@
             "http://*/*",
             "https://*/*"
         ],
+        "css": [
+            "css/style.css"
+        ],
         "js": [
             "lib/crypto-js-3.1.2.js",
             "lib/vault.js",
             "lib/core.js",
             "app/vault-generator.js"
-        ],
-        "css": [
-            "css/style.css"
         ]
       }
   ],
