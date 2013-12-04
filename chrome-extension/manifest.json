@@ -40,7 +40,8 @@
             "lib/vault.js",
             "lib/core.js",
             "app/vault-generator.js"
-        ]
+        ],
+        "run_at": "document_idle"
       }
   ],
   "permissions": [
