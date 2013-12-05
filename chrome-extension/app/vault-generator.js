@@ -244,6 +244,12 @@ var activateOverlay = function (password, login, settings) {
     setServicename(servicename, settings);
 };
 
+var closeOverlay = function (pwId) {
+    toggleOverlay($('vault-generator-overlay-' + pwId), false);
+    overlayClosed = true;
+    password.focus();
+};
+
 var createOverlay = function (imgUrl, password, login, settings) {
     'use strict';
 
@@ -260,15 +266,20 @@ var createOverlay = function (imgUrl, password, login, settings) {
             if (e.keyCode === 13) {
                 vaultButtonSubmit(settings, password);
             }
+
+            if (e.keyCode === 27) {
+                closeOverlay(pwId);
+            }
         });
 
-        on($('vault-close-' + pwId), ['click', 'keyup'], function (e) {
-            // @todo make escape (27) work...
-            if (e.type === 'click' || e.keyCode === 27) {
-                toggleOverlay($('vault-generator-overlay-' + pwId), false);
-                overlayClosed = true;
-                password.focus();
+        on($('vault-servicename-' + pwId), 'keyup', function (e) {
+            if (e.keyCode === 27) {
+                closeOverlay(pwId);
             }
+        });
+
+        on($('vault-close-' + pwId), 'click', function () {
+            closeOverlay(pwId);
         });
     } else {
         activateOverlay(password, login);
@@ -330,5 +341,3 @@ chrome.storage.local.get('settings', function (items) {
         initGenerator(imgURL, password, login, settings);
     }
 });
-
-// @todo is there a better way to get the servicename/login?
