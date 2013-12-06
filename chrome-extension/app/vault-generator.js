@@ -336,15 +336,28 @@ var getSettings = function (settings) {
     return settings;
 };
 
-/** start the overlay presentation and vault generation */
-var login = getElementFromList(userFieldList),
+var getLoginName = function (userFieldList) {
+    var login = getElementFromList(userFieldList);
+
+    if (!login) {
+
+    }
+
+    return login;
+};
+
+/* -----------------------------------------------------
+ *  start the overlay presentation and vault generation
+ * -----------------------------------------------------
+ */
+var login = getLoginName(userFieldList),
     password = getElementFromList(pwFieldList);
 
 var passwords = document.querySelectorAll("input[type=password]");
 
 chrome.storage.local.get('settings', function (items) {
     if (passwords.length > 0) {
-        settings = getSettings(JSON.parse(items.settings));
+        settings = (undefined !== items.settings) ? getSettings(JSON.parse(items.settings)) : DEFAULT_SETTINGS;
 
         // deactivate autosend if there are multiple password fields
         settings.autosend = passwords.length === 1;

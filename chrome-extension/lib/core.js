@@ -1,3 +1,20 @@
+var DEFAULT_SETTINGS = {
+        length: 20,
+        repeat: 0,
+        autosend: false,
+        servicename: 'login',
+        defServicename: undefined,
+        lower: undefined,
+        upper: undefined,
+        number: undefined,
+        dash: undefined,
+        space: undefined,
+        symbol: undefined,
+        prefix: false,
+        suffix: false
+    },
+    TYPES = 'lower upper number dash space symbol'.split(' ');
+
 var $ = function (selector) {
     'use strict';
 
@@ -23,18 +40,3 @@ var on = function (element, event, listener) {
         }
     }
 };
-
-var DEFAULT_SETTINGS = {
-        length: 20,
-        repeat: 0,
-        autosend: false,
-        servicename: 'login',
-        defServicename: undefined,
-        lower: undefined,
-        upper: undefined,
-        number: undefined,
-        dash: undefined,
-        space: undefined,
-        symbol: undefined
-    },
-    TYPES = 'lower upper number dash space symbol'.split(' ');

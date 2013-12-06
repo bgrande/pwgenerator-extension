@@ -65,7 +65,7 @@ chrome.storage.local.get('settings', function (items) {
         required.value = settings.requiredLength;
     }
 
-    if (settings.autosend) {
+    if (undefined !== settings.autosend) {
         autosend.checked = settings.autosend;
     }
 
@@ -86,14 +86,13 @@ chrome.storage.local.get('settings', function (items) {
     }
 });
 
-var saveOptions = function () {
+var saveOptions = function (length, required, autosend, defServicename, servicename, prefix, suffix) {
     'use strict';
 
     var passLength        = parseInt(length.value, 10),
         requiredLength    = parseInt(required.value, 10),
         autosendChecked   = autosend.checked,
         defServicenameVal = defServicename.value,
-        status            = $('option-status'),
         servicenameVal    = undefined,
         passRepeat,
         value,
@@ -130,14 +129,16 @@ var saveOptions = function () {
     chrome.storage.local.set({
         settings: JSON.stringify(settings)
     });
+};
+
+on($('save-options'), 'click', function () {
+    var status = $('option-status');
+
+    saveOptions(length, required, autosend, defServicename, servicename, prefix, suffix);
 
     // let user know it's saved
     status.style.display = 'block';
     setTimeout(function () {
         status.style.display = 'none';
     }, 1600);
-};
-
-on($('save-options'), 'click', function () {
-    saveOptions();
 });
