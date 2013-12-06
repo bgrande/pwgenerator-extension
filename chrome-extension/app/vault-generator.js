@@ -1,16 +1,16 @@
 var pwFieldList = [ 'pass', 'Pass', 'passwd', 'Passwd', 'password', 'Password', 'PASSWORD', 'pw', 'PW', 'passwort', 'Passwort', 'ap_password', 'login_password', 'user_password', 'user_pass', 'pwd', 'rpass' ],
-    userFieldList = [ 'mail', 'Mail', 'email', 'Email', 'EMail', 'e-mail', 'E-Mail', 'eMail', 'login', 'Login', 'user', 'User', 'username', 'Username', 'ap_email', 'userid', 'Userid', 'userId', 'UserId', 'login_email', 'user_login', 'signin-email', 'j_username' ],
+    userFieldList = [ 'mail', 'Mail', 'email', 'Email', 'EMail', 'e-mail', 'E-Mail', 'eMail', 'login', 'Login', 'user', 'User', 'username', 'Username', 'ap_email', 'userid', 'Userid', 'userId', 'UserId', 'login_email', 'user_login', 'signin-email', 'j_username', 'session[username_or_email]' ],
     imgURL = chrome.extension.getURL("./images/close.png"),
     overlayClosed = false,
     settings;
 
-var getElementFromList = function (list) {
+var getElementFromList = function (list, callback) {
     'use strict';
 
     var i, element;
 
     for (i = 0; i < list.length; i++) {
-        element = $(list[i]);
+        element = callback(list[i]);
 
         if (element) {
             return element;
@@ -71,7 +71,7 @@ var getPasswordIdentifier = function (password) {
     return null;
 };
 
-var addOverlayDiv = function (imgUrl, password, login, settings) {
+var addOverlayDiv = function (imgUrl, password, settings) {
     'use strict';
 
     var overlayDiv = document.createElement('div'),
@@ -101,9 +101,6 @@ var addOverlayDiv = function (imgUrl, password, login, settings) {
     serviceElement.id = 'vault-servicename-' + pwId;
     serviceElement.className = 'vault-servicename';
     serviceElement.type = 'text';
-    if (undefined !== login) {
-        serviceElement.value = login.value;
-    }
     serviceElement.placeholder = 'twitter';
 
     pwElementLabel.innerText = 'Passphrase';
@@ -193,7 +190,7 @@ var vaultButtonSubmit = function (settings, password) {
     }
 };
 
-var setServicename = function (servicename, settings) {
+var setServicename = function (servicename, login, settings) {
     var domainname = document.domain;
 
     if (!servicename || servicename.value) {
@@ -208,7 +205,7 @@ var setServicename = function (servicename, settings) {
 
             if (login.value) {
                 servicename.value = login.value;
-            } else if (login.textContent) {
+            } else if (login.textContent && login.textContent.length <= 30) {
                 servicename.value = login.textContent;
             } else {
                 servicename.value = domainname;
@@ -250,7 +247,7 @@ var activateOverlay = function (password, login, settings) {
 
     overlayClosed = false;
 
-    setServicename(servicename, settings);
+    setServicename(servicename, login, settings);
 };
 
 var closeOverlay = function (pwId, password) {
@@ -262,10 +259,11 @@ var closeOverlay = function (pwId, password) {
 var createOverlay = function (imgUrl, password, login, settings) {
     'use strict';
 
-    var pwId = getPasswordIdentifier(password);
+    var pwId = getPasswordIdentifier(password),
+        servicename = $('vault-servicename-' + pwId);
 
     if (!$('vault-generator-overlay-' + pwId)) {
-        addOverlayDiv(imgUrl, password, login, settings);
+        addOverlayDiv(imgUrl, password, settings);
 
         on($('vault-generate-' + pwId), 'click', function () {
             vaultButtonSubmit(settings, password);
@@ -281,7 +279,7 @@ var createOverlay = function (imgUrl, password, login, settings) {
             }
         });
 
-        on($('vault-servicename-' + pwId), 'keydown', function (e) {
+        on(servicename, 'keydown', function (e) {
             if (e.keyCode === 27) {
                 closeOverlay(pwId, password);
             }
@@ -296,8 +294,10 @@ var createOverlay = function (imgUrl, password, login, settings) {
         on($('vault-close-' + pwId), 'click', function () {
             closeOverlay(pwId, password);
         });
+
+        setServicename(servicename, login, settings);
     } else {
-        activateOverlay(password, login);
+        activateOverlay(password, login, settings);
     }
 };
 
@@ -337,11 +337,16 @@ var getSettings = function (settings) {
 };
 
 var getLoginName = function (userFieldList) {
-    var login = getElementFromList(userFieldList);
+    var login = getElementFromList(userFieldList, $);
 
     if (!login) {
-
+        // @todo make this work right
+        var callback = function (name) {
+            return document.getElementsByName(name);
+        };
+        login = getElementFromList(userFieldList, callback);
     }
+
 
     return login;
 };
@@ -351,7 +356,7 @@ var getLoginName = function (userFieldList) {
  * -----------------------------------------------------
  */
 var login = getLoginName(userFieldList),
-    password = getElementFromList(pwFieldList);
+    password = getElementFromList(pwFieldList, $);
 
 var passwords = document.querySelectorAll("input[type=password]");
 
