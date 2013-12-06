@@ -24,7 +24,7 @@
 }
 
 .vault-service-container label, .vault-pass-container label {
-    color: #000000;
+    color: #000000 !important;
     font-weight: normal;
 }
 
@@ -48,8 +48,10 @@
 }
 
 .vault-close {
-    top: -12px;
-    right: -7px;
+    top: -7px;
+    right: -6px;
+    margin: 0;
+    padding: 0;
     font-weight: bold;
     font-size: large;
     cursor: pointer;
@@ -59,7 +61,10 @@
 }
 
 .vault-close img {
+    position: absolute;
+    margin: 0;
+    padding: 0;
     width: 12px;
     height: 12px;
-    opacity: 0.7;
+    opacity: 0.8;
 }

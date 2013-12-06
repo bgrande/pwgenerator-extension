@@ -71,7 +71,7 @@ var addOverlayDiv = function (imgUrl, password, login, settings) {
         dialogDiv = document.createElement('div'),
         serviceDiv = document.createElement('div'),
         passDiv = document.createElement('div'),
-        closeSpan = document.createElement('span'),
+        closeDiv = document.createElement('div'),
         closeImg = document.createElement('img'),
         serviceElementLabel = document.createElement('label'),
         serviceElement = document.createElement('input'),
@@ -85,10 +85,10 @@ var addOverlayDiv = function (imgUrl, password, login, settings) {
     closeImg.src = imgUrl;
     closeImg.alt = 'Close Overlay';
 
-    closeSpan.id = 'vault-close-' + pwId;
-    closeSpan.className = 'vault-close';
-    closeSpan.title = 'Close Overlay';
-    closeSpan.appendChild(closeImg);
+    closeDiv.id = 'vault-close-' + pwId;
+    closeDiv.className = 'vault-close';
+    closeDiv.title = 'Close Overlay';
+    closeDiv.appendChild(closeImg);
 
     serviceElementLabel.innerText = 'Service name';
     serviceElement.id = 'vault-servicename-' + pwId;
@@ -130,8 +130,8 @@ var addOverlayDiv = function (imgUrl, password, login, settings) {
     dialogDiv.appendChild(passDiv);
     dialogDiv.appendChild(submitButton);
 
+    overlayDiv.appendChild(closeDiv);
     overlayDiv.appendChild(dialogDiv);
-    overlayDiv.appendChild(closeSpan);
 
     password.parentNode.appendChild(overlayDiv);
 
