@@ -350,7 +350,6 @@ chrome.storage.local.get('settings', function (items) {
         settings.autosend = passwords.length === 1;
 
         for (var i = 0; i < passwords.length; i++) {
-            console.log(passwords[i], 'executed');
             initGenerator(imgURL, passwords[i], login, settings);
         }
     } else if (passwords.length === 0 && password) {
