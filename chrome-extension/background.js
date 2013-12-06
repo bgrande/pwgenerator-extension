@@ -1,6 +1,5 @@
 chrome.browserAction.onClicked.addListener(function (tab) {
-    chrome.tabs.executeScript(tab.id, { file: "app/generate.js", allFrames: true }, function () {
-    });
+    chrome.tabs.executeScript(tab.id, { file: "app/generate.js", allFrames: true }, function () { });
 });
 
 chrome.runtime.onInstalled.addListener(function (details) {
