@@ -1,6 +1,6 @@
 {
   "name": "Vault-Generator",
-  "version": "0.8.10",
+  "version": "0.8.13",
   "manifest_version": 2,
 
   "description": "Generates safe passwords for the web on the fly",
@@ -22,8 +22,6 @@
         "19": "images/icon19.png",
         "32": "images/icon32.png"
     },
-    // @todo browser_action to catch cases where password and/or user field cannot/could not be guessed
-    //"default_popup": "vault.html",
     "default_title": "Generate Password"
   },
   "content_scripts": [
@@ -41,7 +39,8 @@
             "lib/core.js",
             "app/vault-generator.js"
         ],
-        "run_at": "document_idle"
+        "run_at": "document_idle",
+        "all_frames": true
       }
   ],
   "permissions": [

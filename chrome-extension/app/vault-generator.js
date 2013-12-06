@@ -54,11 +54,18 @@ var generatePassword = function(serviceValue, phraseValue, settings) {
 var getPasswordIdentifier = function (password) {
     'use strict';
 
+    var pwString;
+
     if (password.id) {
         return password.id;
     }
     if (password.name) {
-        return password.name.replace(/\[|\]/g, '-').replace(/-+$/, '');
+        pwString = password.name.replace(/\[|\]/g, '-').replace(/-+$/, '');
+        if ($('vault-generator-overlay-' + pwString)) {
+            pwString += '1';
+        }
+
+        return pwString;
     }
 
     return null;
@@ -241,10 +248,12 @@ var activateOverlay = function (password, login, settings) {
         passphrase.focus();
     }
 
+    overlayClosed = false;
+
     setServicename(servicename, settings);
 };
 
-var closeOverlay = function (pwId) {
+var closeOverlay = function (pwId, password) {
     toggleOverlay($('vault-generator-overlay-' + pwId), false);
     overlayClosed = true;
     password.focus();
@@ -262,24 +271,30 @@ var createOverlay = function (imgUrl, password, login, settings) {
             vaultButtonSubmit(settings, password);
         });
 
-        on($('vault-passphrase-' + pwId), 'keyup', function (e) {
+        on($('vault-passphrase-' + pwId), 'keydown', function (e) {
             if (e.keyCode === 13) {
                 vaultButtonSubmit(settings, password);
             }
 
             if (e.keyCode === 27) {
-                closeOverlay(pwId);
+                closeOverlay(pwId, password);
             }
         });
 
-        on($('vault-servicename-' + pwId), 'keyup', function (e) {
+        on($('vault-servicename-' + pwId), 'keydown', function (e) {
             if (e.keyCode === 27) {
-                closeOverlay(pwId);
+                closeOverlay(pwId, password);
+            }
+        });
+
+        on($('vault-generator-overlay' + pwId), 'keydown', function (e) {
+            if (e.keyCode === 27) {
+                closeOverlay(pwId, password);
             }
         });
 
         on($('vault-close-' + pwId), 'click', function () {
-            closeOverlay(pwId);
+            closeOverlay(pwId, password);
         });
     } else {
         activateOverlay(password, login);
@@ -335,6 +350,7 @@ chrome.storage.local.get('settings', function (items) {
         settings.autosend = passwords.length === 1;
 
         for (var i = 0; i < passwords.length; i++) {
+            console.log(passwords[i], 'executed');
             initGenerator(imgURL, passwords[i], login, settings);
         }
     } else if (passwords.length === 0 && password) {
