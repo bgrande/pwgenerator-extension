@@ -1,3 +1,9 @@
+/*
+ vault
+ https://github.com/jcoglan/vault
+ Copyright (c) 2011-2013 James Coglan
+ MIT License
+ */
 var Vault = function(settings) {
   this._phrase   = settings.phrase || '';
   this._length   = settings.length || Vault.DEFAULT_LENGTH;
