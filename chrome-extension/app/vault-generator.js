@@ -346,6 +346,5 @@ var getLoginName = function (userFieldList) {
         login = getElementFromList(userFieldList, callback);
     }
 
-
     return login;
 };

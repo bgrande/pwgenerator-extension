@@ -23,7 +23,7 @@
         "19": "images/icon19.png",
         "32": "images/icon32.png"
     },
-    "default_title": "Generate Password"
+    "default_title": "Reload Password Generator"
   },
   "content_scripts": [
       {
