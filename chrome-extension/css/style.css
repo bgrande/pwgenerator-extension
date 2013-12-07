@@ -8,6 +8,7 @@
     padding: 6px !important;
     display: none;
     font-family: sans-serif;
+    font-size: 12px !important;
 }
 
 .vault-generator-dialog {
@@ -36,18 +37,20 @@
     margin-left: 5px !important;
     cursor: pointer;
     position: absolute !important;
-    bottom: 6px !important;
+    top: 13px !important;
     border: 1px solid #333333;
     background-color: #eeeeee !important;
+    position: absolute;
 }
 
 .vault-servicename, .vault-passphrase {
     width: 150px !important;
-    height: 16px;
+    height: 16px !important;
     border: 1px solid #333333 !important;
     padding: 2px !important;
     margin-top: 2px !important;
     background-color: #ffffff !important;
+    font-size: 12px !important;
 }
 
 .vault-close {
@@ -55,8 +58,6 @@
     right: -6px;
     margin: 0;
     padding: 0;
-    font-weight: bold;
-    font-size: large;
     cursor: pointer;
     position: absolute;
     width: 12px;
