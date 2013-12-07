@@ -19,6 +19,9 @@ chrome.storage.local.get('settings', function (items) {
             initGenerator(imgURL, passwords[i], login, settings);
         }
     } else if (passwords.length === 0 && password) {
+        // field has not password type - better use no autosend to prevent misbehaviour
+        settings.autosend = false;
+
         initGenerator(imgURL, password, login, settings);
     }
 });
