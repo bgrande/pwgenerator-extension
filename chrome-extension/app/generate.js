@@ -8,8 +8,9 @@ var login = getLoginName(userFieldList),
 var passwords = document.querySelectorAll("input[type=password]");
 
 chrome.storage.local.get('settings', function (items) {
+    var settings = (undefined !== items.settings) ? getSettings(JSON.parse(items.settings)) : DEFAULT_SETTINGS;
+
     if (passwords.length > 0) {
-        settings = (undefined !== items.settings) ? getSettings(JSON.parse(items.settings)) : DEFAULT_SETTINGS;
 
         // deactivate autosend if there are multiple password fields
         settings.autosend = passwords.length === 1;
