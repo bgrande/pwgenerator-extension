@@ -1,6 +1,6 @@
 {
   "name": "Vault-Generator",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "manifest_version": 2,
 
   "description": "Generates safe passwords for the web on the fly",

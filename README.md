@@ -18,4 +18,5 @@ Todo
 ======
 1) find a better way to get/recognize the service/loginname and/or use more possible input types, names, etc.
 2) minify js and css through build structure as well as using vendor folders
-3) if extension gets deactivated or deleted the overlays should be removed from every page
+3) localization
+4) if extension gets deactivated or deleted the overlays should be removed from every page
