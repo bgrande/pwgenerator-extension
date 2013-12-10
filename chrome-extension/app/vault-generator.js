@@ -269,12 +269,13 @@ var createOverlay = function (imgUrl, password, login, settings) {
         });
 
         on($('vault-passphrase-' + pwId), 'keydown', function (e) {
-            if (e.keyCode === 13) {
-                vaultButtonSubmit(settings, password);
-            }
-
-            if (e.keyCode === 27) {
-                closeOverlay(pwId, password);
+            switch (e.keyCode) {
+                case 13:
+                    vaultButtonSubmit(settings, password);
+                    break;
+                case 27:
+                    closeOverlay(pwId, password);
+                    break;
             }
         });
 
