@@ -190,7 +190,7 @@ var vaultButtonSubmit = function (settings, password) {
 };
 
 var setServicename = function (servicename, login, settings) {
-    var domainname = document.domain;
+    var domainname = document.domain.replace(/www?\./, '');
 
     if (!servicename || servicename.value) {
         return false;
