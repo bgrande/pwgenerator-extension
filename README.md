@@ -14,7 +14,6 @@ Needed Chrome Permissions
 Issues
 =======
 1. after reloading extension generate file prevent extension from creating the overlay for overlay passwords
-2. make sure we do not use subdomains, www, and so on as part of servicename
 
 Todo
 ======
