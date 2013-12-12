@@ -83,6 +83,7 @@ var addOverlayDiv = function (imgUrl, password, settings, pwId) {
         dialogDiv = document.createElement('div'),
         serviceDiv = document.createElement('div'),
         passDiv = document.createElement('div'),
+        generateDiv = document.createElement('div'),
         closeDiv = document.createElement('div'),
         closeImg = document.createElement('img'),
         serviceElementLabel = document.createElement('label'),
@@ -130,13 +131,17 @@ var addOverlayDiv = function (imgUrl, password, settings, pwId) {
         submitButton.value = 'Generate\n& Login';
     }
 
+    generateDiv.className = 'vault-button-container';
+    generateDiv.appendChild(submitButton);
+
     overlayDiv.id = 'vault-generator-overlay-' + pwId;
     overlayDiv.className = 'vault-generator-overlay';
+    overlayDiv.style = 'display: none';
 
     dialogDiv.className = 'vault-generator-dialog';
     dialogDiv.appendChild(serviceDiv);
     dialogDiv.appendChild(passDiv);
-    dialogDiv.appendChild(submitButton);
+    dialogDiv.appendChild(generateDiv);
 
     overlayDiv.appendChild(closeDiv);
     overlayDiv.appendChild(dialogDiv);
