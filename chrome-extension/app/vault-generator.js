@@ -193,7 +193,12 @@ var vaultButtonSubmit = function (settings, password, pwId) {
 };
 
 var setServicename = function (servicename, login, settings) {
-    var domainname = document.domain.replace(/^[a-zA-Z0-9]*\./, '');
+    var domainparts = document.domain.split('.'),
+        domainname = document.domain;
+
+    if (2 < domainparts.length) {
+        domainname = domainparts[domainparts.length - 2] + '.' + domainparts[domainparts.length - 1];
+    }
 
     if (!servicename || servicename.value) {
         return false;
