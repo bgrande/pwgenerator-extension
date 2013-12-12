@@ -53,14 +53,19 @@ var generatePassword = function(serviceValue, phraseValue, settings) {
 var getPasswordIdentifier = function (password) {
     'use strict';
 
-    var pwString;
+    var pwString,
+        pwId;
 
-    if (password.id) {
+    if (password.id && password.id.match(/^vault-passphrase-/)) {
+        pwId = password.id;
+        return pwId.replace(/^vault-passphrase-/, '');
+    } else if (password.id) {
         return password.id;
     }
 
     if (password.name) {
         pwString = password.name.replace(/\[|\]/g, '-').replace(/-+$/, '');
+
         if ($('vault-generator-overlay-' + pwString)) {
             pwString += '1';
         }
@@ -257,44 +262,40 @@ var createOverlay = function (imgUrl, password, login, settings, pwId) {
 
     var servicename = $('vault-servicename-' + pwId);
 
-    if (!$('vault-generator-overlay-' + pwId)) {
-        addOverlayDiv(imgUrl, password, settings, pwId);
+    addOverlayDiv(imgUrl, password, settings, pwId);
 
-        on($('vault-generate-' + pwId), 'click', function () {
-            vaultButtonSubmit(settings, password, pwId);
-        });
+    on($('vault-generate-' + pwId), 'click', function () {
+        vaultButtonSubmit(settings, password, pwId);
+    });
 
-        on($('vault-passphrase-' + pwId), 'keydown', function (e) {
-            switch (e.keyCode) {
-                case 13:
-                    vaultButtonSubmit(settings, password, pwId);
-                    break;
-                case 27:
-                    closeOverlay(pwId, password);
-                    break;
-            }
-        });
-
-        on(servicename, 'keydown', function (e) {
-            if (e.keyCode === 27) {
+    on($('vault-passphrase-' + pwId), 'keydown', function (e) {
+        switch (e.keyCode) {
+            case 13:
+                vaultButtonSubmit(settings, password, pwId);
+                break;
+            case 27:
                 closeOverlay(pwId, password);
-            }
-        });
+                break;
+        }
+    });
 
-        on($('vault-generator-overlay' + pwId), 'keydown', function (e) {
-            if (e.keyCode === 27) {
-                closeOverlay(pwId, password);
-            }
-        });
-
-        on($('vault-close-' + pwId), 'click', function () {
+    on(servicename, 'keydown', function (e) {
+        if (e.keyCode === 27) {
             closeOverlay(pwId, password);
-        });
+        }
+    });
 
-        setServicename(servicename, login, settings);
-    } else {
-        activateOverlay(password, login, settings, pwId);
-    }
+    on($('vault-generator-overlay' + pwId), 'keydown', function (e) {
+        if (e.keyCode === 27) {
+            closeOverlay(pwId, password);
+        }
+    });
+
+    on($('vault-close-' + pwId), 'click', function () {
+        closeOverlay(pwId, password);
+    });
+
+    setServicename(servicename, login, settings);
 };
 
 var initGenerator = function (imgUrl, password, login, settings) {
@@ -302,18 +303,22 @@ var initGenerator = function (imgUrl, password, login, settings) {
 
     var pwId = getPasswordIdentifier(password);
 
-    createOverlay(imgUrl, password, login, settings, pwId);
+    if (!$('vault-generator-overlay-' + pwId)) {
+        createOverlay(imgUrl, password, login, settings, pwId);
 
-    on(password, 'focus', function () {
-        if (!overlayClosed) {
-            activateOverlay(password, login, settings, pwId);
-        } else {
-            overlayClosed = false;
-        }
-    });
+        on(password, 'focus', function () {
+            if (!overlayClosed) {
+                activateOverlay(password, login, settings, pwId);
+            } else {
+                overlayClosed = false;
+            }
+        });
+    } else {
+        activateOverlay(password, login, settings, pwId);
+    }
 
     // make sure the overlay will be loaded even if the password field is already active
-    if (password === document.activeElement) {
+    if (true === overlayClosed && password === document.activeElement) {
         activateOverlay(password, login, settings, pwId);
     }
 };

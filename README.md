@@ -13,7 +13,6 @@ Needed Chrome Permissions
 
 Issues
 =======
-1. after reloading extension generate file prevent extension from creating the overlay for overlay passwords
 
 Todo
 ======
