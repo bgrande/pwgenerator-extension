@@ -1,25 +1,45 @@
-var pwFieldList = [ 'pass', 'pass1', 'pass2', 'Pass', 'passwd', 'Passwd', 'password', 'Password', 'PASSWORD', 'pw', 'PW', 'passwort', 'Passwort', 'ap_password', 'login_password', 'user_password', 'user_pass', 'pwd', 'rpass' ],
-    userFieldList = [ 'mail', 'Mail', 'email', 'Email', 'EMail', 'e-mail', 'E-Mail', 'eMail', 'login', 'Login', 'user', 'User', 'username', 'Username', 'ap_email', 'userid', 'Userid', 'userId', 'UserId', 'login_email', 'user_login', 'signin-email', 'j_username', 'session[username_or_email]' ],
-    imgURL = chrome.extension.getURL("./images/close.png"),
-    overlayClosed = false;
+var SETTINGS = {},
+    VaultGenerator = {
+        _overlay: {},
+        _serviceValue: '',
+        _phraseValue: '',
+        _vaultSettings: {},
+        _overlayClosed: false,
+        _pwId: '',
+        _imgUrl: '',
+        _pwField: {},
+        _loginField: {}
+    };
 
-var getElementFromList = function (list, callback) {
-    'use strict';
+SETTINGS.pwFieldList = [
+    'pass', 'pass1', 'pass2', 'Pass', 'passwd', 'Passwd', 'password', 'Password', 'PASSWORD',
+    'pw', 'PW', 'passwort', 'Passwort', 'ap_password', 'login_password', 'user_password',
+    'user_pass', 'pwd', 'rpass'
+];
 
-    var i, element;
+SETTINGS.userFieldList = [
+    'mail', 'Mail', 'email', 'Email', 'EMail', 'e-mail', 'E-Mail', 'eMail', 'login', 'Login',
+    'user', 'User', 'username', 'Username', 'ap_email', 'userid', 'Userid', 'userId', 'UserId',
+    'login_email', 'user_login', 'signin-email', 'j_username', 'session[username_or_email]'
+];
 
-    for (i = 0; i < list.length; i++) {
-        element = callback(list[i]);
+SETTINGS.imgUrl = chrome.extension.getURL("./images/close.png");
 
-        if (element) {
-            return element;
-        }
+VaultGenerator.setLoginName = function (userFieldList) {
+    var login = getElementFromList(userFieldList, $);
+
+    if (!login) {
+        // @todo make this work right
+        var callback = function (name) {
+            return document.getElementsByName(name);
+        };
+        login = getElementFromList(userFieldList, callback);
     }
 
-    return false;
+    this._loginField = login;
 };
 
-var toggleOverlay = function (overlay, status) {
+VaultGenerator.toggleOverlay = function (status) {
     'use strict';
 
     var display = 'none';
@@ -28,18 +48,18 @@ var toggleOverlay = function (overlay, status) {
         display = 'block';
     }
 
-    overlay.style.display = display;
+    this._overlay.style.display = display;
 };
 
-var generatePassword = function(serviceValue, phraseValue, settings) {
+VaultGenerator.generatePassword = function () {
     'use strict';
 
     var pwValue;
 
     try {
-        if (serviceValue && phraseValue) {
-            settings.phrase = phraseValue;
-            pwValue = new Vault(settings).generate(serviceValue);
+        if (this._serviceValue && this._phraseValue) {
+            this._vaultSettings.phrase = this._phraseValue;
+            pwValue = new Vault(this._vaultSettings).generate(this._serviceValue);
         } else {
             pwValue = '';
         }
@@ -50,11 +70,10 @@ var generatePassword = function(serviceValue, phraseValue, settings) {
     }
 };
 
-var getPasswordIdentifier = function (password) {
+VaultGenerator.getPasswordIdentifier = function (password) {
     'use strict';
 
-    var pwString,
-        pwId;
+    var pwString, pwId;
 
     if (password.id && password.id.match(/^vault-passphrase-/)) {
         pwId = password.id;
@@ -76,7 +95,13 @@ var getPasswordIdentifier = function (password) {
     return null;
 };
 
-var addOverlayDiv = function (imgUrl, password, settings, pwId) {
+/*VaultGenerator.getPasswordIdentifier = function () {
+    'use strict';
+
+    return this._pwId;
+};*/
+
+VaultGenerator.addOverlayDiv = function () {
     'use strict';
 
     var overlayDiv = document.createElement('div'),
@@ -90,11 +115,13 @@ var addOverlayDiv = function (imgUrl, password, settings, pwId) {
         serviceElement = document.createElement('input'),
         pwElementLabel = document.createElement('label'),
         pwElement = document.createElement('input'),
-        submitButton = document.createElement('input');
+        submitButton = document.createElement('input'),
+        pwId = this.getPasswordIdentifier(),
+        pwField = this._pwField;
 
     closeImg.id = 'vault-close-icon-' + pwId;
     closeImg.className = 'vault-close-icon';
-    closeImg.src = imgUrl;
+    closeImg.src = this._imgUrl;
     closeImg.alt = 'Close Overlay';
 
     closeDiv.id = 'vault-close-' + pwId;
@@ -112,7 +139,7 @@ var addOverlayDiv = function (imgUrl, password, settings, pwId) {
     pwElement.id = 'vault-passphrase-' + pwId;
     pwElement.className = 'vault-passphrase';
     pwElement.type = 'password';
-    pwElement.value = password.value;
+    pwElement.value = pwField.value;
     pwElement.placeholder = 'best pass ever';
 
     passDiv.className = 'vault-pass-container';
@@ -127,7 +154,7 @@ var addOverlayDiv = function (imgUrl, password, settings, pwId) {
     submitButton.className = 'vault-generate';
     submitButton.type = 'button';
     submitButton.value = 'Generate';
-    if (settings.autosend) {
+    if (this._vaultSettings.autosend) {
         submitButton.value = 'Generate\n& Login';
     }
 
@@ -146,24 +173,26 @@ var addOverlayDiv = function (imgUrl, password, settings, pwId) {
     overlayDiv.appendChild(closeDiv);
     overlayDiv.appendChild(dialogDiv);
 
-    password.parentNode.appendChild(overlayDiv);
+    pwField.parentNode.appendChild(overlayDiv);
+
+    this._overlay = $('vault-generator-dialog' + pwId);
 
     on($('vault-passphrase-' + pwId), 'focus', function () {
         if (!this.value) {
-            this.value = password.value;
+            this.value = pwField.value;
         }
     });
 };
 
-var getLoginForm = function (password) {
+VaultGenerator.getLoginForm = function () {
     'use strict';
 
     for (var i = 0; i < document.forms.length; i++) {
         for (var o = 0; o < document.forms[i].length; o++) {
-            if (password.id === document.forms[i][o].id) {
+            if (this._pwField.id === document.forms[i][o].id) {
                 return i;
             }
-            if (password.name === document.forms[i][o].name) {
+            if (this._pwField.name === document.forms[i][o].name) {
                 return i;
             }
         }
@@ -172,23 +201,23 @@ var getLoginForm = function (password) {
     return false;
 };
 
-var vaultButtonSubmit = function (settings, password, pwId) {
+VaultGenerator.createVaultButtonSubmit = function () {
     'use strict';
 
+    var pwId = this.getPasswordIdentifier();
+
     var passPhrase = $('vault-passphrase-' + pwId),
-        phraseValue  = passPhrase.value,
-        serviceValue = $('vault-servicename-' + pwId).value,
         newPassword,
         loginFormNumber;
 
-    newPassword = generatePassword(serviceValue, phraseValue, settings);
+    newPassword = this.generatePassword();
 //console.log(newPassword);
-    password.value = newPassword;
+    this._pwField.value = newPassword;
 
-    toggleOverlay($('vault-generator-overlay-' + pwId), false);
+    this.toggleOverlay(false);
 
-    if (settings.autosend) {
-        loginFormNumber = getLoginForm(password);
+    if (this._vaultSettings.autosend) {
+        loginFormNumber = this.getLoginForm();
         if ('number' === typeof loginFormNumber) {
             document.forms[loginFormNumber].submit();
         }
@@ -197,9 +226,10 @@ var vaultButtonSubmit = function (settings, password, pwId) {
     }
 };
 
-var setServicename = function (servicename, login, settings) {
+VaultGenerator.setServicename = function (servicename) {
     var domainparts = document.domain.split('.'),
-        domainname = document.domain;
+        domainname = document.domain,
+        loginField = this._loginField;
 
     if (2 < domainparts.length) {
         domainname = domainparts[domainparts.length - 2] + '.' + domainparts[domainparts.length - 1];
@@ -209,30 +239,30 @@ var setServicename = function (servicename, login, settings) {
         return false;
     }
 
-    switch (settings.servicename) {
+    switch (this._vaultSettings.servicename) {
         case 'login':
-            if (undefined === login) {
+            if (undefined === loginField) {
                 return null;
             }
 
-            if (login.value) {
-                servicename.value = login.value;
-            } else if (login.textContent && login.textContent.length <= 30) {
-                servicename.value = login.textContent;
+            if (loginField.value) {
+                servicename.value = loginField.value;
+            } else if (loginField.textContent && loginField.textContent.length <= 30) {
+                servicename.value = loginField.textContent;
             } else {
                 servicename.value = domainname;
             }
             break;
 
         case 'prefix':
-            if (settings.defServicename) {
-                servicename.value = settings.defServicename + domainname;
+            if (this._vaultSettings.servicename.defServicename) {
+                servicename.value = this._vaultSettings.servicename.defServicename + domainname;
             }
             break;
 
         case 'suffix':
-            if (settings.defServicename) {
-                servicename.value = domainname + settings.defServicename;
+            if (this._vaultSettings.servicename.defServicename) {
+                servicename.value = domainname + this._vaultSettings.servicename.defServicename;
             }
             break;
     }
@@ -240,125 +270,121 @@ var setServicename = function (servicename, login, settings) {
     return true;
 };
 
-var activateOverlay = function (password, login, settings, pwId) {
+VaultGenerator.activateOverlay = function () {
     'use strict';
 
-    var passphrase = $('vault-passphrase-' + pwId),
+    var pwId = this.getPasswordIdentifier(),
+        passphrase = $('vault-passphrase-' + pwId),
         servicename = $('vault-servicename-' + pwId);
 
-    toggleOverlay($('vault-generator-overlay-' + pwId), true);
+    this.toggleOverlay(true);
 
     if (passphrase && !passphrase.value) {
-        passphrase.value = password.value;
+        passphrase.value = this._pwField.value;
     }
 
-    if (!overlayClosed) {
+    if (!this._overlayClosed) {
         passphrase.focus();
     }
 
-    overlayClosed = false;
+    this._overlayClosed = false;
 
-    setServicename(servicename, login, settings);
+    this.setServicename(servicename);
 };
 
-var closeOverlay = function (pwId, password) {
-    toggleOverlay($('vault-generator-overlay-' + pwId), false);
-    overlayClosed = true;
-    password.focus();
-};
-
-var createOverlay = function (imgUrl, password, login, settings, pwId) {
+VaultGenerator.closeOverlay = function () {
     'use strict';
 
-    var servicename = $('vault-servicename-' + pwId);
+    this.toggleOverlay(false);
+    this._overlayClosed = true;
+    this._pwField.focus();
+};
 
-    addOverlayDiv(imgUrl, password, settings, pwId);
+VaultGenerator.createOverlay = function () {
+    'use strict';
+
+    var pwId = this.getPasswordIdentifier(),
+        servicename = $('vault-servicename-' + pwId),
+        that = this;
+
+    this.addOverlayDiv();
 
     on($('vault-generate-' + pwId), 'click', function () {
-        vaultButtonSubmit(settings, password, pwId);
+        that.createVaultButtonSubmit();
     });
 
     on($('vault-passphrase-' + pwId), 'keydown', function (e) {
         switch (e.keyCode) {
             case 13:
-                vaultButtonSubmit(settings, password, pwId);
+                that.createVaultButtonSubmit();
                 break;
             case 27:
-                closeOverlay(pwId, password);
+                that.closeOverlay();
                 break;
         }
     });
 
     on(servicename, 'keydown', function (e) {
         if (e.keyCode === 27) {
-            closeOverlay(pwId, password);
+            that.closeOverlay();
         }
     });
 
     on($('vault-generator-overlay' + pwId), 'keydown', function (e) {
         if (e.keyCode === 27) {
-            closeOverlay(pwId, password);
+            that.closeOverlay();
         }
     });
 
     on($('vault-close-' + pwId), 'click', function () {
-        closeOverlay(pwId, password);
+        that.closeOverlay();
     });
 
-    setServicename(servicename, login, settings);
+    this.setServicename(servicename);
 };
 
-var initGenerator = function (imgUrl, password, login, settings) {
+VaultGenerator.setSettings = function (settings, defaultSettings) {
     'use strict';
 
-    var pwId = getPasswordIdentifier(password);
+    settings.length = undefined !== settings.plength ? settings.plength : defaultSettings.length;
+    settings.repeat = undefined !== settings.repeat ? settings.repeat : defaultSettings.repeat;
+    settings.autosend = undefined !== settings.autosend ? settings.autosend : defaultSettings.autosend;
+    settings.servicename = undefined !== settings.servicename ? settings.servicename : defaultSettings.servicename;
+    settings.defServicename = undefined !== settings.defServicename ? settings.defServicename : defaultSettings.defServicename;
 
-    if (!$('vault-generator-overlay-' + pwId)) {
-        createOverlay(imgUrl, password, login, settings, pwId);
+    for (var i = 0; i < TYPES.length; i++) {
+        settings[TYPES[i]] = undefined !== settings[TYPES[i]] ? settings[TYPES[i]] : defaultSettings[TYPES[i]];
+    }
 
-        on(password, 'focus', function () {
-            if (!overlayClosed) {
-                activateOverlay(password, login, settings, pwId);
+    this._vaultSettings = settings;
+};
+
+VaultGenerator.init = function (settings, pwField, vaultSettings, defaultSettings) {
+    'use strict';
+
+    var that = this;
+
+    this._pwField = pwField;
+    this._imgUrl = settings.imgUrl;
+    this.setLoginName(SETTINGS.userFieldList);
+    this.setSettings(vaultSettings, defaultSettings);
+
+    if (!$('vault-generator-overlay-' + this.getPasswordIdentifier($(pwField)))) {
+        this.createOverlay();
+
+        on($(pwField), 'focus', function () {
+            if (!that._overlayClosed) {
+                that.activateOverlay();
             } else {
-                overlayClosed = false;
+                that._overlayClosed = false;
             }
         });
     } else {
-        activateOverlay(password, login, settings, pwId);
+        this.activateOverlay();
     }
 
     // make sure the overlay will be loaded even if the password field is already active
-    if (true === overlayClosed && password === document.activeElement) {
-        activateOverlay(password, login, settings, pwId);
+    if (true === this._overlayClosed && pwField === document.activeElement) {
+        this.activateOverlay();
     }
-};
-
-var getSettings = function (settings) {
-    'use strict';
-
-    settings.length = undefined !== settings.plength ? settings.plength : DEFAULT_SETTINGS.length;
-    settings.repeat = undefined !== settings.repeat ? settings.repeat : DEFAULT_SETTINGS.repeat;
-    settings.autosend = undefined !== settings.autosend ? settings.autosend : DEFAULT_SETTINGS.autosend;
-    settings.servicename = undefined !== settings.servicename ? settings.servicename : DEFAULT_SETTINGS.servicename;
-    settings.defServicename = undefined !== settings.defServicename ? settings.defServicename : DEFAULT_SETTINGS.defServicename;
-
-    for (var i = 0; i < TYPES.length; i++) {
-        settings[TYPES[i]] = undefined !== settings[TYPES[i]] ? settings[TYPES[i]] : DEFAULT_SETTINGS[TYPES[i]];
-    }
-
-    return settings;
-};
-
-var getLoginName = function (userFieldList) {
-    var login = getElementFromList(userFieldList, $);
-
-    if (!login) {
-        // @todo make this work right
-        var callback = function (name) {
-            return document.getElementsByName(name);
-        };
-        login = getElementFromList(userFieldList, callback);
-    }
-
-    return login;
 };

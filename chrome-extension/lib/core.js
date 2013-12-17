@@ -40,3 +40,19 @@ var on = function (element, event, listener) {
         }
     }
 };
+
+var getElementFromList = function (list, callback) {
+    'use strict';
+
+    var i, element;
+
+    for (i = 0; i < list.length; i++) {
+        element = callback(list[i]);
+
+        if (element) {
+            return element;
+        }
+    }
+
+    return false;
+};
