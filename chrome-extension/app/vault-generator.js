@@ -1,8 +1,6 @@
 var SETTINGS = {},
     VaultGenerator = {
         _overlayId: '',
-        _serviceValue: '',
-        _phraseValue: '',
         _vaultSettings: {},
         _overlayClosed: false,
         _pwId: '',
@@ -50,15 +48,25 @@ VaultGenerator.toggleOverlay = function (status) {
     $(this._overlayId).style.display = display;
 };
 
+VaultGenerator.getServicevalue = function () {
+    return $('vault-servicename-' + this.getPasswordIdentifier()).value;
+};
+
+VaultGenerator.getPhrasevalue = function () {
+    return $('vault-passphrase-' + this.getPasswordIdentifier()).value;
+};
+
 VaultGenerator.generatePassword = function () {
     'use strict';
 
-    var pwValue;
+    var phraseValue = this.getPhrasevalue(),
+        serviceValue = this.getServicevalue(),
+        pwValue;
 
     try {
-        if (this._serviceValue && this._phraseValue) {
-            this._vaultSettings.phrase = this._phraseValue;
-            pwValue = new Vault(this._vaultSettings).generate(this._serviceValue);
+        if (serviceValue && phraseValue) {
+            this._vaultSettings.phrase = phraseValue;
+            pwValue = new Vault(this._vaultSettings).generate(serviceValue);
         } else {
             pwValue = '';
         }
@@ -220,10 +228,11 @@ VaultGenerator.createVaultButtonSubmit = function (pwField) {
     }
 };
 
-VaultGenerator.setServicename = function (servicename) {
+VaultGenerator.setServicename = function () {
     var domainparts = document.domain.split('.'),
         domainname = document.domain,
-        loginField = this._loginField;
+        loginField = this._loginField,
+        servicename = $('vault-servicename-' + this.getPasswordIdentifier());
 
     if (2 < domainparts.length) {
         domainname = domainparts[domainparts.length - 2] + '.' + domainparts[domainparts.length - 1];
@@ -249,14 +258,14 @@ VaultGenerator.setServicename = function (servicename) {
             break;
 
         case 'prefix':
-            if (this._vaultSettings.servicename.defServicename) {
-                servicename.value = this._vaultSettings.servicename.defServicename + domainname;
+            if (this._vaultSettings.defServicename) {
+                servicename.value = this._vaultSettings.defServicename + domainname;
             }
             break;
 
         case 'suffix':
-            if (this._vaultSettings.servicename.defServicename) {
-                servicename.value = domainname + this._vaultSettings.servicename.defServicename;
+            if (this._vaultSettings.defServicename) {
+                servicename.value = domainname + this._vaultSettings.defServicename;
             }
             break;
     }
@@ -267,9 +276,7 @@ VaultGenerator.setServicename = function (servicename) {
 VaultGenerator.activateOverlay = function (pwField) {
     'use strict';
 
-    var pwId = this.getPasswordIdentifier(),
-        passphrase = $('vault-passphrase-' + pwId),
-        servicename = $('vault-servicename-' + pwId);
+    var passphrase = $('vault-passphrase-' + this.getPasswordIdentifier());
 
     this.toggleOverlay(true);
 
@@ -283,7 +290,7 @@ VaultGenerator.activateOverlay = function (pwField) {
 
     this._overlayClosed = false;
 
-    this.setServicename(servicename);
+    this.setServicename();
 };
 
 VaultGenerator.closeOverlay = function (pwField) {
@@ -305,7 +312,7 @@ VaultGenerator.createOverlay = function (pwField) {
     this._overlayId = 'vault-generator-overlay-' + pwId;
 
     on($('vault-generate-' + pwId), 'click', function () {
-        that.createVaultButtonSubmit();
+        that.createVaultButtonSubmit(pwField);
     });
 
     on($('vault-passphrase-' + pwId), 'keydown', function (e) {
@@ -335,7 +342,7 @@ VaultGenerator.createOverlay = function (pwField) {
         that.closeOverlay(pwField);
     });
 
-    this.setServicename(servicename);
+    this.setServicename();
 };
 
 VaultGenerator.setSettings = function (settings, defaultSettings) {
