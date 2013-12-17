@@ -20,10 +20,10 @@
 
     <div>
         <div>
-            <input type="text" class="inputtext" name="email" id="email" value="" tabindex="1" />
+            <input type="text" class="inputtext" name="email" id="email2" value="" tabindex="1" />
         </div>
         <div>
-            <input type="password" class="inputtext" name="pass" id="pass" tabindex="2" />
+            <input type="password" class="inputtext" name="pass" id="pass2" tabindex="2" />
         </div>
         <div>
             <label id="loginbutton">
