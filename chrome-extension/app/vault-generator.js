@@ -3,12 +3,14 @@ var VaultGenerator = {
     _vaultSettings: {},
     _overlayClosed: false,
     _pwId: '',
-    _imgUrl: '',
+    _pwFieldIdentifier: '',
+    _closeImgUrl: '',
     _loginField: {}
 };
 
-VaultGenerator.setLoginName = function (userFieldList) {
-    var login = getElementFromList(userFieldList, $);
+VaultGenerator._setLoginName = function (settings) {
+    var userFieldList = settings.userFieldList,
+        login = getElementFromList(userFieldList, $);
 
     if (!login) {
         // @todo make this work right
@@ -62,30 +64,41 @@ VaultGenerator.generatePassword = function () {
     }
 };
 
-VaultGenerator.getPasswordIdentifier = function (pwField) {
+VaultGenerator._generateId = function (pwField) {
+    var pwString = 'random-id-' + Math.floor(Math.random() * 10);
+
+    if ($('vault-generator-overlay-' + pwString)) {
+        return this._generateId(pwField);
+    }
+
+    return pwString;
+};
+
+VaultGenerator._setPasswordIdentifier = function (pwField) {
     'use strict';
 
-    var pwString, pwId;
+    var pwString;
 
-    if (!pwField) {
-        return this._pwId;
-    }
-
-    if (pwField.id && pwField.id.match(/^vault-passphrase-/)) {
-        pwId = pwField.id;
-        return pwId.replace(/^vault-passphrase-/, '');
-    } else if (pwField.id) {
-        return pwField.id;
-    }
-
-    if (pwField.name) {
+    if (pwField.id) {
+        this._pwId = pwField.id;
+    } else if (pwField.name) {
         pwString = pwField.name.replace(/\[|\]/g, '-').replace(/-+$/, '');
 
         if ($('vault-generator-overlay-' + pwString)) {
             pwString += '1';
         }
 
-        return pwString;
+        this._pwId = pwString;
+    } else {
+        this._pwId = pwField.id = this._generateId(pwField);
+    }
+};
+
+VaultGenerator.getPasswordIdentifier = function () {
+    'use strict';
+
+    if (this._pwId) {
+        return this._pwId;
     }
 
     return null;
@@ -110,7 +123,7 @@ VaultGenerator.addOverlayDiv = function (pwField) {
 
     closeImg.id = 'vault-close-icon-' + pwId;
     closeImg.className = 'vault-close-icon';
-    closeImg.src = this._imgUrl;
+    closeImg.src = this._closeImgUrl;
     closeImg.alt = 'Close Overlay';
 
     closeDiv.id = 'vault-close-' + pwId;
@@ -258,10 +271,11 @@ VaultGenerator.setServicename = function () {
     return true;
 };
 
-VaultGenerator.activateOverlay = function (pwField) {
+VaultGenerator.activateOverlay = function () {
     'use strict';
 
-    var passphrase = $('vault-passphrase-' + this.getPasswordIdentifier());
+    var passphrase = $('vault-passphrase-' + this.getPasswordIdentifier()),
+        pwField = this.getPwField();
 
     this.toggleOverlay(true);
 
@@ -286,10 +300,11 @@ VaultGenerator.closeOverlay = function (pwField) {
     pwField.focus();
 };
 
-VaultGenerator.createOverlay = function (pwField) {
+VaultGenerator.createOverlay = function () {
     'use strict';
 
     var pwId = this.getPasswordIdentifier(),
+        pwField = this.getPwField(),
         servicename = $('vault-servicename-' + pwId),
         that = this;
 
@@ -330,11 +345,13 @@ VaultGenerator.createOverlay = function (pwField) {
     this.setServicename();
 };
 
-VaultGenerator.setSettings = function (settings, defaultSettings) {
+VaultGenerator._setVaultSettings = function (settings, defaultSettings) {
     'use strict';
 
     settings.length = undefined !== settings.plength ? settings.plength : defaultSettings.length;
     settings.repeat = undefined !== settings.repeat ? settings.repeat : defaultSettings.repeat;
+
+    // @todo autosend, servicename and defServicename should be part of generatorSettings
     settings.autosend = undefined !== settings.autosend ? settings.autosend : defaultSettings.autosend;
     settings.servicename = undefined !== settings.servicename ? settings.servicename : defaultSettings.servicename;
     settings.defServicename = undefined !== settings.defServicename ? settings.defServicename : defaultSettings.defServicename;
@@ -346,32 +363,51 @@ VaultGenerator.setSettings = function (settings, defaultSettings) {
     this._vaultSettings = settings;
 };
 
+VaultGenerator._setPwFieldIdentifier = function (pwField) {
+    if (pwField.id) {
+        this._pwFieldIdentifier = pwField.id;
+    } else if (pwField.name) {
+        this._pwFieldIdentifier = pwField.name;
+        pwField.id = pwField.name;
+    }
+};
+
+VaultGenerator.getPwField = function () {
+    return $(this._pwFieldIdentifier);
+};
+
+VaultGenerator._setImgUrls = function (settings) {
+    this._closeImgUrl = settings.imgUrl;
+};
+
+VaultGenerator._initProperties = function (pwField, settings) {
+    this._setPwFieldIdentifier(pwField);
+    this._setPasswordIdentifier(pwField);
+    this._setImgUrls(settings);
+    this._setLoginName(settings);
+};
+
 VaultGenerator.init = function (settings, pwField, vaultSettings, defaultSettings) {
     'use strict';
 
     var that = this;
 
-    if (!$('vault-generator-overlay-' + this.getPasswordIdentifier(pwField))) {
-        this._pwId = this.getPasswordIdentifier(pwField);
-        this._imgUrl = settings.imgUrl;
-        this.setLoginName(SETTINGS.userFieldList);
-        this.setSettings(vaultSettings, defaultSettings);
-        this.createOverlay(pwField);
+    this._initProperties(pwField, settings);
+    this._setVaultSettings(vaultSettings, defaultSettings);
 
-        on(pwField, 'focus', function () {
-            if (!that._overlayClosed) {
-                that.activateOverlay(pwField);
-            } else {
-                that._overlayClosed = false;
-            }
-        });
-    } else {
-        this.activateOverlay(pwField);
-    }
+    this.createOverlay();
+
+    on(pwField, 'focus', function () {
+        if (!that._overlayClosed) {
+            that.activateOverlay();
+        } else {
+            that._overlayClosed = false;
+        }
+    });
 
     // make sure the overlay will be loaded even if the password field is already active
     if (true === this._overlayClosed && pwField === document.activeElement) {
-        this.activateOverlay(pwField);
+        this.activateOverlay();
     }
 
     return this;

@@ -20,20 +20,19 @@ chrome.storage.local.get('settings', function (items) {
         vaultSettings.autosend = passwords.length === 1;
 
         for (var i = 0; i < passwords.length; i++) {
-            if (!generators[i]) {
+            if (!generators[i] && !isOverlay(passwords[i]) && !hasOverlay(passwords[i])) {
                 generators[i] = Object.create(VaultGenerator).init(SETTINGS, passwords[i], vaultSettings, DEFAULT_SETTINGS);
-            } else {
-                generators[i].activateOverlay($(generators[i].getPasswordIdentifier()));
             }
         }
     } else if (passwords.length === 0 && password) {
         // field does not have a password type - better use no autosend to prevent misbehaviour
         vaultSettings.autosend = false;
 
-        if (!generators[0] && !$(generators[0])) {
+        if (!generators[0] && !isOverlay(password) && !hasOverlay(password)) {
             generators[0] = Object.create(VaultGenerator).init(SETTINGS, password, vaultSettings, DEFAULT_SETTINGS);
         }
     }
 
+    // show count of existing overlays
     chrome.runtime.sendMessage({event: 'countChange', overlayCount: generators.length});
 });

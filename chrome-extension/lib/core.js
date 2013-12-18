@@ -24,7 +24,7 @@ var DEFAULT_SETTINGS = {
             'user', 'User', 'username', 'Username', 'ap_email', 'userid', 'Userid', 'userId', 'UserId',
             'login_email', 'user_login', 'signin-email', 'j_username', 'session[username_or_email]'
         ],
-        imgUrl: './images/close.png'
+        imgUrl: 'images/close.png'
     },
     TYPES = 'lower upper number dash space symbol'.split(' ');
 
@@ -68,4 +68,12 @@ var getElementFromList = function (list, callback) {
     }
 
     return false;
+};
+
+var isOverlay = function (pwField) {
+    return pwField && pwField.id && pwField.id.match(/^vault-passphrase-/);
+};
+
+var hasOverlay = function (pwField) {
+    return pwField && pwField.id && $('vault-generator-overlay-' + pwField.id);
 };

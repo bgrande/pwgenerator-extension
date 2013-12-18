@@ -13,14 +13,13 @@ Needed Chrome Permissions
 
 Issues
 =======
-1. fix reloading of generate.js
-2. get password field through generator object
+1. also get close png/image url if reloading generator.js by extension icon click
 
 Todo
 ======
-1. should default settings be stored in storage?
+1. should default settings be stored in storage? At least we need a better (structured) setting handling
 2. how to handle top level domain classes like co.uk as part of servicename recognition?
-3. store passphrase and service field-id-names into object after initialization
+3. store field-id names for passphrase and servicename into object after initialization
 4. maybe use object structure for core library
 5. find a better way to get/recognize the service/loginname and/or use more possible input types, names, etc.
 6. build script for app zipping
