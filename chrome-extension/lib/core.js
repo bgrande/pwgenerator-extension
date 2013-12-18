@@ -13,6 +13,19 @@ var DEFAULT_SETTINGS = {
         prefix: false,
         suffix: false
     },
+    SETTINGS = {
+        pwFieldList: [
+            'pass', 'pass1', 'pass2', 'Pass', 'passwd', 'Passwd', 'password', 'Password', 'PASSWORD',
+            'pw', 'PW', 'passwort', 'Passwort', 'ap_password', 'login_password', 'user_password',
+            'user_pass', 'pwd', 'rpass'
+        ],
+        userFieldList: [
+            'mail', 'Mail', 'email', 'Email', 'EMail', 'e-mail', 'E-Mail', 'eMail', 'login', 'Login',
+            'user', 'User', 'username', 'Username', 'ap_email', 'userid', 'Userid', 'userId', 'UserId',
+            'login_email', 'user_login', 'signin-email', 'j_username', 'session[username_or_email]'
+        ],
+        imgUrl: './images/close.png'
+    },
     TYPES = 'lower upper number dash space symbol'.split(' ');
 
 var $ = function (selector) {

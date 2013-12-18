@@ -2,24 +2,38 @@
  *  start the overlay presentation and vault generation
  * -----------------------------------------------------
  */
-var password = getElementFromList(SETTINGS.pwFieldList, $),
-    passwords = document.querySelectorAll("input[type=password]");
+// make generators globally available but keep old on reload
+if (!generators) {
+    var generators = [];
+}
+
+// set chrome specific url getting for close icon
+SETTINGS.imgUrl = chrome.extension.getURL(SETTINGS.imgUrl);
 
 chrome.storage.local.get('settings', function (items) {
-    var vaultSettings = (undefined !== items.settings) ? JSON.parse(items.settings) : DEFAULT_SETTINGS,
-        generators = [];
+    var password = getElementFromList(SETTINGS.pwFieldList, $),
+        passwords = document.querySelectorAll("input[type=password]"),
+        vaultSettings = (undefined !== items.settings) ? JSON.parse(items.settings) : DEFAULT_SETTINGS;
 
     if (passwords.length > 0) {
         // deactivate autosend if there are multiple password fields
         vaultSettings.autosend = passwords.length === 1;
 
         for (var i = 0; i < passwords.length; i++) {
-            generators[i] = Object.create(VaultGenerator).init(SETTINGS, passwords[i], vaultSettings, DEFAULT_SETTINGS);
+            if (!generators[i]) {
+                generators[i] = Object.create(VaultGenerator).init(SETTINGS, passwords[i], vaultSettings, DEFAULT_SETTINGS);
+            } else {
+                generators[i].activateOverlay($(generators[i].getPasswordIdentifier()));
+            }
         }
     } else if (passwords.length === 0 && password) {
         // field does not have a password type - better use no autosend to prevent misbehaviour
         vaultSettings.autosend = false;
 
-        generators[0] = Object.create(VaultGenerator).init(SETTINGS, password, vaultSettings, DEFAULT_SETTINGS);
+        if (!generators[0] && !$(generators[0])) {
+            generators[0] = Object.create(VaultGenerator).init(SETTINGS, password, vaultSettings, DEFAULT_SETTINGS);
+        }
     }
+
+    chrome.runtime.sendMessage({event: 'countChange', overlayCount: generators.length});
 });
