@@ -13,7 +13,6 @@ Needed Chrome Permissions
 
 Issues
 =======
-1. also get close png/image url if reloading generator.js by extension icon click
 
 Todo
 ======

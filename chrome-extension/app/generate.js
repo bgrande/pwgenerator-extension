@@ -8,7 +8,7 @@ if (!generators) {
 }
 
 // set chrome specific url getting for close icon
-SETTINGS.imgUrl = chrome.extension.getURL(SETTINGS.imgUrl);
+SETTINGS.imgUrl = chrome.extension.getURL('images/close.png');
 
 chrome.storage.local.get('settings', function (items) {
     var password = getElementFromList(SETTINGS.pwFieldList, $),
