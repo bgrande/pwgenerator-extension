@@ -35,7 +35,7 @@ var setRadio = function (name, value) {
                     input.checked = (value && value > 0);
                     break;
                 case 'allowed':
-                    input.checked = (value === undefined);
+                    input.checked = (value === null);
                     break;
                 case 'forbidden':
                     input.checked = (value === 0);

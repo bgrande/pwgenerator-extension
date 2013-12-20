@@ -32,14 +32,13 @@ chrome.runtime.onInstalled.addListener(function (details) {
             var settings = JSON.parse(items.settings), key, isNew = false;
 
             for (key in DEFAULT_SETTINGS) {
-                if (DEFAULT_SETTINGS.hasOwnProperty(key) && !settings.hasOwnProperty(key)) {
+                if (DEFAULT_SETTINGS.hasOwnProperty(key) && !settings.hasOwnProperty(key) ) {
                     settings[key] = DEFAULT_SETTINGS[key];
                     isNew = true;
                 }
             }
 
             if (true === isNew) {
-                alert('new settings!');
                 chrome.storage.local.set({
                     settings: JSON.stringify(settings)
                 });
