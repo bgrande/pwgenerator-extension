@@ -24,4 +24,4 @@ Todo
 6. build script for app zipping
 7. minify js and css through build structure as well as using vendor folders
 8. localization
-9. if extension gets deactivated or deleted the overlays should be removed from every page
+9. if possible: if extension gets deactivated or deleted the overlays should be removed from every page
