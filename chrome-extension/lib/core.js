@@ -1,9 +1,6 @@
 var DEFAULT_SETTINGS = {
         length: 20,
         repeat: 0,
-        autosend: false,
-        servicename: 'login',
-        defServicename: undefined,
         lower: undefined,
         upper: undefined,
         number: undefined,
@@ -11,9 +8,12 @@ var DEFAULT_SETTINGS = {
         space: undefined,
         symbol: undefined,
         prefix: false,
-        suffix: false
-    },
-    SETTINGS = {
+        suffix: false,
+
+        autosend: false,
+        servicename: 'prefix',
+        defServicename: undefined,
+
         pwFieldList: [
             'pass', 'pass1', 'pass2', 'Pass', 'passwd', 'Passwd', 'password', 'Password', 'PASSWORD',
             'pw', 'PW', 'passwort', 'Passwort', 'ap_password', 'login_password', 'user_password',

@@ -22,7 +22,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
 chrome.runtime.onInstalled.addListener(function (details) {
     if ('update' === details.reason) {
-        // someday we are going to update the options
+        // @todo someday we are going to update the options
     } else {
         chrome.storage.local.set({
             settings: JSON.stringify(DEFAULT_SETTINGS)

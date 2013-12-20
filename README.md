@@ -16,7 +16,7 @@ Issues
 
 Todo
 ======
-1. should default settings be stored in storage? At least we need a better (structured) setting handling
+1. update default options on extension update
 2. how to handle top level domain classes like co.uk as part of servicename recognition?
 3. store field-id names for passphrase and servicename into object after initialization
 4. maybe use object structure for core library

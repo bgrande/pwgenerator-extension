@@ -1,6 +1,7 @@
 var VaultGenerator = {
     _overlayId: '',
     _vaultSettings: {},
+    _generatorSettings: {},
     _overlayClosed: false,
     _pwId: '',
     _pwFieldIdentifier: '',
@@ -8,8 +9,8 @@ var VaultGenerator = {
     _loginField: {}
 };
 
-VaultGenerator._setLoginName = function (settings) {
-    var userFieldList = settings.userFieldList,
+VaultGenerator._setLoginName = function (defaultSettings) {
+    var userFieldList = defaultSettings.userFieldList,
         login = getElementFromList(userFieldList, $);
 
     if (!login) {
@@ -156,7 +157,7 @@ VaultGenerator.addOverlayDiv = function (pwField) {
     submitButton.className = 'vault-generate';
     submitButton.type = 'button';
     submitButton.value = 'Generate';
-    if (this._vaultSettings.autosend) {
+    if (this._generatorSettings.autosend) {
         submitButton.value = 'Generate\n& Login';
     }
 
@@ -216,7 +217,7 @@ VaultGenerator.createVaultButtonSubmit = function (pwField) {
 
     this.toggleOverlay(false);
 
-    if (this._vaultSettings.autosend) {
+    if (this._generatorSettings.autosend) {
         loginFormNumber = this.getLoginForm(pwField);
         if ('number' === typeof loginFormNumber) {
             document.forms[loginFormNumber].submit();
@@ -240,7 +241,7 @@ VaultGenerator.setServicename = function () {
         return false;
     }
 
-    switch (this._vaultSettings.servicename) {
+    switch (this._generatorSettings.servicename) {
         case 'login':
             if (undefined === loginField) {
                 return null;
@@ -256,14 +257,14 @@ VaultGenerator.setServicename = function () {
             break;
 
         case 'prefix':
-            if (this._vaultSettings.defServicename) {
-                servicename.value = this._vaultSettings.defServicename + domainname;
+            if (this._generatorSettings.defServicename) {
+                servicename.value = this._generatorSettings.defServicename + domainname;
             }
             break;
 
         case 'suffix':
-            if (this._vaultSettings.defServicename) {
-                servicename.value = domainname + this._vaultSettings.defServicename;
+            if (this._generatorSettings.defServicename) {
+                servicename.value = domainname + this._generatorSettings.defServicename;
             }
             break;
     }
@@ -300,7 +301,7 @@ VaultGenerator.closeOverlay = function (pwField) {
     pwField.focus();
 };
 
-VaultGenerator.createOverlay = function () {
+VaultGenerator._createOverlay = function () {
     'use strict';
 
     var pwId = this.getPasswordIdentifier(),
@@ -348,22 +349,33 @@ VaultGenerator.createOverlay = function () {
 VaultGenerator._setVaultSettings = function (settings, defaultSettings) {
     'use strict';
 
-    settings.length = undefined !== settings.plength ? settings.plength : defaultSettings.length;
-    settings.repeat = undefined !== settings.repeat ? settings.repeat : defaultSettings.repeat;
+    var vaultSettings = {};
 
-    // @todo autosend, servicename and defServicename should be part of generatorSettings
-    settings.autosend = undefined !== settings.autosend ? settings.autosend : defaultSettings.autosend;
-    settings.servicename = undefined !== settings.servicename ? settings.servicename : defaultSettings.servicename;
-    settings.defServicename = undefined !== settings.defServicename ? settings.defServicename : defaultSettings.defServicename;
+    vaultSettings.length = undefined !== settings.plength ? settings.plength : defaultSettings.length;
+    vaultSettings.repeat = undefined !== settings.repeat ? settings.repeat : defaultSettings.repeat;
 
     for (var i = 0; i < TYPES.length; i++) {
-        settings[TYPES[i]] = undefined !== settings[TYPES[i]] ? settings[TYPES[i]] : defaultSettings[TYPES[i]];
+        vaultSettings[TYPES[i]] = undefined !== settings[TYPES[i]] ? settings[TYPES[i]] : defaultSettings[TYPES[i]];
     }
 
-    this._vaultSettings = settings;
+    this._vaultSettings = vaultSettings;
+};
+
+VaultGenerator._setGeneratorSettings = function (settings, defaultSettings) {
+    'use strict';
+
+    var generatorSettings = {};
+
+    generatorSettings.autosend = undefined !== settings.autosend ? settings.autosend : defaultSettings.autosend;
+    generatorSettings.servicename = undefined !== settings.servicename ? settings.servicename : defaultSettings.servicename;
+    generatorSettings.defServicename = undefined !== settings.defServicename ? settings.defServicename : defaultSettings.defServicename;
+
+    this._generatorSettings = generatorSettings;
 };
 
 VaultGenerator._setPwFieldIdentifier = function (pwField) {
+    'use strict';
+
     if (pwField.id) {
         this._pwFieldIdentifier = pwField.id;
     } else if (pwField.name) {
@@ -373,29 +385,41 @@ VaultGenerator._setPwFieldIdentifier = function (pwField) {
 };
 
 VaultGenerator.getPwField = function () {
+    'use strict';
+
     return $(this._pwFieldIdentifier);
 };
 
-VaultGenerator._setImgUrls = function (settings) {
-    this._closeImgUrl = settings.imgUrl;
+VaultGenerator._setImgUrls = function (defaultSettings) {
+    'use strict';
+
+    this._closeImgUrl = defaultSettings.imgUrl;
 };
 
-VaultGenerator._initProperties = function (pwField, settings) {
+VaultGenerator._initProperties = function (pwField, defaultSettings) {
+    'use strict';
+
     this._setPwFieldIdentifier(pwField);
     this._setPasswordIdentifier(pwField);
-    this._setImgUrls(settings);
-    this._setLoginName(settings);
+    this._setImgUrls(defaultSettings);
+    this._setLoginName(defaultSettings);
 };
 
-VaultGenerator.init = function (settings, pwField, vaultSettings, defaultSettings) {
+VaultGenerator._initSettings = function (settings, defaultSettings) {
+    'use strict';
+
+    this._setVaultSettings(settings, defaultSettings);
+    this._setGeneratorSettings(settings, defaultSettings);
+};
+
+VaultGenerator.init = function (pwField, settings, defaultSettings) {
     'use strict';
 
     var that = this;
 
-    this._initProperties(pwField, settings);
-    this._setVaultSettings(vaultSettings, defaultSettings);
-
-    this.createOverlay();
+    this._initProperties(pwField, defaultSettings);
+    this._initSettings(settings, defaultSettings);
+    this._createOverlay();
 
     on(pwField, 'focus', function () {
         if (!that._overlayClosed) {
