@@ -41,7 +41,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
             if (true === isNew) {
                 alert('new settings!');
                 chrome.storage.local.set({
-                    settings: settings
+                    settings: JSON.stringify(settings)
                 });
             }
         });
