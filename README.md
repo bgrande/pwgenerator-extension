@@ -16,12 +16,11 @@ Issues
 
 Todo
 ======
-1. update default options on extension update
-2. how to handle top level domain classes like co.uk as part of servicename recognition?
-3. store field-id names for passphrase and servicename into object after initialization
-4. maybe use object structure for core library
-5. find a better way to get/recognize the service/loginname and/or use more possible input types, names, etc.
-6. build script for app zipping
-7. minify js and css through build structure as well as using vendor folders
-8. localization
-9. if possible: if extension gets deactivated or deleted the overlays should be removed from every page
+1. how to handle top level domain classes like co.uk as part of servicename recognition?
+2. store field-id names for passphrase and servicename into object after initialization
+3. maybe use object structure for core library
+4. find a better way to get/recognize the service/loginname and/or use more possible input types, names, etc.
+5. build script for app zipping
+6. minify js and css through build structure as well as using vendor folders
+7. localization
+8. if possible: if extension gets deactivated or deleted the overlays should be removed from every page
