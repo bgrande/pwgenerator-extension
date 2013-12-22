@@ -21,7 +21,22 @@ VaultGenerator._setLoginName = function (defaultSettings) {
         login = getElementFromList(userFieldList, callback);
     }
 
-    this._loginField = login;
+    if (login.id) {
+        this._loginField = login.id;
+    } else if (login.name) {
+        this._loginField = login.name;
+        login.id = login.name;
+    }
+};
+
+VaultGenerator.getLoginField = function () {
+    'use strict';
+
+    if (this._loginField) {
+        return $(this._loginField);
+    }
+
+    return null;
 };
 
 VaultGenerator.toggleOverlay = function (status) {
@@ -230,14 +245,14 @@ VaultGenerator.createVaultButtonSubmit = function (pwField) {
 VaultGenerator.setServicename = function () {
     var domainparts = document.domain.split('.'),
         domainname = document.domain,
-        loginField = this._loginField,
+        loginField = this.getLoginField(),
         servicename = $('vault-servicename-' + this.getPasswordIdentifier());
 
     if (2 < domainparts.length) {
         domainname = domainparts[domainparts.length - 2] + '.' + domainparts[domainparts.length - 1];
     }
 
-    if (!servicename || servicename.value) {
+    if (!servicename || (servicename.value && domainname !== servicename.value)) {
         return false;
     }
 
