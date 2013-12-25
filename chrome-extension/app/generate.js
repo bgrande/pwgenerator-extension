@@ -11,7 +11,7 @@ if (!generators) {
 DEFAULT_SETTINGS.imgUrl = chrome.extension.getURL('images/close.png');
 
 chrome.storage.local.get('settings', function (items) {
-    var password = getElementFromList(DEFAULT_SETTINGS.pwFieldList, $),
+    var password = getElementFromList(DEFAULT_SETTINGS.pwFieldList),
         passwords = document.querySelectorAll("input[type=password]"),
         settings = (undefined !== items.settings) ? JSON.parse(items.settings) : DEFAULT_SETTINGS;
 

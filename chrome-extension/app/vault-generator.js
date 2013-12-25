@@ -11,15 +11,7 @@ var VaultGenerator = {
 
 VaultGenerator._setLoginName = function (defaultSettings) {
     var userFieldList = defaultSettings.userFieldList,
-        login = getElementFromList(userFieldList, $);
-
-    if (!login) {
-        // @todo make this work right
-        var callback = function (name) {
-            return document.getElementsByName(name);
-        };
-        login = getElementFromList(userFieldList, callback);
-    }
+        login = getElementFromList(userFieldList);
 
     if (login.id) {
         this._loginField = login.id;

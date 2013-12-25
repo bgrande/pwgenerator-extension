@@ -31,7 +31,13 @@ var DEFAULT_SETTINGS = {
 var $ = function (selector) {
     'use strict';
 
-    return document.getElementById(selector);
+    var element = document.getElementById(selector);
+
+    if (!element) {
+        element = document.getElementsByName(selector)[0];
+    }
+
+    return element;
 };
 
 var on = function (element, event, listener) {
@@ -54,13 +60,13 @@ var on = function (element, event, listener) {
     }
 };
 
-var getElementFromList = function (list, callback) {
+var getElementFromList = function (list) {
     'use strict';
 
     var i, element;
 
     for (i = 0; i < list.length; i++) {
-        element = callback(list[i]);
+        element = $(list[i]);
 
         if (element) {
             return element;
