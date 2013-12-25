@@ -24,6 +24,10 @@ var DEFAULT_SETTINGS = {
             'user', 'User', 'username', 'Username', 'ap_email', 'userid', 'Userid', 'userId', 'UserId',
             'login_email', 'user_login', 'signin-email', 'j_username', 'session[username_or_email]'
         ],
+        ccTldList: [
+            'com', 'co', 'ar', 'net', 'org', 'jp', 'se', 'ae', 'me', 'plc', 'ac', 'ltd', 'gov', 'kids', 'us'
+        ],
+
         imgUrl: 'images/close.png'
     },
     TYPES = 'lower upper number dash space symbol'.split(' ');
@@ -70,6 +74,17 @@ var getElementFromList = function (list) {
 
         if (element) {
             return element;
+        }
+    }
+
+    return false;
+};
+
+var isCcTld = function (name) {
+    var i;
+    for (i = 0; i < DEFAULT_SETTINGS.ccTldList.length; i++) {
+        if (name === DEFAULT_SETTINGS.ccTldList[i]) {
+            return true;
         }
     }
 

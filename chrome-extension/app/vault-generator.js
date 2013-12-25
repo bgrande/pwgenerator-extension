@@ -242,6 +242,10 @@ VaultGenerator.setServicename = function () {
 
     if (2 < domainparts.length) {
         domainname = domainparts[domainparts.length - 2] + '.' + domainparts[domainparts.length - 1];
+
+        if (isCcTld(domainparts[domainparts.length - 2])) {
+            domainname = domainparts[domainparts.length - 3] + '.' + domainname;
+        }
     }
 
     if (!servicename || (servicename.value && domainname !== servicename.value)) {
