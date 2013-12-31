@@ -424,11 +424,11 @@ VaultGenerator._initSettings = function (settings, defaultSettings) {
 VaultGenerator.init = function (pwField, settings, defaultSettings) {
     'use strict';
 
-    var that = this;
-
     this._initProperties(pwField, defaultSettings);
     this._initSettings(settings, defaultSettings);
     this._createOverlay();
+
+    var that = this;
 
     on(pwField, 'focus', function () {
         if (!that._overlayClosed) {
