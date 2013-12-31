@@ -3,7 +3,7 @@ vault-pwgenerator-extension
 
 Generates safe passwords within browser context based on James Coglan's vault (https://github.com/jcoglan/vault)
 
-Right now chrome only content_script extension witch browser action support
+Right now chrome only content_script extension with browser action support
 
 Needed Chrome Permissions
 =========================
