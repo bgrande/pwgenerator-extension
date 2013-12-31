@@ -1,7 +1,7 @@
 .vault-generator-overlay {
     position: absolute;
     opacity: 0.8;
-    background-color: #cccccc;
+    background-color: #ceceb2;
     z-index: 999;
     width: 400px !important;
     height: 50px !important;
