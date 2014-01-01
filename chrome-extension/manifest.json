@@ -2,13 +2,9 @@
   "name": "Password-Generator",
   "version": "0.11.0",
   "manifest_version": 2,
-  //"default_locale": "en",
   "author": "Benedikt Grande",
-
   "description": "Generates safe passwords for the web on the fly",
-
   "incognito": "split",
-
   "icons": {
       "128": "images/icon128.png",
       "48": "images/icon48.png",
@@ -55,10 +51,8 @@
     "http://*/*",
     "https://*/*"
   ],
-
   "web_accessible_resources": [
     "images/close.png"
   ],
-
   "options_page": "options.html"
 }
