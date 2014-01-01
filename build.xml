@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="build" default="zip" basedir=".">
+
+    <property name="build-dir" value="build" />
+    <property name="project-version" value="0.11.0" />
+    <property name="project-name" value="password-generator" />
+    <property name="folder-to-zip" value="${project-name}-${project-version}" />
+
+    <target name="clean">
+        <delete file="${build-dir}/${project-name}.zip" />
+    </target>
+
+    <target name="prepare" depends="clean">
+        <mkdir dir="temp" />
+        <mkdir dir="temp/${folder-to-zip}" />
+
+        <copy todir="temp/${folder-to-zip}">
+            <fileset dir="chrome-extension" />
+        </copy>
+
+        <copy file="src/key.pem" todir="temp/${folder-to-zip}/" />
+    </target>
+
+    <target name="zip" depends="prepare">
+        <zip destfile="${build-dir}/${project-name}.zip" basedir="temp/${folder-to-zip}" />
+        <delete dir="temp" />
+    </target>
+
+</project>
