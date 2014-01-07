@@ -21,7 +21,6 @@ Usage
 
 Issues
 =======
-1. Better set default option for SPACE and !@#$% to FORBIDDEN
 
 Todo
 ======

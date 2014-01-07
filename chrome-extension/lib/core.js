@@ -5,14 +5,14 @@ var DEFAULT_SETTINGS = {
         upper: null,
         number: null,
         dash: null,
-        space: null,
-        symbol: null,
+        space: 0,
+        symbol: 0,
         prefix: false,
         suffix: false,
 
         autosend: false,
         servicename: 'prefix',
-        defServicename: null,
+        defServicename: 'myPrefix@',
 
         pwFieldList: [
             'pass', 'pass1', 'pass2', 'Pass', 'passwd', 'Passwd', 'password', 'Password', 'PASSWORD',

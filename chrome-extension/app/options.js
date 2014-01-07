@@ -108,6 +108,8 @@ var saveOptions = function (length, required, autosend, defServicename, servicen
             settings[TYPES[i]] = 0;
         } else if (value === 'required') {
             settings[TYPES[i]] = requiredLength;
+        } else {
+            settings[TYPES[i]] = null;
         }
     }
 

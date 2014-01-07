@@ -1,6 +1,6 @@
 {
   "name": "Password-Generator",
-  "version": "0.11.0",
+  "version": "0.11.1",
   "manifest_version": 2,
   "author": "Benedikt Grande",
   "description": "Generates safe passwords for the web on the fly",
