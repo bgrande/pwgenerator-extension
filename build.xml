@@ -22,7 +22,7 @@
     </target>
 
     <target name="zip" depends="prepare">
-        <zip destfile="${build-dir}/${project-name}.zip" basedir="temp/${folder-to-zip}" />
+        <zip destfile="${build-dir}/${project-name}-${project-version}.zip" basedir="temp/${folder-to-zip}" />
         <delete dir="temp" />
     </target>
 
