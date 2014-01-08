@@ -34,5 +34,7 @@ chrome.storage.local.get('settings', function (items) {
     }
 
     // show count of existing overlays
-    chrome.runtime.sendMessage({event: 'countChange', overlayCount: generators.length});
+    if (0 < generators.length) {
+        chrome.runtime.sendMessage({event: 'countChange', overlayCount: generators.length});
+    }
 });
