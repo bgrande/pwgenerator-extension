@@ -27,9 +27,8 @@ Todo
 1. store field-id names for passphrase and servicename into object after initialization
 2. improve object structure
 3. find a better way to get/recognize the service/loginname and/or use more possible input types, names, etc.
-4. build script for app zipping
-5. minify js and css through build structure as well as using vendor folders
-6. localization
-7. if possible: if extension gets deactivated or deleted the overlays should be removed from every page
-8. firefox extension
-9. android app
+4. minify js and css through build structure as well as using vendor folders
+5. localization
+6. if possible: if extension gets deactivated or deleted the overlays should be removed from every page
+7. firefox extension
+8. android app
