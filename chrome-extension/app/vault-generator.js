@@ -139,7 +139,7 @@ VaultGenerator.addOverlayDiv = function (pwField) {
     serviceElement.id = 'vault-servicename-' + pwId;
     serviceElement.className = 'vault-servicename';
     serviceElement.type = 'text';
-    serviceElement.placeholder = 'twitter';
+    serviceElement.placeholder = this._getDomainname();
 
     pwElementLabel.innerText = 'Passphrase';
     pwElement.id = 'vault-passphrase-' + pwId;
