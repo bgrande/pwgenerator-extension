@@ -21,6 +21,7 @@ Usage
 
 Issues
 =======
+1. handle pages which use the same id twice (or even more...)
 
 Todo
 ======
