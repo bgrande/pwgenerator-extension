@@ -1,3 +1,5 @@
+'use strict';
+
 var required    = $('required'),
     length      = $('vlength'),
     repeat      = $('repeat'),
@@ -8,11 +10,9 @@ var required    = $('required'),
     defServicename = $('def-servicename');
 
 var getRadio = function (name) {
-    'use strict';
-    
-    var inputs = document.getElementsByTagName('input'), input;
+    var inputs = document.getElementsByTagName('input'), input, i, n;
 
-    for (var i = 0, n = inputs.length; i < n; i++) {
+    for (i = 0, n = inputs.length; i < n; i++) {
         input = inputs[i];
         if (input.type === 'radio' && input.name === name && input.checked) {
             return input.value;
@@ -23,11 +23,9 @@ var getRadio = function (name) {
 };
 
 var setRadio = function (name, value) {
-    'use strict';
+    var inputs = document.getElementsByTagName('input'), input, i, n;
 
-    var inputs = document.getElementsByTagName('input'), input, i;
-
-    for (i = 0; i < inputs.length; i++) {
+    for (i = 0, n = inputs.length; i < n; i++) {
         input = inputs[i];
         if (input.type === 'radio' && input.name === name) {
             switch (input.value) {
@@ -47,9 +45,9 @@ var setRadio = function (name, value) {
 
 // retrieve already stored options
 chrome.storage.local.get('settings', function (items) {
-    var settings = JSON.parse(items.settings), i;
+    var settings = JSON.parse(items.settings), i, n;
 
-    for (i = 0; i < TYPES.length; i++) {
+    for (i = 0, n = TYPES.length; i < n; i++) {
         setRadio(TYPES[i], settings[TYPES[i]]);
     }
 
@@ -87,21 +85,16 @@ chrome.storage.local.get('settings', function (items) {
 });
 
 var saveOptions = function (length, required, autosend, defServicename, servicename, prefix, suffix) {
-    'use strict';
-
     var passLength        = parseInt(length.value, 10),
         requiredLength    = parseInt(required.value, 10),
         autosendChecked   = autosend.checked,
         defServicenameVal = defServicename.value,
         servicenameVal    = undefined,
-        passRepeat,
-        value,
-        settings = {},
-        i;
+        passRepeat, value, settings = {}, i, n;
 
     passRepeat = !repeat.value ? 0: parseInt(repeat.value, 10);
 
-    for (i = 0; i < TYPES.length; i++) {
+    for (i = 0, n = TYPES.length; i < n; i++) {
         value = getRadio(TYPES[i]);
 
         if (value === 'forbidden') {

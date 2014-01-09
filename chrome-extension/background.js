@@ -1,12 +1,10 @@
-chrome.browserAction.onClicked.addListener(function (tab) {
-    'use strict';
+'use strict';
 
+chrome.browserAction.onClicked.addListener(function (tab) {
     chrome.tabs.executeScript(tab.id, { file: "app/generate.js", allFrames: true }, function () {});
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    'use strict';
-
     if (!request || request.event !== 'countChange') {
         return;
     }
@@ -25,8 +23,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 });
 
 chrome.runtime.onInstalled.addListener(function (details) {
-    'use strict';
-
     if ('update' === details.reason) {
         chrome.storage.local.get('settings', function (items) {
             var settings = JSON.parse(items.settings), key, isNew = false;

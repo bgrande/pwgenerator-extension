@@ -1,3 +1,5 @@
+'use strict';
+
 var VaultGenerator = {
     _overlayId: '',
     _vaultSettings: {},
@@ -50,8 +52,6 @@ VaultGenerator.getPhrasevalue = function () {
 };
 
 VaultGenerator.generatePassword = function () {
-    'use strict';
-
     var phraseValue = this.getPhrasevalue(),
         serviceValue = this.getServicevalue(),
         pwValue;
@@ -81,8 +81,6 @@ VaultGenerator._generateId = function () {
 };
 
 VaultGenerator._setPasswordIdentifier = function (pwField) {
-    'use strict';
-
     var pwString;
 
     if (pwField.id) {
@@ -109,8 +107,6 @@ VaultGenerator.getPasswordIdentifier = function () {
 };
 
 VaultGenerator.addOverlayDiv = function (pwField) {
-    'use strict';
-
     var overlayDiv = document.createElement('div'),
         dialogDiv = document.createElement('div'),
         serviceDiv = document.createElement('div'),
@@ -189,10 +185,8 @@ VaultGenerator.addOverlayDiv = function (pwField) {
 };
 
 VaultGenerator.getLoginForm = function (pwField) {
-    'use strict';
-
-    for (var i = 0; i < document.forms.length; i++) {
-        for (var o = 0; o < document.forms[i].length; o++) {
+    for (var i = 0, n = document.forms.length; i < n; i++) {
+        for (var o = 0, m = document.forms[i].length; o < m; o++) {
             if (pwField.id === document.forms[i][o].id) {
                 return i;
             }
@@ -214,8 +208,6 @@ VaultGenerator._getServicenameField = function () {
 };
 
 VaultGenerator.createVaultButtonSubmit = function (pwField) {
-    'use strict';
-
     var passPhrase = this._getPassphraseField(),
         newPassword,
         loginFormNumber;
@@ -237,8 +229,6 @@ VaultGenerator.createVaultButtonSubmit = function (pwField) {
 };
 
 VaultGenerator._getDomainname = function () {
-    'use strict';
-
     var domainname = document.domain,
         domainparts = domainname.split('.');
 
@@ -254,8 +244,6 @@ VaultGenerator._getDomainname = function () {
 };
 
 VaultGenerator.setServicename = function () {
-    'use strict';
-
     var domainname = this._getDomainname(),
         loginField = this._getLoginField(),
         servicename = this._getServicenameField();
@@ -296,8 +284,6 @@ VaultGenerator.setServicename = function () {
 };
 
 VaultGenerator.activateOverlay = function () {
-    'use strict';
-
     var passphrase = this._getPassphraseField(),
         pwField = this.getPwField();
 
@@ -323,8 +309,6 @@ VaultGenerator.closeOverlay = function (pwField) {
 };
 
 VaultGenerator._createOverlay = function () {
-    'use strict';
-
     var pwId = this.getPasswordIdentifier(),
         pwField = this.getPwField(),
         servicename = this._getServicenameField(),
@@ -368,14 +352,12 @@ VaultGenerator._createOverlay = function () {
 };
 
 VaultGenerator._setVaultSettings = function (settings, defaultSettings) {
-    'use strict';
-
-    var vaultSettings = {};
+    var vaultSettings = {}, i, n;
 
     vaultSettings.length = undefined !== settings.plength ? settings.plength : defaultSettings.length;
     vaultSettings.repeat = undefined !== settings.repeat ? settings.repeat : defaultSettings.repeat;
 
-    for (var i = 0; i < TYPES.length; i++) {
+    for (i = 0, n = TYPES.length; i < n; i++) {
         vaultSettings[TYPES[i]] = undefined !== settings[TYPES[i]] ? settings[TYPES[i]] : defaultSettings[TYPES[i]];
     }
 
@@ -422,8 +404,6 @@ VaultGenerator._initSettings = function (settings, defaultSettings) {
 };
 
 VaultGenerator.init = function (pwField, settings, defaultSettings) {
-    'use strict';
-
     this._initProperties(pwField, defaultSettings);
     this._initSettings(settings, defaultSettings);
     this._createOverlay();

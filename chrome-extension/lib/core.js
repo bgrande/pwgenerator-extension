@@ -1,3 +1,5 @@
+'use strict';
+
 var DEFAULT_SETTINGS = {
         length: 20,
         repeat: 0,
@@ -33,8 +35,6 @@ var DEFAULT_SETTINGS = {
     TYPES = 'lower upper number dash space symbol'.split(' ');
 
 var $ = function (selector) {
-    'use strict';
-
     var element = document.getElementById(selector);
 
     if (!element) {
@@ -45,8 +45,6 @@ var $ = function (selector) {
 };
 
 var on = function (element, event, listener) {
-    'use strict';
-    
     if (!element) {
         return;
     }
@@ -55,7 +53,7 @@ var on = function (element, event, listener) {
         event = [event];
     }
 
-    for (var i = 0; i < event.length; i++) {
+    for (var i = 0, n = event.length; i < n; i++) {
         if (element.addEventListener) {
             element.addEventListener(event[i], listener, false);
         } else {
@@ -65,11 +63,9 @@ var on = function (element, event, listener) {
 };
 
 var getElementFromList = function (list) {
-    'use strict';
+    var i, n, element;
 
-    var i, element;
-
-    for (i = 0; i < list.length; i++) {
+    for (i = 0, n = list.length; i < n; i++) {
         element = $(list[i]);
 
         if (element) {
@@ -81,8 +77,9 @@ var getElementFromList = function (list) {
 };
 
 var isCcTld = function (name) {
-    var i;
-    for (i = 0; i < DEFAULT_SETTINGS.ccTldList.length; i++) {
+    var i, n;
+
+    for (i = 0, n = DEFAULT_SETTINGS.ccTldList.length; i < n; i++) {
         if (name === DEFAULT_SETTINGS.ccTldList[i]) {
             return true;
         }
