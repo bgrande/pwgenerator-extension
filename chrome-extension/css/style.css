@@ -37,6 +37,7 @@
     color: #000000 !important;
     font-weight: normal;
     margin: 0;
+    padding-bottom: .1em;
 }
 
 .vault-generate {
