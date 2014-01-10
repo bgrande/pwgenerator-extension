@@ -171,6 +171,7 @@ VaultGenerator._addOverlayDiv = function (pwField) {
     showPasswordLabel.innerText = 'Show generated pw';
     showPasswordLabel.htmlFor = 'vault-show-password-' + pwId;
     showPasswordContainer.className = "vault-show-pw-container";
+    showPasswordContainer.title = "Be careful! Make sure nobody is behind you!";
     showPasswordContainer.appendChild(showPassword);
     showPasswordContainer.appendChild(showPasswordLabel);
     passDiv.appendChild(showPasswordContainer);
