@@ -8,6 +8,7 @@ var VaultGenerator = {
     _vaultGeneratorOverlayIdentifier: 'vault-generator-overlay-',
     _vaultGeneratorDialogIdentifier: 'vault-generator-dialog-',
     _pwId: '',
+    _showPw: false,
     _pwFieldIdentifier: '',
     _closeImgUrl: '',
     _loginField: {}
@@ -106,7 +107,7 @@ VaultGenerator.getPasswordIdentifier = function () {
     return null;
 };
 
-VaultGenerator.addOverlayDiv = function (pwField) {
+VaultGenerator._addOverlayDiv = function (pwField) {
     var overlayDiv = document.createElement('div'),
         dialogDiv = document.createElement('div'),
         serviceDiv = document.createElement('div'),
@@ -119,6 +120,9 @@ VaultGenerator.addOverlayDiv = function (pwField) {
         pwElementLabel = document.createElement('label'),
         pwElement = document.createElement('input'),
         submitButton = document.createElement('input'),
+        showPasswordContainer = document.createElement('div'),
+        showPassword = document.createElement('input'),
+        showPasswordLabel = document.createElement('label'),
         pwId = this.getPasswordIdentifier();
 
     closeImg.id = 'vault-close-icon-' + pwId;
@@ -132,12 +136,14 @@ VaultGenerator.addOverlayDiv = function (pwField) {
     closeDiv.appendChild(closeImg);
 
     serviceElementLabel.innerText = 'Service name';
+    serviceElementLabel.htmlFor = 'vault-servicename-' + pwId;
     serviceElement.id = 'vault-servicename-' + pwId;
     serviceElement.className = 'vault-servicename';
     serviceElement.type = 'text';
     serviceElement.placeholder = this._getDomainname();
 
     pwElementLabel.innerText = 'Passphrase';
+    pwElementLabel.htmlFor = 'vault-passphrase-' + pwId;
     pwElement.id = 'vault-passphrase-' + pwId;
     pwElement.className = 'vault-passphrase';
     pwElement.type = 'password';
@@ -160,12 +166,20 @@ VaultGenerator.addOverlayDiv = function (pwField) {
         submitButton.value = 'Generate\n& Login';
     }
 
+    showPassword.id = 'vault-show-password-' + pwId;
+    showPassword.type = 'checkbox';
+    showPasswordLabel.innerText = 'Show generated pw';
+    showPasswordLabel.htmlFor = 'vault-show-password-' + pwId;
+    showPasswordContainer.className = "vault-show-pw-container";
+    showPasswordContainer.appendChild(showPassword);
+    showPasswordContainer.appendChild(showPasswordLabel);
+    passDiv.appendChild(showPasswordContainer);
+
     generateDiv.className = 'vault-button-container';
     generateDiv.appendChild(submitButton);
 
     overlayDiv.id = 'vault-generator-overlay-' + pwId;
     overlayDiv.className = 'vault-generator-overlay';
-    //overlayDiv.style = 'display: none';
 
     dialogDiv.className = 'vault-generator-dialog';
     dialogDiv.appendChild(serviceDiv);
@@ -207,18 +221,18 @@ VaultGenerator._getServicenameField = function () {
     return $('vault-servicename-' + this.getPasswordIdentifier());
 };
 
-VaultGenerator.createVaultButtonSubmit = function (pwField) {
+VaultGenerator._createVaultButtonSubmit = function (pwField) {
     var passPhrase = this._getPassphraseField(),
         newPassword,
         loginFormNumber;
 
     newPassword = this.generatePassword();
-//console.log(newPassword);
+    pwField.type = (this._showPw) ? 'text' : 'password';
     pwField.value = newPassword;
 
     this.toggleOverlay(false);
 
-    if (this._generatorSettings.autosend) {
+    if (this._generatorSettings.autosend && !this._showPw) {
         loginFormNumber = this.getLoginForm(pwField);
         if ('number' === typeof loginFormNumber) {
             document.forms[loginFormNumber].submit();
@@ -314,17 +328,27 @@ VaultGenerator._createOverlay = function () {
         servicename = this._getServicenameField(),
         that = this;
 
-    this.addOverlayDiv(pwField);
+    this._addOverlayDiv(pwField);
     this._overlayId = 'vault-generator-overlay-' + pwId;
 
     on($('vault-generate-' + pwId), 'click', function () {
-        that.createVaultButtonSubmit(pwField);
+        that._createVaultButtonSubmit(pwField);
+    });
+
+
+    on($('vault-show-password-' + pwId), 'change', function () {
+        that._showPw = this.checked;
+
+        // immediately hide password again!
+        if (!that._showPw) {
+            pwField.type = 'password';
+        }
     });
 
     on(this._getPassphraseField(), 'keydown', function (e) {
         switch (e.keyCode) {
             case 13:
-                that.createVaultButtonSubmit(pwField);
+                that._createVaultButtonSubmit(pwField);
                 break;
             case 27:
                 that.closeOverlay(pwField);

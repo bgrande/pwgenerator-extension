@@ -1,6 +1,6 @@
 {
   "name": "Easy Password Handling",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "manifest_version": 2,
   "author": "Benedikt Grande",
   "description": "Generates safe and service specific passwords for web services on the fly",

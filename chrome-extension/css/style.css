@@ -4,7 +4,7 @@
     background-color: #ceceb2;
     z-index: 999;
     width: 400px !important;
-    height: 50px !important;
+    height: 60px !important;
     border: 1px solid #333333;
     padding: 6px !important;
     display: none;
@@ -80,4 +80,9 @@
     width: 12px;
     height: 12px;
     opacity: 0.8;
+}
+
+.vault-show-pw-container {
+    margin-top: .1em;
+    width: 100%;
 }
