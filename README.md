@@ -21,7 +21,7 @@ Usage
 
 Issues
 =======
-1. handle pages which use the same id twice (or even more...)
+1. make sure overlay is only submitted on Enter if autologin is true
 
 Todo
 ======

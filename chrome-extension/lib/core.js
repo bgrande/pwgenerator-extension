@@ -88,6 +88,18 @@ var isCcTld = function (name) {
     return false;
 };
 
+var fixDuplicateIds = function (idArray) {
+    var i, j, n = idArray.length;
+
+    for (i = 0; i < n; i++) {
+        for (j = i + 1; j < n; j++) {
+            if (idArray[i].id === idArray[j].id) {
+                idArray[j].id = 'passid1';
+            }
+        }
+    }
+};
+
 var isOverlay = function (pwField) {
     return pwField && pwField.id && pwField.id.match(/^vault-passphrase-/);
 };

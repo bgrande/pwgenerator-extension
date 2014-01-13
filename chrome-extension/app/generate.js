@@ -18,6 +18,9 @@ chrome.storage.local.get('settings', function (items) {
         pwLength = passwords.length, i;
 
     if (pwLength > 0) {
+        // there are pages using the same id twice...
+        fixDuplicateIds(passwords);
+
         // deactivate autosend if there are multiple password fields
         settings.autosend = (pwLength === 1);
 
