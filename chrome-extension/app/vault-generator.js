@@ -379,7 +379,6 @@ VaultGenerator._createOverlay = function () {
     });
 
     on($('vault-close-' + pwId), 'click', function () {
-        e.preventDefault();
         that.closeOverlay(pwField);
     });
 
