@@ -21,6 +21,8 @@ Usage
 
 Issues
 =======
+1. overlay should reopen on next click into password field
+
 
 Todo
 ======
