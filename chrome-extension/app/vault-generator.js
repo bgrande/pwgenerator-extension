@@ -222,7 +222,7 @@ VaultGenerator._getServicenameField = function () {
     return $('vault-servicename-' + this.getPasswordIdentifier());
 };
 
-VaultGenerator._createVaultButtonSubmit = function (pwField) {
+VaultGenerator._vaultButtonSubmit = function (pwField) {
     var passPhrase = this._getPassphraseField(),
         newPassword,
         loginFormNumber;
@@ -326,14 +326,13 @@ VaultGenerator.closeOverlay = function (pwField) {
 VaultGenerator._createOverlay = function () {
     var pwId = this.getPasswordIdentifier(),
         pwField = this.getPwField(),
-        servicename = this._getServicenameField(),
         that = this;
 
     this._addOverlayDiv(pwField);
     this._overlayId = 'vault-generator-overlay-' + pwId;
 
     on($('vault-generate-' + pwId), 'click', function () {
-        that._createVaultButtonSubmit(pwField);
+        that._vaultButtonSubmit(pwField);
     });
 
 
@@ -349,27 +348,38 @@ VaultGenerator._createOverlay = function () {
     on(this._getPassphraseField(), 'keydown', function (e) {
         switch (e.keyCode) {
             case 13:
-                that._createVaultButtonSubmit(pwField);
+                e.preventDefault();
+                that._vaultButtonSubmit(pwField);
                 break;
             case 27:
+                e.preventDefault();
                 that.closeOverlay(pwField);
                 break;
         }
     });
 
-    on(servicename, 'keydown', function (e) {
-        if (e.keyCode === 27) {
-            that.closeOverlay(pwField);
+    on(this._getServicenameField(), 'keydown', function (e) {
+        switch (e.keyCode) {
+            case 13:
+                e.preventDefault();
+                that._getPassphraseField().focus();
+                break;
+            case 27:
+                e.preventDefault();
+                that.closeOverlay(pwField);
+                break;
         }
     });
 
     on($(this._overlayId), 'keydown', function (e) {
         if (e.keyCode === 27) {
+            e.preventDefault();
             that.closeOverlay(pwField);
         }
     });
 
     on($('vault-close-' + pwId), 'click', function () {
+        e.preventDefault();
         that.closeOverlay(pwField);
     });
 

@@ -21,7 +21,6 @@ Usage
 
 Issues
 =======
-1. make sure overlay is only submitted on Enter if autologin is true
 
 Todo
 ======
