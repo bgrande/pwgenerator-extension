@@ -11,6 +11,7 @@ chrome-extension/images/*.png
 chrome-extension/lib/*.js
 
 # firefox extension dir
+firefox-extension/*.png
 firefox-extension/data/app/vault-generator.js
 firefox-extension/data/css/*.css
 firefox-extension/data/images/*.png

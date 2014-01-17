@@ -23,18 +23,16 @@
         <delete dir="temp" />
     </target>
 
-    <target name="update-vault">
-        <copy todir="common/lib">
-            <fileset refid="vault" />
-        </copy>
-    </target>
-
-    <target name="prepare" depends="clean,update-vault">
+    <target name="prepare" depends="clean">
         <mkdir dir="temp" />
     </target>
 
     <target name="prepare-chrome" depends="prepare">
         <mkdir dir="temp/${chrome-folder-to-zip}" />
+
+        <copy todir="chrome-extension/lib">
+            <fileset refid="vault" />
+        </copy>
 
         <copy todir="chrome-extension/">
             <fileset refid="common" />
@@ -48,9 +46,18 @@
     <target name="prepare-firefox" depends="prepare">
         <mkdir dir="temp/${firefox-folder-to-zip}" />
 
-        <copy todir="firefox-extension/data/">
+        <property name="firefox-path" value="firefox-extension/data/" />
+
+        <copy todir="${firefox-path}/lib">
+            <fileset refid="vault" />
+        </copy>
+
+        <copy todir="${firefox-path}">
             <fileset refid="common" />
         </copy>
+
+        <copy file="common/images/icon48.png" tofile="firefox-extension/icon.png" />
+        <copy file="common/images/icon64.png" tofile="firefox-extension/icon64.png" />
 
         <copy todir="temp/${firefox-folder-to-zip}">
             <fileset dir="firefox-extension" />
