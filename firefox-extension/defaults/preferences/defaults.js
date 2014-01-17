@@ -1,0 +1,13 @@
+pref("extensions.easypasswordhandling.length", 20);
+pref("extensions.easypasswordhandling.repeat", 0);
+pref("extensions.easypasswordhandling.lower", null);
+pref("extensions.easypasswordhandling.upper", null);
+pref("extensions.easypasswordhandling.number", null);
+pref("extensions.easypasswordhandling.dash", null);
+pref("extensions.easypasswordhandling.space", 0);
+pref("extensions.easypasswordhandling.symbol", 0);
+pref("extensions.easypasswordhandling.prefix", false);
+pref("extensions.easypasswordhandling.suffix", false);
+pref("extensions.easypasswordhandling.autosend", false);
+pref("extensions.easypasswordhandling.servicename", 'prefix');
+pref("extensions.easypasswordhandling.defServicename", 'myPrefix@');

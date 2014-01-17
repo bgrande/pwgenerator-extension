@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?><RDF xmlns:em="http://www.mozilla.org/2004/em-rdf#" xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <Description about="urn:mozilla:install-manifest">
+    <em:id>easypasswordhandling@bgrande.de</em:id>
+    <em:name>Easy Password Handling</em:name>
+    <em:version>0.1.0</em:version>
+    <em:creator>Benedikt Grande</em:creator>
+    <em:homepageURL>http://bgrande.de/blog/password-generator-extension/</em:homepageURL>
+    <em:description>Generates safe and service specific passwords for web services on the fly</em:description>
+    <em:optionsURL>resource://easypasswordhandling/extension/data/options.html</em:optionsURL>
+    <em:optionsType>2</em:optionsType>
+
+    <em:localized>
+      <Description>
+        <em:locale>de-DE</em:locale>
+        <em:name>Einfache Passworthandhabung</em:name>
+        <em:description>Generiert sichere und dienstspezifische Passwörter für Web-Services</em:description>
+      </Description>
+    </em:localized>
+
+    <em:targetApplication>
+      <Description>
+        <em:minVersion>4.0</em:minVersion>
+        <em:maxVersion>99.*</em:maxVersion>
+        <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
+      </Description>
+    </em:targetApplication>
+
+    <em:type>2</em:type>
+
+<!--
+    <em:unpack>true</em:unpack>
+    <em:bootstrap>true</em:bootstrap>
+    <em:updateURL>https://gallery.extensionfactory.com/labs/conversion/update/cnpkgmppackihpealapimckhbomgfalj/</em:updateURL>
+g-->
+
+  </Description>
+</RDF>
