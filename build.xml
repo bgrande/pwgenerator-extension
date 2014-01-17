@@ -1,29 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="build" default="zip" basedir=".">
+<project name="build" default="all" basedir=".">
 
     <property name="build-dir" value="build" />
-    <property name="project-version" value="1.1.2" />
     <property name="project-name" value="password-generator" />
-    <property name="folder-to-zip" value="${project-name}-${project-version}" />
+
+    <property name="chrome-version" value="1.1.2" />
+    <property name="chrome-project-name" value="chrome-${project-name}" />
+    <property name="chrome-folder-to-zip" value="${chrome-project-name}-${chrome-version}" />
+
+    <property name="firefox-version" value="0.1.0" />
+    <property name="firefox-project-name" value="firefox-${project-name}" />
+    <property name="firefox-folder-to-zip" value="${firefox-project-name}-${firefox-version}" />
 
     <target name="clean">
-        <delete file="${build-dir}/${project-name}.zip" />
         <delete dir="temp" />
     </target>
 
     <target name="prepare" depends="clean">
         <mkdir dir="temp" />
-        <mkdir dir="temp/${folder-to-zip}" />
+    </target>
 
-        <copy todir="temp/${folder-to-zip}">
+    <target name="prepare-chrome" depends="prepare">
+        <mkdir dir="temp/${chrome-folder-to-zip}" />
+
+        <copy todir="temp/${chrome-folder-to-zip}">
             <fileset dir="chrome-extension" />
         </copy>
 
-        <copy file="src/key.pem" todir="temp/${folder-to-zip}/" />
+        <copy file="src/key.pem" todir="temp/${chrome-folder-to-zip}/" />
     </target>
 
-    <target name="zip" depends="prepare">
-        <zip destfile="${build-dir}/${project-name}-${project-version}.zip" basedir="temp/${folder-to-zip}" />
+    <target name="prepare-firefox" depends="prepare">
+        <mkdir dir="temp/${firefox-folder-to-zip}" />
+
+        <copy todir="temp/${firefox-folder-to-zip}">
+            <fileset dir="firefox-extension" />
+        </copy>
     </target>
+
+    <target name="chrome" depends="prepare-chrome">
+        <zip destfile="${build-dir}/${project-name}-${chrome-version}.zip" basedir="temp/${chrome-folder-to-zip}" />
+    </target>
+
+    <target name="firefox" depends="prepare-firefox">
+        <zip destfile="${build-dir}/${project-name}-${firefox-version}.xpi" basedir="temp/${firefox-folder-to-zip}" />
+    </target>
+
+    <target name="all" depends="chrome,firefox" />
 
 </project>
