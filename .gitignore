@@ -3,3 +3,17 @@ atlassian-ide-plugin.xml
 chrome-extension.crx
 chrome-extension.pem
 key.pem
+
+# chrome extension dir
+chrome-extension/app/options.js
+chrome-extension/app/vault-generator.js
+chrome-extension/css/*.css
+chrome-extension/images/*.png
+chrome-extension/lib/*.js
+
+# firefox extension dir
+firefox-extension/data/app/options.js
+firefox-extension/data/app/vault-generator.js
+firefox-extension/data/css/*.css
+firefox-extension/data/images/*.png
+firefox-extension/data/lib/*.js

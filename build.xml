@@ -12,26 +12,45 @@
     <property name="firefox-project-name" value="firefox-${project-name}" />
     <property name="firefox-folder-to-zip" value="${firefox-project-name}-${firefox-version}" />
 
+    <fileset id="vault" dir="vendor/vault/lib">
+        <exclude name="app.js" />
+        <exclude name="style.css" />
+    </fileset>
+
+    <fileset id="common" dir="common" />
+
     <target name="clean">
         <delete dir="temp" />
     </target>
 
-    <target name="prepare" depends="clean">
+    <target name="update-vault">
+        <copy todir="common/lib">
+            <fileset refid="vault" />
+        </copy>
+    </target>
+
+    <target name="prepare" depends="clean,update-vault">
         <mkdir dir="temp" />
     </target>
 
     <target name="prepare-chrome" depends="prepare">
         <mkdir dir="temp/${chrome-folder-to-zip}" />
 
+        <copy todir="chrome-extension/">
+            <fileset refid="common" />
+        </copy>
+
         <copy todir="temp/${chrome-folder-to-zip}">
             <fileset dir="chrome-extension" />
         </copy>
-
-        <copy file="src/key.pem" todir="temp/${chrome-folder-to-zip}/" />
     </target>
 
     <target name="prepare-firefox" depends="prepare">
         <mkdir dir="temp/${firefox-folder-to-zip}" />
+
+        <copy todir="firefox-extension/data/">
+            <fileset refid="common" />
+        </copy>
 
         <copy todir="temp/${firefox-folder-to-zip}">
             <fileset dir="firefox-extension" />
@@ -39,6 +58,7 @@
     </target>
 
     <target name="chrome" depends="prepare-chrome">
+        <copy file="src/key.pem" todir="temp/${chrome-folder-to-zip}/" />
         <zip destfile="${build-dir}/${project-name}-${chrome-version}.zip" basedir="temp/${chrome-folder-to-zip}" />
     </target>
 
@@ -47,5 +67,6 @@
     </target>
 
     <target name="all" depends="chrome,firefox" />
+    <target name="prepare-all" depends="prepare-chrome,prepare-firefox" />
 
 </project>
