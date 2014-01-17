@@ -28,9 +28,13 @@
     </target>
 
     <target name="prepare-chrome" depends="prepare">
+        <property name="chrome-path" value="chrome-extension" />
+
         <mkdir dir="temp/${chrome-folder-to-zip}" />
 
-        <copy todir="chrome-extension/lib">
+        <mkdir dir="${chrome-path}/lib" />
+
+        <copy todir="${chrome-path}/lib">
             <fileset refid="vault" />
         </copy>
 
@@ -44,9 +48,11 @@
     </target>
 
     <target name="prepare-firefox" depends="prepare">
+        <property name="firefox-path" value="firefox-extension/data/" />
+
         <mkdir dir="temp/${firefox-folder-to-zip}" />
 
-        <property name="firefox-path" value="firefox-extension/data/" />
+        <mkdir dir="${firefox-path}/lib" />
 
         <copy todir="${firefox-path}/lib">
             <fileset refid="vault" />
