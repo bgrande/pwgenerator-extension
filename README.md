@@ -1,4 +1,4 @@
-vault-pwgenerator-extension
+pwgenerator-extension
 ===========================
 
 Generates safe passwords within browser context based on James Coglan's vault (https://github.com/jcoglan/vault)
