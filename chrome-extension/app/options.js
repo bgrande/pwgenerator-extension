@@ -44,8 +44,8 @@ var setRadio = function (name, value) {
 };
 
 // retrieve already stored options
-chrome.storage.local.get('settings', function (items) {
-    var settings = JSON.parse(items.settings), i, n;
+var getOptionSettings = function (settings) {
+    var i, n;
 
     for (i = 0, n = TYPES.length; i < n; i++) {
         setRadio(TYPES[i], settings[TYPES[i]]);
@@ -82,7 +82,13 @@ chrome.storage.local.get('settings', function (items) {
     if (settings.defServicename) {
         defServicename.value = settings.defServicename;
     }
-});
+};
+
+var saveChromeSettings = function (settings) {
+    chrome.storage.local.set({
+        settings: JSON.stringify(settings)
+    });
+};
 
 var saveOptions = function (length, required, autosend, defServicename, servicename, prefix, suffix) {
     var passLength        = parseInt(length.value, 10),
@@ -121,10 +127,12 @@ var saveOptions = function (length, required, autosend, defServicename, servicen
     settings.requiredLength = requiredLength;
     settings.defServicename = defServicenameVal;
 
-    chrome.storage.local.set({
-        settings: JSON.stringify(settings)
-    });
+    saveChromeSettings(settings);
 };
+
+chrome.storage.local.get('settings', function (items) {
+    getOptionSettings(JSON.parse(items.settings));
+});
 
 on($('save-options'), 'click', function () {
     var status = $('option-status');
