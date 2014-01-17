@@ -1,10 +1,11 @@
 .vault-generator-overlay {
     position: absolute;
-    opacity: 0.8;
+    opacity: 0.85;
     background-color: #ceceb2;
     z-index: 999;
     width: 400px !important;
-    height: 60px !important;
+    min-height: 60px !important;
+    height: auto !important;
     border: 1px solid #333333;
     padding: 6px !important;
     display: none;
@@ -14,11 +15,23 @@
     border-radius: 0 0 5px 0;
 }
 
+.vault-generator-overlay input {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 100% !important;
+}
+
+.vault-generator-overlay input[type=checkbox] {
+    width: 13px !important;
+    height: 13px !important;
+    min-height: 13px !important;
+}
+
 .vault-generator-dialog {
     width: 100%;
     height: 100%;
     display: block;
-    visibility: visible;
+    overflow: visible;
     position: relative;
 }
 
@@ -30,25 +43,35 @@
 }
 
 .vault-button-container {
-    width: 20%;
+    width: 20% !important;
+    height: 100% !important;
 }
 
 .vault-service-container label, .vault-pass-container label {
     color: #000000 !important;
+    display: block;
     font-weight: normal;
     margin: 0;
     padding-bottom: .1em;
+    white-space: nowrap;
+}
+
+.description-label {
+    margin-left: 0.3em !important;
+    display: inline !important;
 }
 
 .vault-generate {
+    min-height: 50px !important;
     height: 100% !important;
-    width: 75px !important;
+    width: 100% !important;
     font-weight: bold;
     font-size: 12px !important;
     float: right;
     margin-left: 5px !important;
-    cursor: pointer;
-    border: 1px solid #333333;
+    cursor: pointer !important;
+    border: 1px solid #333333 !important;
+    padding: 10px !important;
     background-color: #eeeeee !important;
 }
 
@@ -83,6 +106,6 @@
 }
 
 .vault-show-pw-container {
-    margin-top: .1em;
-    width: 100%;
+    margin-top: .3em !important;
+    width: 100% !important;
 }
