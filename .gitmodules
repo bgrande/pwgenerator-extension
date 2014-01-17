@@ -1,0 +1,3 @@
+[submodule "vendor/vault"]
+	path = vendor/vault
+	url = https://github.com/jcoglan/vault
