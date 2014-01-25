@@ -2,7 +2,7 @@
 <project name="build" default="zip" basedir=".">
 
     <property name="build-dir" value="build" />
-    <property name="project-version" value="1.1.3" />
+    <property name="project-version" value="1.1.4" />
     <property name="project-name" value="password-generator" />
     <property name="folder-to-zip" value="${project-name}-${project-version}" />
 
