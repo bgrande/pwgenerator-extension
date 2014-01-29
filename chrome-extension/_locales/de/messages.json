@@ -1,0 +1,14 @@
+{
+    "extName": {
+        "message": "Easy Password Handling",
+        "description": "Der Name der Extension"
+    },
+    "extDescription": {
+        "message": "Erstellt umgehend sichere und dienstabhängige Passwörter für Webanwendungen.",
+        "description": "Die Extensionbeschreibung"
+    },
+    "extTitle": {
+        "message": "Den Password Generator neu laden",
+        "description": "Der Titel des Extensionbuttons"
+    }
+}

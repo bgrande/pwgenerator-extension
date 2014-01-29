@@ -1,0 +1,14 @@
+{
+    "extName": {
+        "message": "Easy Password Handling",
+        "description": "The extension's name."
+    },
+    "extDescription": {
+        "message": "Generates safe and service specific passwords for web services on the fly.",
+        "description": "The extension's description"
+    },
+    "extTitle": {
+        "message": "Reload Password Generator",
+        "description": "The extension's button title"
+    }
+}
