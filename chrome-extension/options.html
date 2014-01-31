@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Vault Options</title>
+    <title>Easy Password Handling Options</title>
     <script type="text/javascript" src="./lib/core.js"></script>
     <link rel="stylesheet" type="text/css" href="./css/options.css">
   </head>
@@ -11,18 +11,18 @@
     <div class="form">
       <div class="sub">
         <div class="length">
-          <label for="vlength">Password length <span>e.g. 12</span></label>
+          <label for="vlength" id="length-label">Password length</label>
           <input type="text" class="text" name="vlength" id="vlength" value="20" autocomplete="off">
         </div>
 
         <div class="repeat">
-          <label for="repeat">Max repetition <span>e.g. 2</span></label>
+          <label for="repeat" id="repeat-label">Max repetition</label>
           <input type="text" class="text" name="repeat" id="repeat" value="" autocomplete="off">
         </div>
 
         <div class="autosend">
             <input type="checkbox" name="autosend" id="autosend" value="1" checked="checked" autocomplete="off">
-            <label for="autosend">Automatically send form after insert</label>
+            <label for="autosend" id="autosend-label">Automatically send form after insert</label>
         </div>
 
         <div>
@@ -31,18 +31,18 @@
 
         <div class="servicename">
             <input type="radio" name="servicename" id="servicename" value="login" checked="checked" autocomplete="off">
-            <label for="servicename">Use loginname as Servicename</label>
+            <label for="servicename" id="servicename-label">Use loginname as Servicename</label>
         </div>
 
         <div class="servicename">
-          <label for="def-servicename">Use </label>
+          <label for="def-servicename" id="defservicename-label">Use </label>
           <input type="text" class="text" name="def-servicename" id="def-servicename" value="" autocomplete="off">
 
           <input type="radio" name="servicename" id="prefix" value="prefix" autocomplete="off">
-          <label for="prefix">as prefix</label>
+          <label for="prefix" id="defservicename-prefix-label">as prefix</label>
 
           <input type="radio" name="servicename" id="suffix" value="suffix" autocomplete="off">
-          <label for="suffix">as suffix</label>
+          <label for="suffix" id="defservicename-suffix-label">as suffix</label>
         </div>
 
         <div>
@@ -58,14 +58,14 @@
                 <th scope="col">A&ndash;Z</th>
                 <th scope="col">0&ndash;9</th>
                 <th scope="col">- / _</th>
-                <th scope="col">SPACE</th>
+                <th scope="col" id="space-head">SPACE</th>
                 <th scope="col">!@#$%</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <th scope="row">
-                  <label for="required">Required</label>
+                  <label for="required" id="required-label">Required</label>
                   (<input type="text" class="text" name="required" id="required" value="2" autocomplete="off">)
                 </th>
                 <td><input type="radio" name="lower" value="required"></td>
@@ -76,7 +76,7 @@
                 <td><input type="radio" name="symbol" value="required"></td>
               </tr>
               <tr>
-                <th scope="row">Allowed</th>
+                <th scope="row" id="allowed-label">Allowed</th>
                 <td><input type="radio" name="lower" value="allowed" checked="checked"></td>
                 <td><input type="radio" name="upper" value="allowed" checked="checked"></td>
                 <td><input type="radio" name="number" value="allowed" checked="checked"></td>
@@ -85,7 +85,7 @@
                 <td><input type="radio" name="symbol" value="allowed" checked="checked"></td>
               </tr>
               <tr>
-                <th scope="row">Forbidden</th>
+                <th scope="row" id="forbidden-label">Forbidden</th>
                 <td><input type="radio" name="lower" value="forbidden"></td>
                 <td><input type="radio" name="upper" value="forbidden"></td>
                 <td><input type="radio" name="number" value="forbidden"></td>
@@ -106,8 +106,8 @@
       <div class="sub">
         <button id="save-options">Save</button>
       </div>
-      <div class="sub">
-          You can also use <a href="https://getvau.lt/">the original vault</a>.
+      <div class="sub" id="link-to-vault">
+          <span id="link-to-vault-1">You can also use</span> <a href="https://getvau.lt/"><span id="link-text">the original vault</span></a> <span id="link-to-vault-2">to generate your passwords</span>.
       </div>
     </div>
 

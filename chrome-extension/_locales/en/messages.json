@@ -4,11 +4,65 @@
         "description": "The extension's name."
     },
     "extDescription": {
-        "message": "Generates safe and service specific passwords for web services on the fly.",
-        "description": "The extension's description"
+        "message": "Generates safe and service specific passwords for web services on the fly."
     },
     "extTitle": {
         "message": "Reload Password Generator",
         "description": "The extension's button title"
+    },
+    "optionsTitle": {
+        "message": "Easy Password Handling Options",
+        "description": "The extension's options' page title"
+    },
+    "lengthLabel": {
+        "message": "Password length"
+    },
+    "repeatLabel": {
+        "message": "Max repetition" // of what? Should be password's iteration
+    },
+    "autosendLabel": {
+        "message": "Automatically send form after insert"
+    },
+    "servicenameLabel": {
+        "message": "Use loginname as servicename"
+    },
+    "defservicenameLabel": {
+        "message": "Use "
+    },
+    "defservicenamePrefixLabel": {
+        "message": "as prefix"
+    },
+    "defservicenameSuffixLabel": {
+        "message": "as suffix"
+    },
+    "spaceHead": {
+        "message": "SPACE"
+    },
+    "requiredLabel": {
+        "message": "Required"
+    },
+    "allowedLabel": {
+        "message": "Allowed"
+    },
+    "forbiddenLabel": {
+        "message": "Forbidden"
+    },
+    "optionStatus": {
+        "message": "Options Saved!"
+    },
+    "saveOptions": {
+        "message": "Save"
+    },
+    "linkText": {
+        "message": "the original vault",
+        "description": "Link text for vault link"
+    },
+    "linkText1": {
+        "message": "You can also use",
+        "description": "Text for vault text part 1"
+    },
+    "linkText2": {
+        "message": "to generate your passwords",
+        "description": "Text for vault text part 1"
     }
 }

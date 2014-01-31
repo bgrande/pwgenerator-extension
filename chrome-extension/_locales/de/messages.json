@@ -1,14 +1,62 @@
 {
     "extName": {
-        "message": "Easy Password Handling",
-        "description": "Der Name der Extension"
+        "message": "Easy Password Handling"
     },
     "extDescription": {
-        "message": "Erstellt umgehend sichere und dienstabhängige Passwörter für Webanwendungen.",
-        "description": "Die Extensionbeschreibung"
+        "message": "Erstellt umgehend sichere und dienstabhängige Passwörter für Webanwendungen."
     },
     "extTitle": {
-        "message": "Den Password Generator neu laden",
-        "description": "Der Titel des Extensionbuttons"
+        "message": "Den Password Generator neu laden"
+    },
+    "optionsTitle": {
+        "message": "Easy Password Handling Einstellungen"
+    },
+    "lengthLabel": {
+        "message": "Passwortlänge"
+    },
+    "repeatLabel": {
+        "message": "Maximale Wiederholung"
+    },
+    "autosendLabel": {
+        "message": "Formular automatisch nach Einfügen des Passworts abschicken"
+    },
+    "servicenameLabel": {
+        "message": "Benutzernamen als Servicenamen verwenden"
+    },
+    "defservicenameLabel": {
+        "message": "Verwende "
+    },
+    "defservicenamePrefixLabel": {
+        "message": "als Präfix"
+    },
+    "defservicenameSuffixLabel": {
+        "message": "als Anhang"
+    },
+    "spaceHead": {
+        "message": "LEERZEICHEN"
+    },
+    "requiredLabel": {
+        "message": "Muss"
+    },
+    "allowedLabel": {
+        "message": "Kann"
+    },
+    "forbiddenLabel": {
+        "message": "Darf nicht"
+    },
+    "optionStatus": {
+        "message": "Einstellungen gespeichert!"
+    },
+    "saveOptions": {
+        "message": "Speichern"
+    },
+    "linkText": {
+        "message": "das zugrundeliegende Vault"
+    },
+    "linkText1": {
+        "message": "Sie können auch"
+    },
+    "linkText2": {
+        "message": "verwenden um Ihre Passwörter zu generieren"
     }
 }
