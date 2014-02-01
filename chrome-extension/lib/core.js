@@ -14,7 +14,7 @@ var DEFAULT_SETTINGS = {
 
         autosend: false,
         servicename: 'prefix',
-        defServicename: 'myPrefix@',
+        defServicename: chrome.i18n.getMessage("defServicenameDefault"),
 
         pwFieldList: [
             'pass', 'pass1', 'pass2', 'Pass', 'passwd', 'Passwd', 'password', 'Password', 'PASSWORD',
