@@ -23,7 +23,7 @@
     "autosendLabel": {
         "message": "Automatically send form after insert"
     },
-    "servicenameLabel": {
+    "servicenameOptionLabel": {
         "message": "Use loginname as servicename"
     },
     "defservicenameLabel": {
@@ -64,5 +64,37 @@
     "linkText2": {
         "message": "to generate your passwords",
         "description": "Text for vault text part 1"
+    },
+    "closeOverlay": {
+        "message": "Close Overlay",
+        "description": "Overlay close icon text"
+    },
+    "serviceNameLabel": {
+        "message": "Service name",
+        "description": "Overlay servicename input field label"
+    },
+    "passphraseLabel": {
+        "message": "Passphrase",
+        "description": "Overlay passphrase input field label"
+    },
+    "passphrasePlaceholder": {
+        "message": "best pass ever",
+        "description": "Overlay passphrase input field placeholder text"
+    },
+    "submitButtonText": {
+        "message": "Generate",
+        "description": "Overlay submit button text"
+    },
+    "submitButtonTextAlt": {
+        "message": "Generate\n& Login",
+        "description": "Overlay submit button alternative text"
+    },
+    "showPasswordLabel": {
+        "message": "Show generated pw",
+        "description": "Overlay show password checkbox label"
+    },
+    "showPasswordTitle": {
+        "message": "Be careful! Make sure nobody is behind you!",
+        "description": "Overlay show password checkbox title text"
     }
 }

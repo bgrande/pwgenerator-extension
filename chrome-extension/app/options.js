@@ -144,7 +144,7 @@ on($('save-options'), 'click', function () {
         lengthLabel = chrome.i18n.getMessage("lengthLabel"),
         repeatLabel = chrome.i18n.getMessage("repeatLabel"),
         autosendLabel = chrome.i18n.getMessage("autosendLabel"),
-        servicenameLabel = chrome.i18n.getMessage("servicenameLabel"),
+        servicenameLabel = chrome.i18n.getMessage("servicenameOptionLabel"),
         defservicenameLabel = chrome.i18n.getMessage("defservicenameLabel"),
         defservicenamePrefixLabel = chrome.i18n.getMessage("defservicenamePrefixLabel"),
         defservicenameSuffixLabel = chrome.i18n.getMessage("defservicenameSuffixLabel"),
