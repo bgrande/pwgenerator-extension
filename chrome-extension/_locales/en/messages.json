@@ -1,0 +1,104 @@
+{
+    "extName": {
+        "message": "Easy Password Handling",
+        "description": "The extension's name."
+    },
+    "extDescription": {
+        "message": "Generates safe and service specific passwords for web services on the fly."
+    },
+    "extTitle": {
+        "message": "Reload Password Generator",
+        "description": "The extension's button title"
+    },
+    "optionsTitle": {
+        "message": "Easy Password Handling Options",
+        "description": "The extension's options' page title"
+    },
+    "lengthLabel": {
+        "message": "Password length"
+    },
+    "repeatLabel": {
+        "message": "Max repetition" // of what? Should be password's iteration
+    },
+    "autosendLabel": {
+        "message": "Automatically send form after insert"
+    },
+    "servicenameOptionLabel": {
+        "message": "Use loginname as servicename"
+    },
+    "defservicenameLabel": {
+        "message": "Use "
+    },
+    "defservicenamePrefixLabel": {
+        "message": "as prefix"
+    },
+    "defservicenameSuffixLabel": {
+        "message": "as suffix"
+    },
+    "spaceHead": {
+        "message": "SPACE"
+    },
+    "requiredLabel": {
+        "message": "Required"
+    },
+    "allowedLabel": {
+        "message": "Allowed"
+    },
+    "forbiddenLabel": {
+        "message": "Forbidden"
+    },
+    "optionStatus": {
+        "message": "Options Saved!"
+    },
+    "saveOptions": {
+        "message": "Save"
+    },
+    "linkText": {
+        "message": "the original vault",
+        "description": "Link text for vault link"
+    },
+    "linkText1": {
+        "message": "You can also use",
+        "description": "Text for vault text part 1"
+    },
+    "linkText2": {
+        "message": "to generate your passwords",
+        "description": "Text for vault text part 1"
+    },
+    "closeOverlay": {
+        "message": "Close Overlay",
+        "description": "Overlay close icon text"
+    },
+    "serviceNameLabel": {
+        "message": "Service name",
+        "description": "Overlay servicename input field label"
+    },
+    "passphraseLabel": {
+        "message": "Passphrase",
+        "description": "Overlay passphrase input field label"
+    },
+    "passphrasePlaceholder": {
+        "message": "best pass ever",
+        "description": "Overlay passphrase input field placeholder text"
+    },
+    "submitButtonText": {
+        "message": "Generate",
+        "description": "Overlay submit button text"
+    },
+    "submitButtonTextAlt": {
+        "message": "Generate\n& Login",
+        "description": "Overlay submit button alternative text"
+    },
+    "showPasswordLabel": {
+        "message": "Show generated pw",
+        "description": "Overlay show password checkbox label"
+    },
+    "showPasswordTitle": {
+        "message": "Be careful! Make sure nobody is behind you!",
+        "description": "Overlay show password checkbox title text"
+    },
+    "defServicenameDefault": {
+        "message": "myPrefix@",
+        "description": "Default Servicename for initial servicename prefix"
+    }
+}

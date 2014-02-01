@@ -9,7 +9,7 @@ body, input {
 .sub {
   margin: 0 auto;
   padding: 0 1em 1.5em;
-  width: 400px;
+  width: 600px;
 }
 .form {
   background: #f4f4f4;
@@ -84,7 +84,7 @@ input.text, input.password {
   font-family: Monaco, Courier New, monospace;
 }
 
-.autosend, .servicename, {
+.autosend, .servicename {
     width: 100%;
 }
 .autosend label, #autosend, .servicename label, #servicename, #def-servicename {
@@ -154,4 +154,9 @@ table th:first-child, table td:first-child {
 
 #required {
     text-align: center;
+}
+
+#save-options {
+    padding: .5em;
+    margin-top: .3em;
 }

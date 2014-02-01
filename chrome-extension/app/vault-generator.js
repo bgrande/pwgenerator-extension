@@ -128,27 +128,27 @@ VaultGenerator._addOverlayDiv = function (pwField) {
     closeImg.id = 'vault-close-icon-' + pwId;
     closeImg.className = 'vault-close-icon';
     closeImg.src = this._closeImgUrl;
-    closeImg.alt = 'Close Overlay';
+    closeImg.alt = chrome.i18n.getMessage("closeOverlay");
 
     closeDiv.id = 'vault-close-' + pwId;
     closeDiv.className = 'vault-close';
-    closeDiv.title = 'Close Overlay';
+    closeDiv.title = chrome.i18n.getMessage("closeOverlay");
     closeDiv.appendChild(closeImg);
 
-    serviceElementLabel.innerText = 'Service name';
+    serviceElementLabel.innerText = chrome.i18n.getMessage("serviceNameLabel");
     serviceElementLabel.htmlFor = 'vault-servicename-' + pwId;
     serviceElement.id = 'vault-servicename-' + pwId;
     serviceElement.className = 'vault-servicename';
     serviceElement.type = 'text';
     serviceElement.placeholder = this._getDomainname();
 
-    pwElementLabel.innerText = 'Passphrase';
+    pwElementLabel.innerText = chrome.i18n.getMessage("passphraseLabel");
     pwElementLabel.htmlFor = 'vault-passphrase-' + pwId;
     pwElement.id = 'vault-passphrase-' + pwId;
     pwElement.className = 'vault-passphrase';
     pwElement.type = 'password';
     pwElement.value = pwField.value;
-    pwElement.placeholder = 'best pass ever';
+    pwElement.placeholder = chrome.i18n.getMessage("passphrasePlaceholder");
 
     passDiv.className = 'vault-pass-container';
     passDiv.appendChild(pwElementLabel);
@@ -161,18 +161,18 @@ VaultGenerator._addOverlayDiv = function (pwField) {
     submitButton.id = 'vault-generate-' + pwId;
     submitButton.className = 'vault-generate';
     submitButton.type = 'button';
-    submitButton.value = 'Generate';
+    submitButton.value = chrome.i18n.getMessage("submitButtonText");
     if (this._generatorSettings.autosend) {
-        submitButton.value = 'Generate\n& Login';
+        submitButton.value = chrome.i18n.getMessage("submitButtonTextAlt");
     }
 
     showPassword.id = 'vault-show-password-' + pwId;
     showPassword.type = 'checkbox';
-    showPasswordLabel.innerText = 'Show generated pw';
+    showPasswordLabel.innerText = chrome.i18n.getMessage("showPasswordLabel");
     showPasswordLabel.htmlFor = 'vault-show-password-' + pwId;
     showPasswordLabel.className = 'description-label';
     showPasswordContainer.className = "vault-show-pw-container";
-    showPasswordContainer.title = "Be careful! Make sure nobody is behind you!";
+    showPasswordContainer.title = chrome.i18n.getMessage("showPasswordTitle");
     showPasswordContainer.appendChild(showPassword);
     showPasswordContainer.appendChild(showPasswordLabel);
     passDiv.appendChild(showPasswordContainer);
