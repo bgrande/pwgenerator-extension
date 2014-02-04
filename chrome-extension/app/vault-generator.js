@@ -347,19 +347,25 @@ VaultGenerator._createOverlay = function () {
     });
 
     on(this._getPassphraseField(), 'keydown', function (e) {
+        cancelEvent(e);
+
         switch (e.keyCode) {
             case 13:
                 e.preventDefault();
                 that._vaultButtonSubmit(pwField);
                 break;
             case 27:
-                e.preventDefault();
                 that.closeOverlay(pwField);
                 break;
         }
     });
 
+    on(this._getPassphraseField(), ['keyup', 'keypress', 'change'], function (e) {
+        cancelEvent(e);
+    });
+
     on(this._getServicenameField(), 'keydown', function (e) {
+        cancelEvent(e);
         switch (e.keyCode) {
             case 13:
                 e.preventDefault();

@@ -107,3 +107,14 @@ var isOverlay = function (pwField) {
 var hasOverlay = function (pwField) {
     return pwField && pwField.id && $('vault-generator-overlay-' + pwField.id);
 };
+
+var cancelEvent = function (e) {
+    // @todo remove not allowed eventListeners (catch events!)
+    if (e.stopPropagation) {
+        e.stopPropagation();
+    }
+
+    if (e.cancelBubble != null) {
+        e.cancelBubble = true;
+    }
+};
