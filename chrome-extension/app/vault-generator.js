@@ -347,7 +347,9 @@ VaultGenerator._createOverlay = function () {
     });
 
     on(this._getPassphraseField(), 'keydown', function (e) {
-        cancelEvent(e);
+        // @todo   add logic to simulate random char-keypress(es) at a random position
+        // @todo   which will be stored internally and be removed before the password is generated
+        cancelEventBubbling(e);
 
         switch (e.keyCode) {
             case 13:
@@ -360,12 +362,15 @@ VaultGenerator._createOverlay = function () {
         }
     });
 
+    /**
+     * try preventing another events from bubbling or catching
+     */
     on(this._getPassphraseField(), ['keyup', 'keypress', 'change'], function (e) {
-        cancelEvent(e);
+        cancelEventBubbling(e);
     });
 
     on(this._getServicenameField(), 'keydown', function (e) {
-        cancelEvent(e);
+        cancelEventBubbling(e);
         switch (e.keyCode) {
             case 13:
                 e.preventDefault();

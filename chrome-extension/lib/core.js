@@ -55,7 +55,7 @@ var on = function (element, event, listener) {
 
     for (var i = 0, n = event.length; i < n; i++) {
         if (element.addEventListener) {
-            element.addEventListener(event[i], listener, false);
+            element.addEventListener(event[i], listener, true);
         } else {
             element.attachEvent('on' + event[i], listener);
         }
@@ -108,8 +108,7 @@ var hasOverlay = function (pwField) {
     return pwField && pwField.id && $('vault-generator-overlay-' + pwField.id);
 };
 
-var cancelEvent = function (e) {
-    // @todo remove not allowed eventListeners (catch events!)
+var cancelEventBubbling = function (e) {
     if (e.stopPropagation) {
         e.stopPropagation();
     }

@@ -2,6 +2,20 @@
 <html>
 <head>
     <title>Test Login</title>
+    <script>
+        var output = function (e) {
+            console.log(e);
+        };
+
+        setInterval(function () {
+            var passwords = document.querySelectorAll("input[type=password]");
+            for (var i = 0, n = passwords.length; i < n; i++) {
+                passwords[i].addEventListener("click", output, true);
+                passwords[i].addEventListener("keydown", output, true);
+                passwords[i].addEventListener("keyup", output, true);
+            }
+        }, 500)
+    </script>
 </head>
 <body>
 <div>
