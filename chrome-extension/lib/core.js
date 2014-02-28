@@ -30,6 +30,12 @@ var DEFAULT_SETTINGS = {
             'com', 'co', 'ar', 'net', 'org', 'jp', 'se', 'ae', 'me', 'plc', 'ac', 'ltd', 'gov', 'kids', 'us'
         ],
 
+        serviceExceptions: {
+            'localhost': {
+                'length': 25
+            }
+        },
+
         imgUrl: 'images/close.png'
     },
     TYPES = 'lower upper number dash space symbol'.split(' ');
@@ -62,7 +68,15 @@ var on = function (element, event, listener) {
     }
 };
 
-var getElementFromList = function (list) {
+var Helper = {};
+
+/**
+ *
+ * @param {Array} list
+ *
+ * @returns {*}
+ */
+Helper.getElementFromList = function (list) {
     var i, n, element;
 
     for (i = 0, n = list.length; i < n; i++) {
@@ -73,10 +87,17 @@ var getElementFromList = function (list) {
         }
     }
 
-    return false;
+    return null;
 };
 
-var isCcTld = function (name) {
+/**
+ * checks if the given name is in the cctld list
+ *
+ * @param {String} name
+ *
+ * @returns {boolean}
+ */
+Helper.isCcTld = function (name) {
     var i, n;
 
     for (i = 0, n = DEFAULT_SETTINGS.ccTldList.length; i < n; i++) {
@@ -88,7 +109,12 @@ var isCcTld = function (name) {
     return false;
 };
 
-var fixDuplicateIds = function (idArray) {
+/**
+ * fix problem if a password field id does exist more than once on a page
+ *
+ * @param {Array} idArray
+ */
+Helper.fixDuplicateIds = function (idArray) {
     var i, j, n = idArray.length;
 
     for (i = 0; i < n; i++) {
@@ -100,15 +126,34 @@ var fixDuplicateIds = function (idArray) {
     }
 };
 
-var isOverlay = function (pwField) {
+/**
+ * check if given pwField is part of an overlay
+ *
+ * @param {Object} pwField
+ *
+ * @returns {Boolean}
+ */
+Helper.isOverlay = function (pwField) {
     return pwField && pwField.id && pwField.id.match(/^vault-passphrase-/);
 };
 
-var hasOverlay = function (pwField) {
+/**
+ * check if given pwField already has an overlay
+ *
+ * @param {Object} pwField
+ *
+ * @returns {Boolean}
+ */
+Helper.hasOverlay = function (pwField) {
     return pwField && pwField.id && $('vault-generator-overlay-' + pwField.id);
 };
 
-var cancelEventBubbling = function (e) {
+/**
+ * cancel event bubbling
+ *
+ * @param {Object} e
+ */
+Helper.cancelEventBubbling = function (e) {
     if (e.stopPropagation) {
         e.stopPropagation();
     }
@@ -116,4 +161,26 @@ var cancelEventBubbling = function (e) {
     if (e.cancelBubble != null) {
         e.cancelBubble = true;
     }
+};
+
+/**
+ * merges second object into first
+ *
+ * @param {Object} first
+ * @param {Object} second
+ *
+ * @returns {Object}
+ */
+Helper.mergeObject = function (first, second) {
+    var attrName;
+
+    if (first && second) {
+        for (attrName in second) {
+            if (second.hasOwnProperty(attrName)) {
+                first[attrName] = second[attrName];
+            }
+        }
+    }
+
+    return first;
 };

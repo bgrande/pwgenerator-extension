@@ -12,20 +12,20 @@ if (!generators) {
 DEFAULT_SETTINGS.imgUrl = chrome.extension.getURL('images/close.png');
 
 chrome.storage.local.get('settings', function (items) {
-    var password = getElementFromList(DEFAULT_SETTINGS.pwFieldList),
+    var password = Helper.getElementFromList(DEFAULT_SETTINGS.pwFieldList),
         passwords = document.querySelectorAll("input[type=password]"),
         settings = (undefined !== items.settings) ? JSON.parse(items.settings) : DEFAULT_SETTINGS,
         pwLength = passwords.length, i;
 
     if (pwLength > 0) {
         // there are pages using the same id twice...
-        fixDuplicateIds(passwords);
+        Helper.fixDuplicateIds(passwords);
 
         // deactivate autosend if there are multiple password fields
         settings.autosend = (pwLength === 1);
 
         for (i = 0; i < pwLength; i++) {
-            if (!generators[i] && !isOverlay(passwords[i]) && !hasOverlay(passwords[i])) {
+            if (!generators[i] && !Helper.isOverlay(passwords[i]) && !Helper.hasOverlay(passwords[i])) {
                 generators[i] = Object.create(VaultGenerator).init(passwords[i], settings, DEFAULT_SETTINGS);
             }
         }
@@ -33,7 +33,7 @@ chrome.storage.local.get('settings', function (items) {
         // field does not have a password type - better use no autosend to prevent misbehaviour
         settings.autosend = false;
 
-        if (!generators[0] && !isOverlay(password) && !hasOverlay(password)) {
+        if (!generators[0] && !Helper.isOverlay(password) && !Helper.hasOverlay(password)) {
             generators[0] = Object.create(VaultGenerator).init(passwords[i], settings, DEFAULT_SETTINGS);
         }
     }
