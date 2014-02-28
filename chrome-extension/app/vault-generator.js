@@ -108,7 +108,6 @@ VaultGenerator.generatePassword = function () {
     try {
         if (serviceValue && phraseValue) {
             vaultSettings = Helper.mergeObject(this._vaultSettings, this._domainService.getPasswordRules());
-            console.log(this._vaultSettings, this._domainService.getPasswordRules(), vaultSettings);
             vaultSettings.phrase = phraseValue;
             pwValue = new Vault(vaultSettings).generate(serviceValue);
         } else {
@@ -137,7 +136,7 @@ VaultGenerator._setPasswordIdentifier = function (pwField) {
     if (pwField.id) {
         this._pwId = pwField.id;
     } else if (pwField.name) {
-        pwString = pwField.name.replace(/\[|\]/g, '-').replace(/-+$/, '');
+        pwString = pwField.name.replace(/\[|\]|:|[ ]/g, '-').replace(/-+$/, '');
 
         if ($('vault-generator-overlay-' + pwString)) {
             pwString += '1';
@@ -276,7 +275,7 @@ VaultGenerator._vaultButtonSubmit = function (pwField) {
     pwField.type = (this._showPw) ? 'text' : 'password';
     pwField.value = newPassword;
 
-    this.toggleOverlay(false);
+    this.closeOverlay(pwField);
 
     if (this._generatorSettings.autosend && !this._showPw) {
         loginFormNumber = this.getLoginForm(pwField);

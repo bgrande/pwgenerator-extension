@@ -33,6 +33,11 @@ var DEFAULT_SETTINGS = {
         serviceExceptions: {
             'alternate.de': {
                 'length': 15
+            },
+            'o2online.de': {
+                'space': 0,
+                'dash': 0,
+                'symbol': 0
             }
         },
 
