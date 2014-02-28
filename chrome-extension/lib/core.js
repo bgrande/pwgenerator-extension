@@ -31,8 +31,8 @@ var DEFAULT_SETTINGS = {
         ],
 
         serviceExceptions: {
-            'localhost': {
-                'length': 25
+            'alternate.de': {
+                'length': 15
             }
         },
 

@@ -30,8 +30,16 @@ Tested Services
 * stackoverflow.com
 * github.com
 * a jenkins installation
+* reichelt.de
+* twitter.com
+* alternate.de -> password rule 'length' => 15
 
 ... more to come
+
+Tested and not working Services
+================================
+* o2-online.de
+
 
 Issues
 =======
