@@ -1,5 +1,46 @@
 'use strict';
 
+var DomainService = {
+    _serviceName: '',
+    _rules: null
+};
+
+DomainService._setDomainname = function () {
+    var domainname = document.domain,
+        domainparts = domainname.split('.');
+
+    if (2 < domainparts.length) {
+        domainname = domainparts[domainparts.length - 2] + '.' + domainparts[domainparts.length - 1];
+
+        if (Helper.isCcTld(domainparts[domainparts.length - 2])) {
+            domainname = domainparts[domainparts.length - 3] + '.' + domainname;
+        }
+    }
+
+    this._serviceName = domainname;
+};
+
+DomainService.getDomainname = function () {
+    return this._serviceName;
+};
+
+DomainService._setPasswordRules = function (settings) {
+    if (settings && settings[this._serviceName]) {
+        this._rules = settings[this._serviceName];
+    }
+};
+
+DomainService.getPasswordRules = function () {
+    return this._rules;
+};
+
+DomainService.init = function (ruleSettings) {
+    this._setDomainname();
+    this._setPasswordRules(ruleSettings);
+
+    return this;
+};
+
 var VaultGenerator = {
     _overlayId: '',
     _vaultSettings: {},
@@ -11,12 +52,13 @@ var VaultGenerator = {
     _showPw: false,
     _pwFieldIdentifier: '',
     _closeImgUrl: '',
-    _loginField: {}
+    _loginField: {},
+    _domainService: null
 };
 
 VaultGenerator._setLoginName = function (defaultSettings) {
     var userFieldList = defaultSettings.userFieldList,
-        login = getElementFromList(userFieldList);
+        login = Helper.getElementFromList(userFieldList);
 
     if (login.id) {
         this._loginField = login.id;
@@ -55,12 +97,15 @@ VaultGenerator.getPhrasevalue = function () {
 VaultGenerator.generatePassword = function () {
     var phraseValue = this.getPhrasevalue(),
         serviceValue = this.getServicevalue(),
-        pwValue;
+        pwValue,
+        vaultSettings;
 
     try {
         if (serviceValue && phraseValue) {
-            this._vaultSettings.phrase = phraseValue;
-            pwValue = new Vault(this._vaultSettings).generate(serviceValue);
+            vaultSettings = Helper.mergeObject(this._vaultSettings, this._domainService.getPasswordRules());
+            console.log(this._vaultSettings, this._domainService.getPasswordRules(), vaultSettings);
+            vaultSettings.phrase = phraseValue;
+            pwValue = new Vault(vaultSettings).generate(serviceValue);
         } else {
             pwValue = '';
         }
@@ -245,18 +290,7 @@ VaultGenerator._vaultButtonSubmit = function (pwField) {
 };
 
 VaultGenerator._getDomainname = function () {
-    var domainname = document.domain,
-        domainparts = domainname.split('.');
-
-    if (2 < domainparts.length) {
-        domainname = domainparts[domainparts.length - 2] + '.' + domainparts[domainparts.length - 1];
-
-        if (isCcTld(domainparts[domainparts.length - 2])) {
-            domainname = domainparts[domainparts.length - 3] + '.' + domainname;
-        }
-    }
-
-    return domainname;
+    return this._domainService.getDomainname();
 };
 
 VaultGenerator.setServicename = function () {
@@ -349,7 +383,7 @@ VaultGenerator._createOverlay = function () {
     on(this._getPassphraseField(), 'keydown', function (e) {
         // @todo   add logic to simulate random char-keypress(es) at a random position
         // @todo   which will be stored internally and be removed before the password is generated
-        cancelEventBubbling(e);
+        Helper.cancelEventBubbling(e);
 
         switch (e.keyCode) {
             case 13:
@@ -366,11 +400,11 @@ VaultGenerator._createOverlay = function () {
      * try preventing another events from bubbling or catching
      */
     on(this._getPassphraseField(), ['keyup', 'keypress', 'change'], function (e) {
-        cancelEventBubbling(e);
+        Helper.cancelEventBubbling(e);
     });
 
     on(this._getServicenameField(), 'keydown', function (e) {
-        cancelEventBubbling(e);
+        Helper.cancelEventBubbling(e);
         switch (e.keyCode) {
             case 13:
                 e.preventDefault();
@@ -437,6 +471,10 @@ VaultGenerator._setImgUrls = function (defaultSettings) {
     this._closeImgUrl = defaultSettings.imgUrl;
 };
 
+VaultGenerator._setDomainService = function (serviceExceptions) {
+    this._domainService = Object.create(DomainService).init(serviceExceptions)
+};
+
 VaultGenerator._initProperties = function (pwField, defaultSettings) {
     this._setPwFieldIdentifier(pwField);
     this._setPasswordIdentifier(pwField);
@@ -450,6 +488,7 @@ VaultGenerator._initSettings = function (settings, defaultSettings) {
 };
 
 VaultGenerator.init = function (pwField, settings, defaultSettings) {
+    this._setDomainService(defaultSettings.serviceExceptions);
     this._initProperties(pwField, defaultSettings);
     this._initSettings(settings, defaultSettings);
     this._createOverlay();
