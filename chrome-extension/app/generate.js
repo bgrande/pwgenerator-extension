@@ -22,7 +22,7 @@ chrome.storage.local.get('settings', function (items) {
         Helper.fixDuplicateIds(passwords);
 
         // deactivate autosend if there are multiple password fields
-        settings.autosend = (pwLength === 1);
+        settings.autosend = (settings.autosend === true && pwLength === 1);
 
         for (i = 0; i < pwLength; i++) {
             if (!generators[i] && !Helper.isOverlay(passwords[i]) && !Helper.hasOverlay(passwords[i])) {
@@ -34,7 +34,7 @@ chrome.storage.local.get('settings', function (items) {
         settings.autosend = false;
 
         if (!generators[0] && !Helper.isOverlay(password) && !Helper.hasOverlay(password)) {
-            generators[0] = Object.create(VaultGenerator).init(passwords[i], settings, DEFAULT_SETTINGS);
+            generators[0] = Object.create(VaultGenerator).init(password, settings, DEFAULT_SETTINGS);
         }
     }
 

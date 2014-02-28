@@ -60,6 +60,11 @@ VaultGenerator._setLoginName = function (defaultSettings) {
     var userFieldList = defaultSettings.userFieldList,
         login = Helper.getElementFromList(userFieldList);
 
+    if (!login) {
+        this._loginField = null;
+        return;
+    }
+
     if (login.id) {
         this._loginField = login.id;
     } else if (login.name) {
@@ -488,6 +493,10 @@ VaultGenerator._initSettings = function (settings, defaultSettings) {
 };
 
 VaultGenerator.init = function (pwField, settings, defaultSettings) {
+    if (!pwField) {
+        return false;
+    }
+
     this._setDomainService(defaultSettings.serviceExceptions);
     this._initProperties(pwField, defaultSettings);
     this._initSettings(settings, defaultSettings);
