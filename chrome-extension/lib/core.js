@@ -38,6 +38,26 @@ var DEFAULT_SETTINGS = {
                 'space': 0,
                 'dash': 0,
                 'symbol': 0
+            },
+            'o2.co.uk': {
+                'space': 0,
+                'dash': 0,
+                'symbol': 0
+            },
+            'o2online.ie': {
+                'space': 0,
+                'dash': 0,
+                'symbol': 0
+            },
+            'o2.cz': {
+                'space': 0,
+                'dash': 0,
+                'symbol': 0
+            },
+            'o2.sk': {
+                'space': 0,
+                'dash': 0,
+                'symbol': 0
             }
         },
 
