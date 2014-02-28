@@ -21,6 +21,7 @@
     font-size: 12px !important;
     border-radius: 0 !important;
     float: left !important;
+    line-height: 23px !important;
 }
 
 .vault-generator-overlay input[type=checkbox] {
