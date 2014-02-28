@@ -3,6 +3,7 @@
 var DEFAULT_SETTINGS = {
         length: 20,
         repeat: 0,
+        iteration: 8,
         lower: null,
         upper: null,
         number: null,

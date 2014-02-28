@@ -430,6 +430,7 @@ VaultGenerator._setVaultSettings = function (settings, defaultSettings) {
 
     vaultSettings.length = undefined !== settings.plength ? settings.plength : defaultSettings.length;
     vaultSettings.repeat = undefined !== settings.repeat ? settings.repeat : defaultSettings.repeat;
+    vaultSettings.iteration = undefined !== settings.iteration ? settings.iteration : defaultSettings.iteration;
 
     for (i = 0, n = TYPES.length; i < n; i++) {
         vaultSettings[TYPES[i]] = undefined !== settings[TYPES[i]] ? settings[TYPES[i]] : defaultSettings[TYPES[i]];
