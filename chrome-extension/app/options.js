@@ -138,8 +138,9 @@ on($('save-options'), 'click', function () {
     }, 1600);
 });
 
-/** translations */
+
 (function () {
+    /** translations */
     var optionsTitle = chrome.i18n.getMessage("optionsTitle"),
         lengthLabel = chrome.i18n.getMessage("lengthLabel"),
         repeatLabel = chrome.i18n.getMessage("repeatLabel"),
@@ -175,4 +176,7 @@ on($('save-options'), 'click', function () {
     $('link-text').innerText = linkText;
     $('link-to-vault-1').innerText = linkText1;
     $('link-to-vault-2').innerText = linkText2;
+
+    // set symbol description
+    $('symbol-description').title = '!"#$%&\'()*+,./:;<=>?@[\\]^{|}~';
 })();
