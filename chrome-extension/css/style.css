@@ -20,9 +20,11 @@
     padding: 0 !important;
     font-size: 12px !important;
     border-radius: 0 !important;
+    float: left !important;
 }
 
 .vault-generator-overlay input[type=checkbox] {
+    margin-top: 0.3em !important;
     width: 13px !important;
     height: 13px !important;
     min-height: 13px !important;
@@ -59,7 +61,10 @@
 
 .description-label {
     margin-left: 0.3em !important;
+    margin-top: 0.3em !important;
+    font-size: 12px !important;
     display: inline !important;
+    width: auto !important;
 }
 
 .vault-generate {
