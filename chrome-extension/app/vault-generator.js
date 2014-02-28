@@ -197,7 +197,7 @@ VaultGenerator._addOverlayDiv = function (pwField) {
     pwElement.id = 'vault-passphrase-' + pwId;
     pwElement.className = 'vault-passphrase';
     pwElement.type = 'password';
-    pwElement.value = pwField.value;
+    pwElement.value = '';
     pwElement.placeholder = chrome.i18n.getMessage("passphrasePlaceholder");
 
     passDiv.className = 'vault-pass-container';
@@ -242,12 +242,6 @@ VaultGenerator._addOverlayDiv = function (pwField) {
     overlayDiv.appendChild(dialogDiv);
 
     pwField.parentNode.appendChild(overlayDiv);
-
-    on(this._getPassphraseField(), 'focus', function () {
-        if (!this.value) {
-            this.value = pwField.value;
-        }
-    });
 };
 
 VaultGenerator.getLoginForm = function (pwField) {
@@ -343,10 +337,6 @@ VaultGenerator.activateOverlay = function () {
         pwField = this.getPwField();
 
     this.toggleOverlay(true);
-
-    if (passphrase && !passphrase.value) {
-        passphrase.value = pwField.value;
-    }
 
     if (!this._overlayClosed) {
         passphrase.focus();
