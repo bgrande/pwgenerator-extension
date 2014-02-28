@@ -18,6 +18,20 @@ Usage
 3. Login to your account and change the password or create a new account. As soon as you hit the password field an overlay should open with a preset servicename and another password field. Choose your servicename and password and hit the Generate Button. Save the changes and logout. 
 4. Now you should be able to login with the overlay opening as soon as you hit a password field. Make sure you use the same servicename and password as set before. The number of password fields found should be shown in front of the extension icon. If there was a password field on the page but no overlay opened, please click on the extension icon to rerun the password field recognition. If that didn't help, you might have found a bug... 
 
+Tested Services
+===============
+* facebook.com
+* google.com (gmail, plus, ...)
+* ebay.com
+* paypal.com
+* trello.com
+* news.ycombinator.com
+* amazon.com
+* stackoverflow.com
+* github.com
+* a jenkins installation
+
+... more to come
 
 Issues
 =======
