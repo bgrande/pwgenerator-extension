@@ -14,7 +14,9 @@ DEFAULT_SETTINGS.imgUrl = chrome.extension.getURL('images/close.png');
 chrome.storage.local.get('settings', function (items) {
     var password = Helper.getElementFromList(DEFAULT_SETTINGS.pwFieldList),
         passwords = document.querySelectorAll("input[type=password]"),
+        // @todo merge default_settings and settings here and only inject one settings object into generator
         settings = (undefined !== items.settings) ? JSON.parse(items.settings) : DEFAULT_SETTINGS,
+        domainService = Object.create(DomainService).init(DEFAULT_SETTINGS.serviceExceptions),
         pwLength = passwords.length, i;
 
     if (pwLength > 0) {
@@ -26,7 +28,7 @@ chrome.storage.local.get('settings', function (items) {
 
         for (i = 0; i < pwLength; i++) {
             if (!generators[i] && !Helper.isOverlay(passwords[i]) && !Helper.hasOverlay(passwords[i])) {
-                generators[i] = Object.create(VaultGenerator).init(passwords[i], settings, DEFAULT_SETTINGS);
+                generators[i] = Object.create(VaultGenerator).init(passwords[i], settings, DEFAULT_SETTINGS, domainService);
             }
         }
     } else if (pwLength === 0 && password) {
@@ -34,7 +36,7 @@ chrome.storage.local.get('settings', function (items) {
         settings.autosend = false;
 
         if (!generators[0] && !Helper.isOverlay(password) && !Helper.hasOverlay(password)) {
-            generators[0] = Object.create(VaultGenerator).init(password, settings, DEFAULT_SETTINGS);
+            generators[0] = Object.create(VaultGenerator).init(password, settings, DEFAULT_SETTINGS, domainService);
         }
     }
 

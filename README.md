@@ -40,7 +40,7 @@ Tested Services
 Tested and not working Services
 ================================
 * o2online.de - change password does not work
-
+* comdirect.de - layout wrong
 
 Issues
 =======

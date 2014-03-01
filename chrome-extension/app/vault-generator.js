@@ -466,8 +466,8 @@ VaultGenerator._setImgUrls = function (defaultSettings) {
     this._closeImgUrl = defaultSettings.imgUrl;
 };
 
-VaultGenerator._setDomainService = function (serviceExceptions) {
-    this._domainService = Object.create(DomainService).init(serviceExceptions)
+VaultGenerator._setDomainService = function (domainService) {
+    this._domainService = domainService;
 };
 
 VaultGenerator._initProperties = function (pwField, defaultSettings) {
@@ -482,12 +482,12 @@ VaultGenerator._initSettings = function (settings, defaultSettings) {
     this._setGeneratorSettings(settings, defaultSettings);
 };
 
-VaultGenerator.init = function (pwField, settings, defaultSettings) {
+VaultGenerator.init = function (pwField, settings, defaultSettings, domainService) {
     if (!pwField) {
         return false;
     }
 
-    this._setDomainService(defaultSettings.serviceExceptions);
+    this._setDomainService(domainService);
     this._initProperties(pwField, defaultSettings);
     this._initSettings(settings, defaultSettings);
     this._createOverlay();
