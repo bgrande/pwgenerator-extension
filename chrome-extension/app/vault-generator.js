@@ -56,8 +56,8 @@ var VaultGenerator = {
     _domainService: null
 };
 
-VaultGenerator._setLoginName = function (defaultSettings) {
-    var userFieldList = defaultSettings.userFieldList,
+VaultGenerator._setLoginName = function (settings) {
+    var userFieldList = settings.userFieldList,
         login = Helper.getElementFromList(userFieldList);
 
     if (!login) {
@@ -425,26 +425,26 @@ VaultGenerator._createOverlay = function () {
     this.setServicename();
 };
 
-VaultGenerator._setVaultSettings = function (settings, defaultSettings) {
+VaultGenerator._setVaultSettings = function (settings) {
     var vaultSettings = {}, i, n;
-
-    vaultSettings.length = undefined !== settings.plength ? settings.plength : defaultSettings.length;
-    vaultSettings.repeat = undefined !== settings.repeat ? settings.repeat : defaultSettings.repeat;
-    vaultSettings.iteration = undefined !== settings.iteration ? settings.iteration : defaultSettings.iteration;
+    // @TODO change plength to length (needs option migration)
+    vaultSettings.length = undefined !== settings.plength ? settings.plength : settings.length;
+    vaultSettings.repeat = settings.repeat;
+    vaultSettings.iteration = settings.iteration;
 
     for (i = 0, n = TYPES.length; i < n; i++) {
-        vaultSettings[TYPES[i]] = undefined !== settings[TYPES[i]] ? settings[TYPES[i]] : defaultSettings[TYPES[i]];
+        vaultSettings[TYPES[i]] = settings[TYPES[i]];
     }
 
     this._vaultSettings = vaultSettings;
 };
 
-VaultGenerator._setGeneratorSettings = function (settings, defaultSettings) {
+VaultGenerator._setGeneratorSettings = function (settings) {
     var generatorSettings = {};
 
-    generatorSettings.autosend = undefined !== settings.autosend ? settings.autosend : defaultSettings.autosend;
-    generatorSettings.servicename = undefined !== settings.servicename ? settings.servicename : defaultSettings.servicename;
-    generatorSettings.defServicename = undefined !== settings.defServicename ? settings.defServicename : defaultSettings.defServicename;
+    generatorSettings.autosend = settings.autosend;
+    generatorSettings.servicename = settings.servicename;
+    generatorSettings.defServicename = settings.defServicename;
 
     this._generatorSettings = generatorSettings;
 };
@@ -462,34 +462,34 @@ VaultGenerator.getPwField = function () {
     return $(this._pwFieldIdentifier);
 };
 
-VaultGenerator._setImgUrls = function (defaultSettings) {
-    this._closeImgUrl = defaultSettings.imgUrl;
+VaultGenerator._setImgUrls = function (settings) {
+    this._closeImgUrl = settings.imgUrl;
 };
 
 VaultGenerator._setDomainService = function (domainService) {
     this._domainService = domainService;
 };
 
-VaultGenerator._initProperties = function (pwField, defaultSettings) {
+VaultGenerator._initProperties = function (pwField, settings) {
     this._setPwFieldIdentifier(pwField);
     this._setPasswordIdentifier(pwField);
-    this._setImgUrls(defaultSettings);
-    this._setLoginName(defaultSettings);
+    this._setImgUrls(settings);
+    this._setLoginName(settings);
 };
 
-VaultGenerator._initSettings = function (settings, defaultSettings) {
-    this._setVaultSettings(settings, defaultSettings);
-    this._setGeneratorSettings(settings, defaultSettings);
+VaultGenerator._initSettings = function (settings) {
+    this._setVaultSettings(settings);
+    this._setGeneratorSettings(settings);
 };
 
-VaultGenerator.init = function (pwField, settings, defaultSettings, domainService) {
+VaultGenerator.init = function (pwField, settings, domainService) {
     if (!pwField) {
         return false;
     }
 
     this._setDomainService(domainService);
-    this._initProperties(pwField, defaultSettings);
-    this._initSettings(settings, defaultSettings);
+    this._initProperties(pwField, settings);
+    this._initSettings(settings);
     this._createOverlay();
 
     var that = this;
