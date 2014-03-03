@@ -59,6 +59,9 @@ var DEFAULT_SETTINGS = {
                 space: 0,
                 dash: 0,
                 symbol: 0
+            },
+            'npmjs.org': {
+                symbol: 0
             }
         },
 
