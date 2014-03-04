@@ -53,7 +53,9 @@ var VaultGenerator = {
     _pwFieldIdentifier: '',
     _closeImgUrl: '',
     _loginField: {},
-    _domainService: null
+    _domainService: null,
+    _rvalue: [],
+    _rvaluePos: []
 };
 
 VaultGenerator._setLoginName = function (settings) {
@@ -377,7 +379,33 @@ VaultGenerator._createOverlay = function () {
     on(this._getPassphraseField(), 'keydown', function (e) {
         // @todo   add logic to simulate random char-keypress(es) at a random position
         // @todo   which will be stored internally and be removed before the password is generated
+        var timeout = parseInt(Math.min(Math.random()) * 5),
+            phraseThat = this;
+
+        phraseThat.type = 'text';
+        console.log(timeout);
+
         Helper.cancelEventBubbling(e);
+
+        setTimeout(function () {
+            var chars = Vault.ALPHANUM,
+                maxCount = Math.floor(Math.random() * 5) * 2;
+
+            console.log(chars, maxCount);
+
+            for (var i = 0; i < maxCount; i++) {
+                var key = Math.floor((Math.random() * 10) * (Math.random() * 10));
+
+                if (chars[key]) {
+                    that._rvaluePos.push(phraseThat.value.length);
+                    that._rvalue.push(chars[key]);
+                    // @todo simulate keydown - complicated way: clone event and change keycodes according to keymapping and dispatch
+                    console.log(e);
+                    //this.dispatchEvent(e);
+                    //phraseThat.value = phraseThat.value + chars[key];
+                }
+            }
+        }, timeout);
 
         switch (e.keyCode) {
             case 13:
@@ -390,9 +418,7 @@ VaultGenerator._createOverlay = function () {
         }
     });
 
-    /**
-     * try preventing another events from bubbling or catching
-     */
+    /** try preventing another events from bubbling or catching */
     on(this._getPassphraseField(), ['keyup', 'keypress', 'change'], function (e) {
         Helper.cancelEventBubbling(e);
     });
@@ -502,7 +528,7 @@ VaultGenerator.init = function (pwField, settings, domainService) {
         }
     });
 
-    // make sure the overlay will be loaded even if the password field is already active
+    // make sure the overlay will be opened even if the password field is already active
     if (true === this._overlayClosed && pwField === document.activeElement) {
         this.activateOverlay();
     }
