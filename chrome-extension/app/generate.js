@@ -11,7 +11,6 @@ if (!generators) {
 chrome.storage.local.get('settings', function (items) {
     var password = Helper.getElementFromList(DEFAULT_SETTINGS.pwFieldList),
         passwords = document.querySelectorAll("input[type=password]"),
-        // @todo merge default_settings and settings here and only inject one settings object into generator
         settings = (undefined !== items.settings) ? Helper.mergeObject(DEFAULT_SETTINGS, JSON.parse(items.settings)) : DEFAULT_SETTINGS,
         domainService = Object.create(DomainService).init(DEFAULT_SETTINGS.serviceExceptions),
         pwLength = passwords.length, i;
