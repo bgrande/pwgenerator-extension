@@ -332,8 +332,7 @@ VaultGenerator.setServicename = function () {
 };
 
 VaultGenerator.activateOverlay = function () {
-    var passphrase = this._getPassphraseField(),
-        pwField = this.getPwField();
+    var passphrase = this._getPassphraseField();
 
     this.toggleOverlay(true);
 
