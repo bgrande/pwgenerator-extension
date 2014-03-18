@@ -275,7 +275,7 @@ VaultGenerator._vaultButtonSubmit = function (pwField) {
     pwField.type = (this._showPw) ? 'text' : 'password';
     pwField.value = newPassword;
 
-    this.closeOverlay(pwField);
+    this.closeOverlay();
 
     if (this._generatorSettings.autosend && !this._showPw) {
         loginFormNumber = this.getLoginForm(pwField);
@@ -345,10 +345,10 @@ VaultGenerator.activateOverlay = function () {
     this.setServicename();
 };
 
-VaultGenerator.closeOverlay = function (pwField) {
+VaultGenerator.closeOverlay = function () {
     this.toggleOverlay(false);
     this._overlayClosed = true;
-    pwField.focus();
+    this.getPwField().focus();
 };
 
 VaultGenerator._createOverlay = function () {
@@ -374,8 +374,6 @@ VaultGenerator._createOverlay = function () {
     });
 
     on(this._getPassphraseField(), 'keydown', function (e) {
-        // @todo   add logic to simulate random char-keypress(es) at a random position
-        // @todo   which will be stored internally and be removed before the password is generated
         Helper.cancelEventBubbling(e);
 
         switch (e.keyCode) {
@@ -384,14 +382,12 @@ VaultGenerator._createOverlay = function () {
                 that._vaultButtonSubmit(pwField);
                 break;
             case 27:
-                that.closeOverlay(pwField);
+                that.closeOverlay();
                 break;
         }
     });
 
-    /**
-     * try preventing another events from bubbling or catching
-     */
+    /** try preventing another events from bubbling or catching */
     on(this._getPassphraseField(), ['keyup', 'keypress', 'change'], function (e) {
         Helper.cancelEventBubbling(e);
     });
@@ -405,7 +401,7 @@ VaultGenerator._createOverlay = function () {
                 break;
             case 27:
                 e.preventDefault();
-                that.closeOverlay(pwField);
+                that.closeOverlay();
                 break;
         }
     });
@@ -413,12 +409,12 @@ VaultGenerator._createOverlay = function () {
     on($(this._overlayId), 'keydown', function (e) {
         if (e.keyCode === 27) {
             e.preventDefault();
-            that.closeOverlay(pwField);
+            that.closeOverlay();
         }
     });
 
     on($('vault-close-' + pwId), 'click', function () {
-        that.closeOverlay(pwField);
+        that.closeOverlay();
     });
 
     this.setServicename();
