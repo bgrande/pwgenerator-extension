@@ -502,7 +502,7 @@ VaultGenerator.init = function (pwField, settings, domainService) {
         }
     });
 
-    // make sure the overlay will be loaded even if the password field is already active
+    // make sure the overlay will be opened even if the password field is already active
     if (true === this._overlayClosed && pwField === document.activeElement) {
         this.activateOverlay();
     }
