@@ -359,6 +359,8 @@ VaultGenerator._createOverlay = function () {
         pwField = this.getPwField(),
         that = this;
 
+    Helper.detectEventCatching(pwField);
+
     this._addOverlayDiv(pwField);
     this._overlayId = 'vault-generator-overlay-' + pwId;
 

@@ -213,3 +213,18 @@ Helper.mergeObject = function (first, second) {
 
     return first;
 };
+
+Helper.detectEventCatching = function (element) {
+    //element.onclick = function(e) { console.log('Clicked!') ; } ; // Attached test event.
+    if (typeof(element) === 'object') {
+        for (var i in element) {
+            if (i.substr(0,2) === 'on' && typeof(element[i]) === 'function') {
+                if (i == 'onclick' || i == 'onkeydown' || i == 'onkeyup' || i == 'onkeypress' || i == 'onchange') {
+                    element[i] = function() {}; // Unbind with null function.
+                    alert('possible keylogger found!');
+                }
+    console.log('event found');
+            }
+        }
+    }
+};
