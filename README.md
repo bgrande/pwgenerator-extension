@@ -34,13 +34,14 @@ Tested Services
 * twitter.com
 * alternate.de -> password rule: 'length' => 15
 * o2online.de -> password rule: 'symbol' => 0, 'dash' => 0, 'space' => 0
+* comdirect.de - layout ok now
 
 ... more to come
 
 Tested and not working Services
 ================================
 * o2online.de - change password does not work
-* comdirect.de - layout wrong
+
 
 Issues
 =======
