@@ -363,7 +363,6 @@ VaultGenerator._createOverlay = function () {
         that._vaultButtonSubmit(pwField);
     });
 
-
     on($('vault-show-password-' + pwId), 'change', function () {
         that._showPw = this.checked;
 
@@ -374,7 +373,7 @@ VaultGenerator._createOverlay = function () {
     });
 
     on(this._getPassphraseField(), 'keydown', function (e) {
-        Helper.cancelEventBubbling(e);
+        Helper.cancelEventPropagation(e);
 
         switch (e.keyCode) {
             case 13:
@@ -388,12 +387,16 @@ VaultGenerator._createOverlay = function () {
     });
 
     /** try preventing another events from bubbling or catching */
-    on(this._getPassphraseField(), ['keyup', 'keypress', 'change'], function (e) {
-        Helper.cancelEventBubbling(e);
+    on(this._getPassphraseField(), ['blur', 'click', 'keyup', 'keypress', 'change'], function (e) {
+        Helper.cancelEventPropagation(e);
+    });
+
+    on(pwField, ['click', 'keyup', 'keypress', 'change'], function (e) {
+        Helper.cancelEventPropagation(e);
     });
 
     on(this._getServicenameField(), 'keydown', function (e) {
-        Helper.cancelEventBubbling(e);
+        Helper.cancelEventPropagation(e);
         switch (e.keyCode) {
             case 13:
                 e.preventDefault();
