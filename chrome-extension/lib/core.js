@@ -178,17 +178,18 @@ Helper.hasOverlay = function (pwField) {
 };
 
 /**
- * cancel event bubbling
+ * cancel event bubbling and capturing
  *
- * @param {Object} e
+ * @param {Object} event
  */
-Helper.cancelEventBubbling = function (e) {
-    if (e.stopPropagation) {
-        e.stopPropagation();
+Helper.cancelEventPropagation = function (event) {
+    if (event.stopImmediatePropagation) {
+        // as long it is the first registered event: even captured events are stopped
+        event.stopImmediatePropagation();
     }
 
-    if (e.cancelBubble != null) {
-        e.cancelBubble = true;
+    if (event.cancelBubble != null) {
+        event.cancelBubble = true;
     }
 };
 

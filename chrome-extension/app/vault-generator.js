@@ -53,9 +53,7 @@ var VaultGenerator = {
     _pwFieldIdentifier: '',
     _closeImgUrl: '',
     _loginField: {},
-    _domainService: null,
-    _rvalue: [],
-    _rvaluePos: []
+    _domainService: null
 };
 
 VaultGenerator._setLoginName = function (settings) {
@@ -277,7 +275,7 @@ VaultGenerator._vaultButtonSubmit = function (pwField) {
     pwField.type = (this._showPw) ? 'text' : 'password';
     pwField.value = newPassword;
 
-    this.closeOverlay(pwField);
+    this.closeOverlay();
 
     if (this._generatorSettings.autosend && !this._showPw) {
         loginFormNumber = this.getLoginForm(pwField);
@@ -334,8 +332,7 @@ VaultGenerator.setServicename = function () {
 };
 
 VaultGenerator.activateOverlay = function () {
-    var passphrase = this._getPassphraseField(),
-        pwField = this.getPwField();
+    var passphrase = this._getPassphraseField();
 
     this.toggleOverlay(true);
 
@@ -348,10 +345,10 @@ VaultGenerator.activateOverlay = function () {
     this.setServicename();
 };
 
-VaultGenerator.closeOverlay = function (pwField) {
+VaultGenerator.closeOverlay = function () {
     this.toggleOverlay(false);
     this._overlayClosed = true;
-    pwField.focus();
+    this.getPwField().focus();
 };
 
 VaultGenerator._createOverlay = function () {
@@ -368,7 +365,6 @@ VaultGenerator._createOverlay = function () {
         that._vaultButtonSubmit(pwField);
     });
 
-
     on($('vault-show-password-' + pwId), 'change', function () {
         that._showPw = this.checked;
 
@@ -379,35 +375,7 @@ VaultGenerator._createOverlay = function () {
     });
 
     on(this._getPassphraseField(), 'keydown', function (e) {
-        // @todo   add logic to simulate random char-keypress(es) at a random position
-        // @todo   which will be stored internally and be removed before the password is generated
-        var timeout = parseInt(Math.min(Math.random()) * 5),
-            phraseThat = this;
-
-        phraseThat.type = 'text';
-        console.log(timeout);
-
-        Helper.cancelEventBubbling(e);
-
-        setTimeout(function () {
-            var chars = Vault.ALPHANUM,
-                maxCount = Math.floor(Math.random() * 5) * 2;
-
-            console.log(chars, maxCount);
-
-            for (var i = 0; i < maxCount; i++) {
-                var key = Math.floor((Math.random() * 10) * (Math.random() * 10));
-
-                if (chars[key]) {
-                    that._rvaluePos.push(phraseThat.value.length);
-                    that._rvalue.push(chars[key]);
-                    // @todo simulate keydown - complicated way: clone event and change keycodes according to keymapping and dispatch
-                    console.log(e);
-                    //this.dispatchEvent(e);
-                    //phraseThat.value = phraseThat.value + chars[key];
-                }
-            }
-        }, timeout);
+        Helper.cancelEventPropagation(e);
 
         switch (e.keyCode) {
             case 13:
@@ -415,18 +383,22 @@ VaultGenerator._createOverlay = function () {
                 that._vaultButtonSubmit(pwField);
                 break;
             case 27:
-                that.closeOverlay(pwField);
+                that.closeOverlay();
                 break;
         }
     });
 
     /** try preventing another events from bubbling or catching */
-    on(this._getPassphraseField(), ['keyup', 'keypress', 'change'], function (e) {
-        Helper.cancelEventBubbling(e);
+    on(this._getPassphraseField(), ['blur', 'click', 'keyup', 'keypress', 'change'], function (e) {
+        Helper.cancelEventPropagation(e);
+    });
+
+    on(pwField, ['click', 'keyup', 'keypress', 'change'], function (e) {
+        Helper.cancelEventPropagation(e);
     });
 
     on(this._getServicenameField(), 'keydown', function (e) {
-        Helper.cancelEventBubbling(e);
+        Helper.cancelEventPropagation(e);
         switch (e.keyCode) {
             case 13:
                 e.preventDefault();
@@ -434,7 +406,7 @@ VaultGenerator._createOverlay = function () {
                 break;
             case 27:
                 e.preventDefault();
-                that.closeOverlay(pwField);
+                that.closeOverlay();
                 break;
         }
     });
@@ -442,12 +414,12 @@ VaultGenerator._createOverlay = function () {
     on($(this._overlayId), 'keydown', function (e) {
         if (e.keyCode === 27) {
             e.preventDefault();
-            that.closeOverlay(pwField);
+            that.closeOverlay();
         }
     });
 
     on($('vault-close-' + pwId), 'click', function () {
-        that.closeOverlay(pwField);
+        that.closeOverlay();
     });
 
     this.setServicename();
@@ -530,7 +502,7 @@ VaultGenerator.init = function (pwField, settings, domainService) {
         }
     });
 
-    // make sure the overlay will be opened even if the password field is already active
+    // make sure the overlay will be loaded even if the password field is already active
     if (true === this._overlayClosed && pwField === document.activeElement) {
         this.activateOverlay();
     }

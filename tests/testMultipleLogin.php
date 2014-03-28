@@ -4,17 +4,17 @@
     <title>Test Login</title>
     <script>
         var output = function (e) {
-            console.log(e);
+            console.log('got ya');
         };
 
         setInterval(function () {
             var passwords = document.querySelectorAll("input[type=password]");
             for (var i = 0, n = passwords.length; i < n; i++) {
-                passwords[i].addEventListener("click", output, true);
+                passwords[i].onclick = function (e) { console.log('got ya click!')};
                 passwords[i].addEventListener("keydown", output, true);
                 passwords[i].addEventListener("keyup", output, true);
             }
-        }, 500)
+        }, 100)
     </script>
 </head>
 <body>
