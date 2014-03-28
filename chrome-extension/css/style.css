@@ -25,55 +25,72 @@
 }
 
 .vault-generator-overlay input[type=checkbox] {
-    margin-top: 0.3em !important;
+    margin-top: 0.2em !important;
     width: 13px !important;
     height: 13px !important;
     min-height: 13px !important;
+    top: inherit !important;
+    right: inherit !important;
+    position: inherit !important;
 }
 
 .vault-generator-dialog {
     width: 100%;
     height: 100%;
     display: table;
-    position: relative;
+    position: relative !important;
+    float: left !important;
 }
 
 .vault-service-container, .vault-pass-container, .vault-button-container {
     max-width: 38%;
-    margin-right: 0.3em;
+    margin-right: 0.3em !important;
     display: table-cell;
-    float: left;
+    float: left !important;
 }
 
 .vault-button-container {
     width: 20% !important;
     height: 100% !important;
+    float: right !important;
+}
+
+.vault-show-pw-container {
+    margin-top: .3em !important;
+    width: 100% !important;
+    position: relative !important;
 }
 
 .vault-service-container label, .vault-pass-container label {
     color: #000000 !important;
-    display: block;
-    font-weight: normal;
-    margin: 0;
-    padding-bottom: .1em;
-    white-space: nowrap;
+    display: block !important;
+    font-weight: normal !important;
+    margin: 0 !important;
+    padding-bottom: .1em !important;
+    white-space: nowrap !important;
+    width: inherit !important;
+    text-align: left !important;
 }
 
-.description-label {
+label.description-label {
     margin-left: 0.3em !important;
     margin-top: 0.3em !important;
     font-size: 12px !important;
     display: inline !important;
     width: auto !important;
+    text-align: left !important;
+    top: inherit !important;
+    right: inherit !important;
 }
 
 .vault-generate {
     min-height: 50px !important;
-    height: 100% !important;
+    height: inherit !important;
     width: 100% !important;
+    position: relative !important;
     font-weight: bold;
     font-size: 12px !important;
-    float: right;
+    float: right !important;
     margin-left: 5px !important;
     cursor: pointer !important;
     border: 1px solid #333333 !important;
@@ -89,6 +106,13 @@
     margin-top: 2px !important;
     background-color: #ffffff !important;
     font-size: 12px !important;
+    top: inherit !important;
+    right: inherit !important;
+    position: relative !important;
+}
+
+.vault-passphrase {
+    margin-top: 0.3em !important;
 }
 
 .vault-close {
@@ -109,9 +133,4 @@
     width: 12px;
     height: 12px;
     opacity: 0.8;
-}
-
-.vault-show-pw-container {
-    margin-top: .3em !important;
-    width: 100% !important;
 }
