@@ -62,6 +62,10 @@ var DEFAULT_SETTINGS = {
             },
             'npmjs.org': {
                 symbol: 0
+            },
+            'hosteurope.de': {
+                length: 16
+                // @todo symbols | and \ are not allowed
             }
         },
 
