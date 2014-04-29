@@ -1,9 +1,3 @@
-/*
- vault
- https://github.com/jcoglan/vault
- Copyright (c) 2011-2013 James Coglan
- MIT License
- */
 var Vault = function(settings) {
   this._phrase   = settings.phrase || '';
   this._length   = settings.length || Vault.DEFAULT_LENGTH;
@@ -50,7 +44,7 @@ Vault.extend = function(target, source) {
 };
 
 Vault.createHash = function(key, message, entropy) {
-  var CJS   = (typeof CryptoJS !== 'undefined') ? CryptoJS : require('./crypto-js-3.1.2'),
+  var CJS   = (typeof CryptoJS !== 'undefined') ? CryptoJS : require('vault-cipher/lib/crypto-js'),
       bytes = (entropy || 256) / 8;
 
   return CJS.PBKDF2(key, message, {keySize: Math.ceil(bytes / 4), iterations: 8}).toString();

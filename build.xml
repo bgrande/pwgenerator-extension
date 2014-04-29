@@ -2,6 +2,8 @@
 <project name="build" default="zip" basedir=".">
 
     <property name="build-dir" value="build" />
+    <property name="extension-dir" value="chrome-extension" />
+    <property name="vendor-dir" value="vendor/vault" />
     <property name="project-version" value="1.3.1" />
     <property name="project-name" value="password-generator" />
     <property name="folder-to-zip" value="${project-name}-${project-version}" />
@@ -16,7 +18,7 @@
         <mkdir dir="temp/${folder-to-zip}" />
 
         <copy todir="temp/${folder-to-zip}">
-            <fileset dir="chrome-extension" />
+            <fileset dir="${extension-dir}" />
         </copy>
 
         <copy file="src/key.pem" todir="temp/${folder-to-zip}/" />
@@ -24,6 +26,16 @@
 
     <target name="zip" depends="prepare">
         <zip destfile="${build-dir}/${project-name}-${project-version}.zip" basedir="temp/${folder-to-zip}" />
+    </target>
+
+    <target name="update-vendor">
+        <exec executable="git" dir="${vendor-dir}">
+            <arg value="submodule"/>
+            <arg value="update"/>
+        </exec>
+
+        <copy file="${vendor-dir}/lib/vault.js" tofile="${extension-dir}/lib/vault.js" />
+        <copy file="${vendor-dir}/node_modules/vault-cipher/lib/crypto-js.js" tofile="${extension-dir}/lib/crypto-js.js" />
     </target>
 
 </project>
