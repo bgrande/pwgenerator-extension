@@ -12,12 +12,17 @@
       <div class="sub">
         <div class="length">
           <label for="vlength" id="length-label">Password length</label>
-          <input type="text" class="text" name="vlength" id="vlength" value="20" autocomplete="off">
+          <input type="text" min="0" class="text" name="vlength" id="vlength" value="20" autocomplete="off">
+        </div>
+
+        <div class="iteration">
+          <label for="iteration" id="iteration-label">Max iteration</label>
+          <input maxlength="2" type="text" class="text" name="repeat" id="iteration" value="8" autocomplete="off" autocapitalize="off">
         </div>
 
         <div class="repeat">
           <label for="repeat" id="repeat-label">Max repetition</label>
-          <input type="text" class="text" name="repeat" id="repeat" value="" autocomplete="off">
+          <input maxlength="2" type="text" class="text" name="repeat" id="repeat" value="" autocomplete="off">
         </div>
 
         <div class="autosend">
@@ -66,7 +71,7 @@
               <tr>
                 <th scope="row">
                   <label for="required" id="required-label">Required</label>
-                  (<input type="text" class="text" name="required" id="required" value="2" autocomplete="off">)
+                  (<input maxlength="2" type="text" class="text" name="required" id="required" value="2" autocomplete="off">)
                 </th>
                 <td><input type="radio" name="lower" value="required"></td>
                 <td><input type="radio" name="upper" value="required"></td>

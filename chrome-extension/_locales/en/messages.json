@@ -20,11 +20,14 @@
     "repeatLabel": {
         "message": "Max repetition"
     },
+    "iterationLabel": {
+        "message": "Max iteration"
+    },
     "autosendLabel": {
         "message": "Automatically send form after insert"
     },
     "servicenameOptionLabel": {
-        "message": "Use loginname as servicename"
+        "message": "Use loginname as servicename or"
     },
     "defservicenameLabel": {
         "message": "Use "

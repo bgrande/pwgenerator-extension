@@ -71,15 +71,18 @@ input.text, input.password {
 .password .show label {
   display: inline;
 }
-.length, .repeat {
-  float: left;
-  margin-bottom: 1em;
-  width: 47%;
+.length, .repeat, .iteration {
+    float: left;
+    margin-bottom: 1em;
+    width: 28%;
 }
-.length {
-  clear: both;
+.iteration, .length {
   margin-right: 6%;
 }
+.repeat {
+    clear: right;
+}
+
 .generator input {
   font-family: Monaco, Courier New, monospace;
 }
