@@ -31,12 +31,6 @@
     <target name="update-vendor">
         <exec executable="git" dir=".">
             <arg value="submodule"/>
-            <arg value="init"/>
-            <arg value="vendor/vault"/>
-        </exec>
-
-        <exec executable="git" dir=".">
-            <arg value="submodule"/>
             <arg value="update"/>
             <arg value="-f"/>
             <arg value="--recursive"/>
@@ -46,7 +40,7 @@
             <arg value="submodule"/>
             <arg value="update"/>
             <arg value="-f"/>
-            <arg value="--recursive"/>
+            <arg value="node_modules/vault-cipher"/>
         </exec>
 
         <copy file="${vendor-dir}/lib/vault.js" tofile="${extension-dir}/lib/vault.js" />
