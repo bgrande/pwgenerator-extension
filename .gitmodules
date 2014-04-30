@@ -1,3 +1,3 @@
-[submodule "vend/vault"]
-	path = vend/vault
-	url = git@github.com:bgrande/vault.git
+[submodule "vendor/vault"]
+    path = vendor/vault
+    url = git@github.com:bgrande/vault.git
