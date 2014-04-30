@@ -3,7 +3,7 @@
 
     <property name="build-dir" value="build" />
     <property name="extension-dir" value="chrome-extension" />
-    <property name="vendor-dir" value="vendor/vault" />
+    <property name="vendor-dir" value="vend/vault" />
     <property name="project-version" value="1.3.1" />
     <property name="project-name" value="password-generator" />
     <property name="folder-to-zip" value="${project-name}-${project-version}" />
