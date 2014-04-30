@@ -18,7 +18,7 @@
         "message": "Max Wiederholung"
     },
     "iterationLabel": {
-        "message": "Max Iteration"
+        "message": "Iteration"
     },
     "autosendLabel": {
         "message": "Formular automatisch nach Einfügen des Passworts abschicken"

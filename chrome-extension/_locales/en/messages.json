@@ -21,7 +21,7 @@
         "message": "Max repetition"
     },
     "iterationLabel": {
-        "message": "Max iteration"
+        "message": "Iteration"
     },
     "autosendLabel": {
         "message": "Automatically send form after insert"
