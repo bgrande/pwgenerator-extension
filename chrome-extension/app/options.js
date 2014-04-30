@@ -3,6 +3,7 @@
 var required    = $('required'),
     length      = $('vlength'),
     repeat      = $('repeat'),
+    iteration   = $('iteration'),
     autosend    = $('autosend'),
     servicename = $('servicename'),
     prefix      = $('prefix'),
@@ -55,6 +56,10 @@ var getOptionSettings = function (settings) {
         repeat.value = settings.repeat;
     }
 
+    if (settings.iteration) {
+        iteration.value = settings.iteration;
+    }
+
     if (settings.plength) {
         length.value = settings.plength;
     }
@@ -90,15 +95,16 @@ var saveChromeSettings = function (settings) {
     });
 };
 
-var saveOptions = function (length, required, autosend, defServicename, servicename, prefix, suffix) {
+var saveOptions = function (length, repeat, iteration, required, autosend, defServicename, servicename, prefix, suffix) {
     var passLength        = parseInt(length.value, 10),
         requiredLength    = parseInt(required.value, 10),
         autosendChecked   = autosend.checked,
         defServicenameVal = defServicename.value,
         servicenameVal    = undefined,
-        passRepeat, value, settings = {}, i, n;
+        passRepeat, genIteration, value, settings = {}, i, n;
 
     passRepeat = !repeat.value ? 0: parseInt(repeat.value, 10);
+    genIteration = !iteration.value ? 0: parseInt(iteration.value, 10);
 
     for (i = 0, n = TYPES.length; i < n; i++) {
         value = getRadio(TYPES[i]);
@@ -122,6 +128,7 @@ var saveOptions = function (length, required, autosend, defServicename, servicen
 
     settings.plength = passLength;
     settings.repeat = passRepeat;
+    settings.iteration = genIteration;
     settings.autosend = autosendChecked;
     settings.servicename = servicenameVal;
     settings.requiredLength = requiredLength;
@@ -137,7 +144,7 @@ chrome.storage.local.get('settings', function (items) {
 on($('save-options'), 'click', function () {
     var status = $('option-status');
 
-    saveOptions(length, required, autosend, defServicename, servicename, prefix, suffix);
+    saveOptions(length, repeat, iteration, required, autosend, defServicename, servicename, prefix, suffix);
 
     // let user know it's saved
     status.style.display = 'block';
