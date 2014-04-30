@@ -1,13 +1,37 @@
-var Vault = function(settings) {
-  this._phrase    = settings.phrase || '';
-  this._length    = settings.length || Vault.DEFAULT_LENGTH;
-  this._repeat    = settings.repeat || Vault.DEFAULT_REPEAT;
-  this._iteration = settings.iteration || Vault.DEFAULT_ITERATION;
-  this._allowed   = Vault.ALL.slice();
-  this._required  = [];
+var Vault = function (settings) {
+    this._phrase = settings.phrase || '';
+    this._length = settings.length || Vault.DEFAULT_LENGTH;
+    this._repeat = settings.repeat || Vault.DEFAULT_REPEAT;
+    this._iteration = settings.iteration || Vault.DEFAULT_ITERATION;
+    this._allowed = Vault.ALL.slice();
+    this._required = [];
+
+    var i, n;
+
+    if (settings.SYMBOL) {
+      var isValidSymbol = false,
+          allowedSymbols = '!"#$%&\'()*+,./:;<=>?@[\\]^{|}~',
+          overwriteSymbols = settings.SYMBOL.split('');
+
+      for (var o = 0, m = overwriteSymbols.length; o < m; o++) {
+        var validSymbol = false;
+        for (i = 0, n = allowedSymbols.length; i < n; i++) {
+          if (overwriteSymbols[o] == allowedSymbols[i]) {
+            validSymbol = true;
+          } else {
+            continue;
+          }
+        }
+        isValidSymbol = validSymbol;
+      }
+
+      if (isValidSymbol) {
+        this.SYMBOL_OVERWRITE = settings.SYMBOL.split('');
+      }
+    }
 
   var types = Vault.TYPES, value;
-  for (var i = 0, n = types.length; i < n; i++) {
+  for (i = 0, n = types.length; i < n; i++) {
     value = settings[types[i].toLowerCase()];
     if (value === 0) {
       this.subtract(Vault[types[i]]);
@@ -32,7 +56,7 @@ Vault.NUMBER    = '0123456789'.split('');
 Vault.ALPHANUM  = Vault.ALPHA.concat(Vault.NUMBER);
 Vault.SPACE     = [' '];
 Vault.DASH      = ['-', '_'];
-Vault.SYMBOL    = '!"#$%&\'()*+,./:;<=>?@[\\]^{|}~'.split('').concat(Vault.DASH);
+Vault.SYMBOL    = (!Vault.SYMBOL_OVERWRITE) ? '!"#$%&\'()*+,./:;<=>?@[\\]^{|}~'.split('').concat(Vault.DASH) : Vault.SYMBOL_OVERWRITE.concat(Vault.DASH);
 Vault.ALL       = Vault.ALPHANUM.concat(Vault.SPACE).concat(Vault.SYMBOL);
 
 Vault.TYPES = 'LOWER UPPER NUMBER SPACE DASH SYMBOL'.split(' ');
