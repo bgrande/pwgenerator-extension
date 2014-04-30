@@ -37,6 +37,11 @@
 
         <exec executable="git" dir="${vendor-dir}">
             <arg value="submodule"/>
+            <arg value="init"/>
+        </exec>
+
+        <exec executable="git" dir="${vendor-dir}">
+            <arg value="submodule"/>
             <arg value="update"/>
             <arg value="-f"/>
         </exec>
