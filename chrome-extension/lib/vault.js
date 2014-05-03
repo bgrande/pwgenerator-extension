@@ -1,48 +1,23 @@
-var SYMBOLS = '!"#$%&\'()*+,./:;<=>?@[\\]^{|}~';
+var Vault = function(settings) {
+  this._phrase    = settings.phrase || '';
+  this._length    = settings.length || Vault.DEFAULT_LENGTH;
+  this._repeat    = settings.repeat || Vault.DEFAULT_REPEAT;
+  this._iteration = settings.iteration || Vault.DEFAULT_ITERATION;
+  this._allowed   = Vault.ALL.slice();
+  this._required  = [];
 
-var Vault = function (settings) {
-    this._phrase = settings.phrase || '';
-    this._length = settings.length || Vault.DEFAULT_LENGTH;
-    this._repeat = settings.repeat || Vault.DEFAULT_REPEAT;
-    this._iteration = settings.iteration || Vault.DEFAULT_ITERATION;
-    this._allowed = Vault.ALL.slice();
-    this._required = [];
-
-    var i, n;
-
-    if (settings.symbols) {
-        var isValidSymbol = false,
-            allowedSymbols = SYMBOLS.split(''),
-            overwriteSymbols = settings.symbols.split('');
-
-        for (var o = 0, m = overwriteSymbols.length; o < m; o++) {
-            var validSymbol = false;
-            for (i = 0, n = allowedSymbols.length; i < n; i++) {
-                if (overwriteSymbols[o] !== allowedSymbols[i]) {
-                    continue;
-                }
-                validSymbol = true;
-            }
-            isValidSymbol = validSymbol;
-        }
-
-        if (isValidSymbol) {
-            this.SYMBOL = settings.symbols.split('');
-        }
+  var types = Vault.TYPES, value;
+  for (var i = 0, n = types.length; i < n; i++) {
+    value = settings[types[i].toLowerCase()];
+    if (value === 0) {
+      this.subtract(Vault[types[i]]);
+    } else if (typeof value === 'number') {
+      this.require(Vault[types[i]], value);
     }
+  }
 
-    var types = Vault.TYPES, value;
-    for (i = 0, n = types.length; i < n; i++) {
-        value = settings[types[i].toLowerCase()];
-        if (value === 0) {
-            this.subtract(Vault[types[i]]);
-        } else if (typeof value === 'number') {
-            this.require(Vault[types[i]], value);
-        }
-    }
-
-    n = this._length - this._required.length;
-    while (n >= 0 && n--) this._required.push(this._allowed);
+  var n = this._length - this._required.length;
+  while (n >= 0 && n--) this._required.push(this._allowed);
 };
 
 Vault.UUID = 'e87eb0f4-34cb-46b9-93ad-766c5ab063e7';
@@ -57,7 +32,7 @@ Vault.NUMBER    = '0123456789'.split('');
 Vault.ALPHANUM  = Vault.ALPHA.concat(Vault.NUMBER);
 Vault.SPACE     = [' '];
 Vault.DASH      = ['-', '_'];
-Vault.SYMBOL    = (Vault.SYMBOL) ? Vault.SYMBOL.concat(Vault.DASH) : SYMBOLS.split('').concat(Vault.DASH);
+Vault.SYMBOL    = '!"#$%&\'()*+,./:;<=>?@[\\]^{|}~'.split('').concat(Vault.DASH);
 Vault.ALL       = Vault.ALPHANUM.concat(Vault.SPACE).concat(Vault.SYMBOL);
 
 Vault.TYPES = 'LOWER UPPER NUMBER SPACE DASH SYMBOL'.split(' ');
