@@ -15,7 +15,7 @@ var DEFAULT_SETTINGS = {
 
         autosend: false,
         servicename: 'prefix',
-        defServicename: Math.random().toString(36).substring(7) + '@',
+        defServicename: '',
 
         pwFieldList: [
             'pass', 'pass1', 'pass2', 'Pass', 'passwd', 'Passwd', 'password', 'Password', 'PASSWORD',
