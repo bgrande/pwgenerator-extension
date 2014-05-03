@@ -5,7 +5,6 @@ var Vault = function (settings) {
     this._length = settings.length || Vault.DEFAULT_LENGTH;
     this._repeat = settings.repeat || Vault.DEFAULT_REPEAT;
     this._iteration = settings.iteration || Vault.DEFAULT_ITERATION;
-    this._allowed = Vault.ALL.slice();
     this._required = [];
 
     var i, n;
@@ -33,8 +32,11 @@ var Vault = function (settings) {
 
         if (isValidSymbol) {
             Vault.SYMBOL = settings.symbols.split('');
+            Vault.ALL = Vault.ALPHANUM.concat(Vault.SPACE).concat(Vault.SYMBOL);
         }
     }
+
+    this._allowed = Vault.ALL.slice();
 
     var types = Vault.TYPES, value;
     for (i = 0, n = types.length; i < n; i++) {
