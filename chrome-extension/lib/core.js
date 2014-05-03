@@ -65,7 +65,7 @@ var DEFAULT_SETTINGS = {
             },
             'hosteurope.de': {
                 length: 16,
-                SYMBOL: '!"#$%&\'()*+,./:;<=>?@[]^{}~'
+                symbols: '!"#$%&\'()*+,./:;<=>?@[]^{}~'
             }
         },
 
