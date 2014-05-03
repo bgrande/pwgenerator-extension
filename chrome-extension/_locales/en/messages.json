@@ -99,9 +99,5 @@
     "showPasswordTitle": {
         "message": "Be careful! Make sure nobody is behind you!",
         "description": "Overlay show password checkbox title text"
-    },
-    "defServicenameDefault": {
-        "message": "myPrefix@",
-        "description": "Default Servicename for initial servicename prefix"
     }
 }
