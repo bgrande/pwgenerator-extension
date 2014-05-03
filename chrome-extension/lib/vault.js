@@ -37,6 +37,7 @@ var Vault = function (settings) {
     }
 
     this._allowed = Vault.ALL.slice();
+    // @todo refactoring needed!
 
     var types = Vault.TYPES, value;
     for (i = 0, n = types.length; i < n; i++) {
