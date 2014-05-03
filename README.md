@@ -1,9 +1,9 @@
 pwgenerator-extension
 ===========================
 
-Generates safe passwords within browser context based on James Coglan's vault (https://github.com/jcoglan/vault)
+This extension generates safe passwords within the browser and page context through an overlay. The extension is based on James Coglan's vault (https://github.com/jcoglan/vault). 
 
-Right now chrome only content_script extension with browser action support
+Right now this is a chrome only content_script extension with browser action support.
 
 Needed Chrome Permissions
 =========================
