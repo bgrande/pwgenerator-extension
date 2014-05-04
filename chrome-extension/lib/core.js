@@ -8,10 +8,8 @@ var DEFAULT_SETTINGS = {
         upper: null,
         number: null,
         dash: null,
-        space: 0,
-        symbol: 0,
-        prefix: false,
-        suffix: false,
+        space: null,
+        symbol: null,
 
         autosend: false,
         servicename: 'prefix',
