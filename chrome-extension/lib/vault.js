@@ -19,8 +19,6 @@ var Vault = function (settings) {
             for (i = 0, n = allowedSymbols.length; i < n; i++) {
                 if (overwriteSymbols[o] == allowedSymbols[i]) {
                     validSymbol = true;
-                } else {
-                    continue;
                 }
             }
             isValidSymbol = validSymbol;
@@ -37,7 +35,6 @@ var Vault = function (settings) {
     }
 
     this._allowed = Vault.ALL.slice();
-    // @todo refactoring needed!
 
     var types = Vault.TYPES, value;
     for (i = 0, n = types.length; i < n; i++) {
