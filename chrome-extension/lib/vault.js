@@ -29,7 +29,7 @@ var Vault = function (settings) {
         }
 
         if (isValidSymbol) {
-            Vault.SYMBOL = settings.symbols.split('');
+            Vault.SYMBOL = settings.symbols.split('').concat(Vault.DASH);
             Vault.ALL = Vault.ALPHANUM.concat(Vault.SPACE).concat(Vault.SYMBOL);
         }
     }
