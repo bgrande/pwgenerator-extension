@@ -29,8 +29,18 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 chrome.runtime.onInstalled.addListener(function (details) {
     DEFAULT_SETTINGS.defServicename = Math.random().toString(36).substring(7) + '@';
 
-    if ('update' === details.reason) {
-        chrome.storage.local.get('settings', function (items) {
+    chrome.storage.sync.get('settings', function (items) {
+        if (items.settings === undefined) {
+            chrome.storage.local.get('settings', function (items) {
+                chrome.storage.sync.set({
+                    settings: items.settings
+                });
+            });
+        }
+    });
+
+    if (details.reason === 'chrome_update' || details.reason === 'update') {
+        chrome.storage.sync.get('settings', function (items) {
             var settings = JSON.parse(items.settings), key, isNew = false;
 
             for (key in DEFAULT_SETTINGS) {
@@ -40,14 +50,14 @@ chrome.runtime.onInstalled.addListener(function (details) {
                 }
             }
 
-            if (true === isNew) {
-                chrome.storage.local.set({
+            if (isNew === true) {
+                chrome.storage.sync.set({
                     settings: JSON.stringify(settings)
                 });
             }
         });
     } else {
-        chrome.storage.local.set({
+        chrome.storage.sync.set({
             settings: JSON.stringify(DEFAULT_SETTINGS)
         });
     }

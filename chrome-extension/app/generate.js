@@ -8,7 +8,7 @@ if (!generators) {
     var generators = [];
 }
 
-chrome.storage.local.get('settings', function (items) {
+chrome.storage.sync.get('settings', function (items) {
     try {
         var password = Helper.getElementFromList(DEFAULT_SETTINGS.pwFieldList),
             passwords = document.querySelectorAll("input[type=password]"),

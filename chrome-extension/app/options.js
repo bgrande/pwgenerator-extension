@@ -90,7 +90,7 @@ var getOptionSettings = function (settings) {
 };
 
 var saveChromeSettings = function (settings) {
-    chrome.storage.local.set({
+    chrome.storage.sync.set({
         settings: JSON.stringify(settings)
     });
 };
@@ -137,7 +137,7 @@ var saveOptions = function (length, repeat, iteration, required, autosend, defSe
     saveChromeSettings(settings);
 };
 
-chrome.storage.local.get('settings', function (items) {
+chrome.storage.sync.get('settings', function (items) {
     getOptionSettings(JSON.parse(items.settings));
 });
 
