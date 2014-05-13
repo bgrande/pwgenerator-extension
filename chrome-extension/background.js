@@ -29,7 +29,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 chrome.runtime.onInstalled.addListener(function (details) {
     DEFAULT_SETTINGS.defServicename = Math.random().toString(36).substring(7) + '@';
 
-    if ('update' === details.reason) {
+    if (details.reason === 'chrome_update' || details.reason === 'update') {
         chrome.storage.local.get('settings', function (items) {
             var settings = JSON.parse(items.settings), key, isNew = false;
 
@@ -40,7 +40,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
                 }
             }
 
-            if (true === isNew) {
+            if (isNew === true) {
                 chrome.storage.local.set({
                     settings: JSON.stringify(settings)
                 });
