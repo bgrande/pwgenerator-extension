@@ -64,6 +64,10 @@ var DEFAULT_SETTINGS = {
             'hosteurope.de': {
                 length: 16,
                 symbols: '!%&/()=*+#.,:;'
+            },
+            'zooplus.de': {
+                length: 20,
+                symbols: '!"#$%&\'()*+,./:;<=>?@[\\]^{}~'
             }
         },
 
