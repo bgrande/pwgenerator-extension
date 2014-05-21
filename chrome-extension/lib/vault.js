@@ -4,7 +4,7 @@ var Vault = function (settings) {
     this._phrase = settings.phrase || '';
     this._length = settings.length || Vault.DEFAULT_LENGTH;
     this._repeat = settings.repeat || Vault.DEFAULT_REPEAT;
-    this._iteration = settings.iteration || Vault.DEFAULT_ITERATION;
+    this._iteration = Vault.DEFAULT_ITERATION;
     this._required = [];
 
     if (settings.iteration && settings.iteration > Vault.DEFAULT_ITERATION && settings.iteration <= Vault.MAX_ITERATION) {
