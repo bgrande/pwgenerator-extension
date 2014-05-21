@@ -7,6 +7,10 @@ var Vault = function (settings) {
     this._iteration = settings.iteration || Vault.DEFAULT_ITERATION;
     this._required = [];
 
+    if (settings.iteration && settings.iteration > Vault.DEFAULT_ITERATION && settings.iteration <= Vault.MAX_ITERATION) {
+        this._iteration = settings.iteration;
+    }
+    
     var i, n;
 
     if (settings.symbols) {
@@ -54,6 +58,7 @@ Vault.UUID = 'e87eb0f4-34cb-46b9-93ad-766c5ab063e7';
 Vault.DEFAULT_LENGTH = 20;
 Vault.DEFAULT_REPEAT = 0;
 Vault.DEFAULT_ITERATION = 8;
+Vault.MAX_ITERATION = 99;
 
 Vault.LOWER     = 'abcdefghijklmnopqrstuvwxyz'.split('');
 Vault.UPPER     = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');

@@ -13,14 +13,22 @@
         <delete dir="temp" />
     </target>
 
-    <target name="prepare" depends="clean">
-        <mkdir dir="temp" />
-        <mkdir dir="temp/${folder-to-zip}" />
-
+    <target name="prepare" depends="clean, get-vendor, create-temp, check-key, copy-key">
         <copy todir="temp/${folder-to-zip}">
             <fileset dir="${extension-dir}" />
         </copy>
+    </target>
 
+    <target name="check-key">
+        <available file="src/key.pem" property="key.present"/>
+    </target>
+
+    <target name="create-temp">
+        <mkdir dir="temp" />
+        <mkdir dir="temp/${folder-to-zip}" />
+    </target>
+
+    <target name="copy-key" if="key.present">
         <copy file="src/key.pem" todir="temp/${folder-to-zip}/" />
     </target>
 
@@ -28,23 +36,9 @@
         <zip destfile="${build-dir}/${project-name}-${project-version}.zip" basedir="temp/${folder-to-zip}" />
     </target>
 
-    <target name="update-vendor">
-        <exec executable="git" dir=".">
-            <arg value="submodule"/>
-            <arg value="update"/>
-            <arg value="-f"/>
-            <arg value="--recursive"/>
-        </exec>
-
-        <exec executable="git" dir="${vendor-dir}">
-            <arg value="submodule"/>
-            <arg value="update"/>
-            <arg value="-f"/>
-            <arg value="node_modules/vault-cipher"/>
-        </exec>
-
-        <copy file="${vendor-dir}/lib/vault.js" tofile="${extension-dir}/lib/vault.js" />
-        <copy file="${vendor-dir}/node_modules/vault-cipher/lib/crypto-js.js" tofile="${extension-dir}/lib/crypto-js.js" />
+    <target name="get-vendor">
+        <get src="https://raw.githubusercontent.com/bgrande/vault/master/lib/vault.js" dest="chrome-extension/lib/vault.js" />
+        <get src="https://raw.githubusercontent.com/jcoglan/vault-cipher/master/lib/crypto-js.js" dest="chrome-extension/lib/crypto-js.js" />
     </target>
 
 </project>
