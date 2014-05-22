@@ -1,3 +1,0 @@
-[submodule "vendor/vault"]
-	path = vendor/vault
-	url = git@github.com:bgrande/vault.git
