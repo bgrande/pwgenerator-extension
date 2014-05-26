@@ -66,6 +66,11 @@ var DEFAULT_SETTINGS = {
             'hosteurope.de': {
                 length: 16
                 // @todo symbols | and \ are not allowed
+            },
+            'nodejitsu.com': {
+                space:0,
+                dash: 0,
+                symbol: 0
             }
         },
 
