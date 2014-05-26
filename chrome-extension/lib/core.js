@@ -68,6 +68,11 @@ var DEFAULT_SETTINGS = {
             'zooplus.de': {
                 length: 20,
                 symbols: '!"#$%&\'()*+,./:;<=>?@[\\]^{}~'
+            },
+            'nodejitsu.com': {
+                space:0,
+                dash: 0,
+                symbol: 0
             }
         },
 
