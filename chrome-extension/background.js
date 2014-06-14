@@ -4,8 +4,8 @@ chrome.browserAction.onClicked.addListener(function (tab) {
     chrome.tabs.executeScript(tab.id, { file: "lib/crypto-js-3.1.2.js", allFrames: true }, function () {});
     chrome.tabs.executeScript(tab.id, { file: "lib/vault.js", allFrames: true }, function () {});
     chrome.tabs.executeScript(tab.id, { file: "lib/core.js", allFrames: true }, function () {});
-    chrome.tabs.executeScript(tab.id, { file: "app/vault-generator.js", allFrames: true }, function () {});
-    chrome.tabs.executeScript(tab.id, { file: "app/vault-overlay.js", allFrames: true }, function () {});
+    chrome.tabs.executeScript(tab.id, { file: "app/generator.js", allFrames: true }, function () {});
+    chrome.tabs.executeScript(tab.id, { file: "app/overlay.js", allFrames: true }, function () {});
     chrome.tabs.executeScript(tab.id, { file: "app/generate.js", allFrames: true }, function () {});
 });
 
