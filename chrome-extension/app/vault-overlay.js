@@ -26,10 +26,6 @@ Overlay._getServicenameField = function () {
     return $('vault-servicename-' + this._getPasswordFieldId());
 };
 
-Overlay._getGeneratorSettings = function () {
-    return this._generator.generatorSettings;
-};
-
 Overlay._generateButtonSubmit = function (pwField) {
     var passPhrase = this._getPassphraseField(),
         serviceSalt = this._getServicenameField(),
@@ -42,7 +38,7 @@ Overlay._generateButtonSubmit = function (pwField) {
 
     this.close();
 
-    if (this._getGeneratorSettings.autosend && !this._passwordField.showPw) {
+    if (this._generator.generatorSettings.autosend && !this._passwordField.showPw) {
         loginFormNumber = Helper .getLoginForm(pwField);
         if ('number' === typeof loginFormNumber) {
             document.forms[loginFormNumber].submit();
@@ -106,7 +102,7 @@ Overlay._createDiv = function (pwField, pwId) {
     submitButton.className = 'vault-generate';
     submitButton.type = 'button';
     submitButton.value = chrome.i18n.getMessage("submitButtonText");
-    if (this._getGeneratorSettings.autosend) {
+    if (this._generator.generatorSettings.autosend) {
         submitButton.value = chrome.i18n.getMessage("submitButtonTextAlt");
     }
 
@@ -142,11 +138,13 @@ Overlay._setServicename = function () {
     var domainname = this._generator.getDomainname(),
         servicename = this._getServicenameField();
 
+    console.log(this._generator.generatorSettings.servicename);
+
     if (!servicename || (servicename.value && domainname !== servicename.value)) {
         return false;
     }
 
-    switch (this._getGeneratorSettings.servicename) {
+    switch (this._generator.generatorSettings.servicename) {
         case 'login':
             var loginField = this._getLoginField();
 
@@ -164,14 +162,14 @@ Overlay._setServicename = function () {
             break;
 
         case 'prefix':
-            if (this._getGeneratorSettings.defServicename) {
-                servicename.value = this._getGeneratorSettings.defServicename + domainname;
+            if (this._generator.generatorSettings.defServicename) {
+                servicename.value = this._generator.generatorSettings.defServicename + domainname;
             }
             break;
 
         case 'suffix':
-            if (this._getGeneratorSettings.defServicename) {
-                servicename.value = domainname + this._getGeneratorSettings.defServicename;
+            if (this._generator.generatorSettings.defServicename) {
+                servicename.value = domainname + this._generator.generatorSettings.defServicename;
             }
             break;
     }
