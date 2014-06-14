@@ -40,8 +40,8 @@
             "lib/crypto-js.js",
             "lib/vault.js",
             "lib/core.js",
-            "app/vault-generator.js",
-            "app/vault-overlay.js",
+            "app/generator.js",
+            "app/overlay.js",
             "app/generate.js"
         ],
         "run_at": "document_idle",
