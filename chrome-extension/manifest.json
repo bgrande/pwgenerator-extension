@@ -41,6 +41,7 @@
             "lib/vault.js",
             "lib/core.js",
             "app/vault-generator.js",
+            "app/vault-overlay.js",
             "app/generate.js"
         ],
         "run_at": "document_idle",
