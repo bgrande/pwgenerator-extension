@@ -106,6 +106,137 @@ var on = function (element, event, listener) {
     }
 };
 
+/**
+ * handles specific domain extensions
+ */
+var DomainService = {
+    _serviceName: '',
+    _rules: null,
+    _setPasswordRules: null,
+    _setDomainname: null,
+    getPasswordRules: null,
+    getDomainname: null
+
+};
+
+DomainService._setDomainname = function (domain) {
+    var domainname = domain || document.domain,
+        domainparts = domainname.split('.');
+
+    if (2 < domainparts.length) {
+        domainname = domainparts[domainparts.length - 2] + '.' + domainparts[domainparts.length - 1];
+
+        if (Helper.isCcTld(domainparts[domainparts.length - 2])) {
+            domainname = domainparts[domainparts.length - 3] + '.' + domainname;
+        }
+    }
+
+    this._serviceName = domainname;
+};
+
+DomainService._setPasswordRules = function (settings) {
+    if (settings && settings[this._serviceName]) {
+        this._rules = settings[this._serviceName];
+    }
+};
+
+DomainService.getDomainname = function () {
+    return this._serviceName;
+};
+
+DomainService.getPasswordRules = function () {
+    return this._rules;
+};
+
+DomainService.init = function (ruleSettings, domain) {
+    this._setDomainname(domain);
+    this._setPasswordRules(ruleSettings);
+
+    return this;
+};
+
+/**
+ * handle service specific password field
+ */
+var PasswordField = {
+    _id: '',
+    showPw: false
+};
+
+PasswordField._generateId = function () {
+    var pwString = 'random-id-' + Math.floor(Math.random() * 10);
+
+    if ($('vault-generator-overlay-' + pwString)) {
+        return this._generateId();
+    }
+
+    return pwString;
+};
+
+PasswordField.getFieldIdentifier = function () {
+    if (this._id) {
+        return this._id;
+    }
+
+    return null;
+};
+
+PasswordField.getField = function () {
+    return $(this._id);
+};
+
+PasswordField.init = function (pwField) {
+    var pwString;
+
+    if (pwField.id) {
+        this._id = pwField.id;
+    } else if (pwField.name) {
+        pwString = pwField.name.replace(/\[|\]|:|[ ]/g, '-').replace(/-+$/, '');
+
+        if ($('vault-generator-overlay-' + pwString)) {
+            pwString += '1';
+        }
+
+        this._id = pwString;
+    } else {
+        this._id = pwField.id = this._generateId();
+    }
+
+    return this;
+};
+
+var LoginField = {
+    _id: ''
+};
+
+LoginField._setLoginName = function (settings) {
+    var userFieldList = settings.userFieldList,
+        login = Helper.getElementFromList(userFieldList);
+
+    if (!login) {
+        this._id = null;
+        return;
+    }
+
+    if (login.id) {
+        this._id = login.id;
+    } else if (login.name) {
+        this._id = login.name;
+        login.id = login.name;
+    }
+};
+
+LoginField._getLoginField = function () {
+    if (this._id) {
+        return $(this._id);
+    }
+
+    return null;
+};
+
+/**
+ * commonly used logic
+ */
 var Helper = {};
 
 /**
@@ -222,4 +353,26 @@ Helper.mergeObject = function (first, second) {
     }
 
     return first;
+};
+
+/**
+ * gets the current password field's login form
+ *
+ * @param {Object} pwField
+ *
+ * @returns {Number|Boolean}
+ */
+Helper.getLoginForm = function (pwField) {
+    for (var i = 0, n = document.forms.length; i < n; i++) {
+        for (var o = 0, m = document.forms[i].length; o < m; o++) {
+            if (pwField.id === document.forms[i][o].id) {
+                return i;
+            }
+            if (pwField.name === document.forms[i][o].name) {
+                return i;
+            }
+        }
+    }
+
+    return false;
 };

@@ -3,9 +3,9 @@
  * -----------------------------------------------------
  */
 'use strict';
-// make generators globally available but keep old on reload
-if (!generators) {
-    var generators = [];
+// make overlays globally available but keep old on reload
+if (!overlays) {
+    var overlays = [];
 }
 
 chrome.storage.sync.get('settings', function (items) {
@@ -14,7 +14,7 @@ chrome.storage.sync.get('settings', function (items) {
             passwords = document.querySelectorAll("input[type=password]"),
             settings = (undefined !== items.settings) ? Helper.mergeObject(DEFAULT_SETTINGS, JSON.parse(items.settings)) : DEFAULT_SETTINGS,
             domainService = Object.create(DomainService).init(DEFAULT_SETTINGS.serviceExceptions),
-            pwLength = passwords.length, i;
+            pwLength = passwords.length, passwordField, generator, i;
 
         // set chrome specific url getting for close icon
         settings.imgUrl = chrome.extension.getURL('images/close.png');
@@ -27,22 +27,26 @@ chrome.storage.sync.get('settings', function (items) {
             settings.autosend = (settings.autosend === true && pwLength === 1);
 
             for (i = 0; i < pwLength; i++) {
-                if (!generators[i] && !Helper.isOverlay(passwords[i]) && !Helper.hasOverlay(passwords[i])) {
-                    generators[i] = Object.create(VaultGenerator).init(passwords[i], settings, domainService);
+                if (!overlays[i] && !Helper.isOverlay(passwords[i]) && !Helper.hasOverlay(passwords[i])) {
+                    passwordField = Object.create(PasswordField).init(passwords[i]);
+                    generator = Object.create(Generator).init(settings, passwordField, domainService);
+                    overlays[i] = Object.create(Overlay).init(settings, passwordField, generator);
                 }
             }
         } else if (pwLength === 0 && password) {
             // field does not have a password type - better use no autosend to prevent misbehaviour
             settings.autosend = false;
 
-            if (!generators[0] && !Helper.isOverlay(password) && !Helper.hasOverlay(password)) {
-                generators[0] = Object.create(VaultGenerator).init(password, settings, domainService);
+            if (!overlays[0] && !Helper.isOverlay(password) && !Helper.hasOverlay(password)) {
+                passwordField = Object.create(PasswordField).init(password);
+                generator = Object.create(Generator).init(settings, passwordField, domainService);
+                overlays[0] = Object.create(Overlay).init(settings, passwordField, generator);
             }
         }
 
         // show count of existing overlays
-        if (0 < generators.length) {
-            chrome.runtime.sendMessage({event: 'countChange', overlayCount: generators.length});
+        if (0 < overlays.length) {
+            chrome.runtime.sendMessage({event: 'countChange', overlayCount: overlays.length});
         }
     } catch (exception) {
         console.error(exception);
