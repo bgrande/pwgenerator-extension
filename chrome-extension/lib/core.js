@@ -208,12 +208,11 @@ PasswordField.init = function (pwField) {
 };
 
 var LoginField = {
-    _id: ''
+    _id: null
 };
 
-LoginField._setLoginName = function (settings) {
-    var userFieldList = settings.userFieldList,
-        login = Helper.getElementFromList(userFieldList);
+LoginField.init = function (userFieldList) {
+    var login = Helper.getElementFromList(userFieldList);
 
     if (!login) {
         this._id = null;
@@ -226,9 +225,11 @@ LoginField._setLoginName = function (settings) {
         this._id = login.name;
         login.id = login.name;
     }
+
+    return this;
 };
 
-LoginField._getLoginField = function () {
+LoginField.getField = function () {
     if (this._id) {
         return $(this._id);
     }
@@ -283,15 +284,15 @@ Helper.isCcTld = function (name) {
 /**
  * fix problem if a password field id does exist more than once on a page
  *
- * @param {Array} idArray
+ * @param {NodeList} nodeList
  */
-Helper.fixDuplicateIds = function (idArray) {
-    var i, j, n = idArray.length;
+Helper.fixDuplicateIds = function (nodeList) {
+    var i, j, n = nodeList.length;
 
     for (i = 0; i < n; i++) {
         for (j = i + 1; j < n; j++) {
-            if (idArray[i].id === idArray[j].id) {
-                idArray[j].id = 'passid1';
+            if (nodeList[i].id === nodeList[j].id) {
+                nodeList[j].id = 'passid1';
             }
         }
     }
