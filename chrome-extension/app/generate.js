@@ -8,13 +8,21 @@ if (!overlays) {
     var overlays = [];
 }
 
+var overlayFactory = function (settings, passwordElement) {
+    var domainService = Object.create(DomainService).init(DEFAULT_SETTINGS.serviceExceptions),
+        loginField = Object.create(LoginField).init(settings.userFieldList),
+        passwordField = Object.create(PasswordField).init(passwordElement),
+        generator = Object.create(Generator).init(settings, passwordField, domainService);
+
+        return Object.create(Overlay).init(settings, passwordField, loginField, generator);
+};
+
 chrome.storage.sync.get('settings', function (items) {
     try {
         var password = Helper.getElementFromList(DEFAULT_SETTINGS.pwFieldList),
             passwords = document.querySelectorAll("input[type=password]"),
             settings = (undefined !== items.settings) ? Helper.mergeObject(DEFAULT_SETTINGS, JSON.parse(items.settings)) : DEFAULT_SETTINGS,
-            domainService = Object.create(DomainService).init(DEFAULT_SETTINGS.serviceExceptions),
-            pwLength = passwords.length, passwordField, generator, i;
+            pwLength = passwords.length, i;
 
         // set chrome specific url getting for close icon
         settings.imgUrl = chrome.extension.getURL('images/close.png');
@@ -28,9 +36,7 @@ chrome.storage.sync.get('settings', function (items) {
 
             for (i = 0; i < pwLength; i++) {
                 if (!overlays[i] && !Helper.isOverlay(passwords[i]) && !Helper.hasOverlay(passwords[i])) {
-                    passwordField = Object.create(PasswordField).init(passwords[i]);
-                    generator = Object.create(Generator).init(settings, passwordField, domainService);
-                    overlays[i] = Object.create(Overlay).init(settings, passwordField, generator);
+                    overlays[i] = overlayFactory(settings, passwords[i]);
                 }
             }
         } else if (pwLength === 0 && password) {
@@ -38,9 +44,7 @@ chrome.storage.sync.get('settings', function (items) {
             settings.autosend = false;
 
             if (!overlays[0] && !Helper.isOverlay(password) && !Helper.hasOverlay(password)) {
-                passwordField = Object.create(PasswordField).init(password);
-                generator = Object.create(Generator).init(settings, passwordField, domainService);
-                overlays[0] = Object.create(Overlay).init(settings, passwordField, generator);
+                overlays[0] = overlayFactory(settings, password);
             }
         }
 

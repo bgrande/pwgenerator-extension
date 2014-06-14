@@ -5,8 +5,6 @@ var Overlay = {
     _passwordField: null,
     _id: '',
     _isClosed: false,
-    //_vaultGeneratorOverlayIdentifier: 'vault-generator-overlay-',
-    //_vaultGeneratorDialogIdentifier: 'vault-generator-dialog-',
     _closeImgUrl: ''
 };
 
@@ -138,15 +136,13 @@ Overlay._setServicename = function () {
     var domainname = this._generator.getDomainname(),
         servicename = this._getServicenameField();
 
-    console.log(this._generator.generatorSettings.servicename);
-
     if (!servicename || (servicename.value && domainname !== servicename.value)) {
         return false;
     }
 
     switch (this._generator.generatorSettings.servicename) {
         case 'login':
-            var loginField = this._getLoginField();
+            var loginField = this._loginField.getField();
 
             if (undefined === loginField) {
                 return null;
@@ -275,8 +271,9 @@ Overlay.toggle = function (status) {
     $(this._id).style.display = display;
 };
 
-Overlay.init = function (settings, passwordField, generator) {
+Overlay.init = function (settings, passwordField, loginField, generator) {
     this._passwordField = passwordField;
+    this._loginField = loginField;
     this._generator = generator;
     this._setImgUrls(settings);
 
