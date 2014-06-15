@@ -3,7 +3,6 @@
 var Generator = {
     generatorSettings: {},
     _vaultSettings: {},
-    _passwordField: null,
     _domainService: null
 };
 
@@ -59,13 +58,12 @@ Generator._initSettings = function (settings) {
     this._setGeneratorSettings(settings);
 };
 
-Generator.init = function (settings, pwField, domainService) {
-    if (!pwField) {
+Generator.init = function (settings, domainService) {
+    if (!domainService || !settings) {
         return false;
     }
 
     this._domainService = domainService;
-    this._passwordField = pwField;
     this._initSettings(settings);
 
     return this;
