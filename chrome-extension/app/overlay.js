@@ -189,6 +189,8 @@ Overlay._create = function (pwField, pwFieldId) {
         if (!that._passwordField.showPw) {
             pwField.type = 'password';
         }
+
+        that._getPassphraseField().focus();
     });
 
     on(this._getPassphraseField(), 'keydown', function (e) {
