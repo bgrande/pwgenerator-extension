@@ -29,6 +29,43 @@ Generator.getDomainname = function () {
     return this._domainService.getDomainname();
 };
 
+Generator.getServicename = function (servicename, loginField) {
+    var domainname = this.getDomainname();
+
+    if (servicename && domainname !== servicename) {
+        return false;
+    }
+
+    switch (this.generatorSettings.servicename) {
+        case 'login':
+            if (loginField === undefined) {
+               // do nothing
+            } else if (loginField.value) {
+                return loginField.value;
+            } else if (loginField.textContent && loginField.textContent.length <= 30) {
+                return loginField.textContent;
+            }
+
+            return domainname;
+
+            break;
+
+        case 'prefix':
+            if (this.generatorSettings.defServicename) {
+                return this.generatorSettings.defServicename + domainname;
+            }
+            break;
+
+        case 'suffix':
+            if (this.generatorSettings.defServicename) {
+                return domainname + this.generatorSettings.defServicename;
+            }
+            break;
+    }
+
+    return false;
+};
+
 Generator._setVaultSettings = function (settings) {
     var vaultSettings = {}, i, n;
     // @TODO change plength to length (needs option migration)

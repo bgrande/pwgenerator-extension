@@ -133,44 +133,12 @@ Overlay._createDiv = function (pwField, pwId) {
 };
 
 Overlay._setServicename = function () {
-    var domainname = this._generator.getDomainname(),
-        servicename = this._getServicenameField();
+    var servicename = this._getServicenameField(),
+        result = this._generator.getServicename(servicename.value, this._loginField.getField());
 
-    if (!servicename || (servicename.value && domainname !== servicename.value)) {
-        return false;
+    if (result) {
+        servicename.value = result;
     }
-
-    switch (this._generator.generatorSettings.servicename) {
-        case 'login':
-            var loginField = this._loginField.getField();
-
-            if (undefined === loginField) {
-                return null;
-            }
-
-            if (loginField.value) {
-                servicename.value = loginField.value;
-            } else if (loginField.textContent && loginField.textContent.length <= 30) {
-                servicename.value = loginField.textContent;
-            } else {
-                servicename.value = domainname;
-            }
-            break;
-
-        case 'prefix':
-            if (this._generator.generatorSettings.defServicename) {
-                servicename.value = this._generator.generatorSettings.defServicename + domainname;
-            }
-            break;
-
-        case 'suffix':
-            if (this._generator.generatorSettings.defServicename) {
-                servicename.value = domainname + this._generator.generatorSettings.defServicename;
-            }
-            break;
-    }
-
-    return true;
 };
 
 Overlay._create = function (pwField, pwFieldId) {
