@@ -6,6 +6,10 @@ var saveSettings = function (settings) {
     });
 };
 
+var cancelOptions = function () {
+    window.close();
+};
+
 chrome.storage.sync.get('settings', function (items) {
     getOptionSettings(JSON.parse(items.settings));
 });
@@ -27,6 +31,7 @@ chrome.storage.sync.get('settings', function (items) {
         forbiddenLabel = chrome.i18n.getMessage("forbiddenLabel"),
         optionStatus = chrome.i18n.getMessage("optionStatus"),
         saveOptionsText = chrome.i18n.getMessage("saveOptions"),
+        cancelOptionsText = chrome.i18n.getMessage("cancelOptions"),
         linkText = chrome.i18n.getMessage("linkText"),
         linkText1 = chrome.i18n.getMessage("linkText1"),
         linkText2 = chrome.i18n.getMessage("linkText2");
@@ -46,6 +51,7 @@ chrome.storage.sync.get('settings', function (items) {
     $('forbidden-label').innerText = forbiddenLabel;
     $('option-status').innerText = optionStatus;
     $('save-options').innerText = saveOptionsText;
+    $('cancel-options').innerText = cancelOptionsText;
     $('link-text').innerText = linkText;
     $('link-to-vault-1').innerText = linkText1;
     $('link-to-vault-2').innerText = linkText2;

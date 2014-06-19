@@ -56,6 +56,9 @@
     "saveOptions": {
         "message": "Save"
     },
+    "cancelOptions": {
+        "message": "Cancel"
+    },
     "linkText": {
         "message": "the original vault",
         "description": "Link text for vault link"

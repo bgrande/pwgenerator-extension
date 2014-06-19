@@ -142,3 +142,7 @@ on($('save-options'), 'click', function () {
         status.style.display = 'none';
     }, 1600);
 });
+
+on($('cancel-options'), 'click', function () {
+    cancelOptions();
+});

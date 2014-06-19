@@ -53,6 +53,9 @@
     "saveOptions": {
         "message": "Speichern"
     },
+    "cancelOptions": {
+        "message": "Abbrechen"
+    },
     "linkText": {
         "message": "das zugrundeliegende Vault"
     },
