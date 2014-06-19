@@ -160,7 +160,7 @@ table th:first-child, table td:first-child {
 }
 
 #save-options, #cancel-options {
-    padding: .8em;
+    padding: 1em;
     width: 30%;
     font-weight: bold;
     margin: .6em 0;
