@@ -164,11 +164,11 @@ table th:first-child, table td:first-child {
     width: 30%;
     font-weight: bold;
     margin: .6em 0;
-    float: left;
+    float: right;
 }
 
 #cancel-options {
-    float: right;
+    float: left;
 }
 
 #link-to-vault {
