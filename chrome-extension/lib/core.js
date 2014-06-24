@@ -168,6 +168,7 @@ var PasswordField = {
 PasswordField._generateId = function () {
     var pwString = 'random-id-' + Math.floor(Math.random() * 10);
 
+    // @todo this is easy password handler only
     if ($('vault-generator-overlay-' + pwString)) {
         return this._generateId();
     }
@@ -195,6 +196,7 @@ PasswordField.init = function (pwField) {
     } else if (pwField.name) {
         pwString = pwField.name.replace(/\[|\]|:|[ ]/g, '-').replace(/-+$/, '');
 
+        // @todo this is easy password handler only
         if ($('vault-generator-overlay-' + pwString)) {
             pwString += '1';
         }
@@ -317,6 +319,7 @@ Helper.isOverlay = function (pwField) {
  * @returns {Boolean}
  */
 Helper.hasOverlay = function (pwField) {
+    // @todo this is easy password handler only
     return pwField && pwField.id && $('vault-generator-overlay-' + pwField.id);
 };
 
