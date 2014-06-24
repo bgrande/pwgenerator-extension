@@ -61,7 +61,7 @@ LoginField.init = function (userFieldList) {
 
     if (!login) {
         this._id = null;
-        return;
+        return false;
     }
 
     if (login.id) {
