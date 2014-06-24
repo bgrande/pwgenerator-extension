@@ -1,5 +1,7 @@
 'use strict';
 
+var BASE_NAME = 'easy-password-';
+
 var Overlay = {
     _generator: null,
     _passwordField: null,
@@ -17,11 +19,11 @@ Overlay._getPasswordFieldId = function () {
 };
 
 Overlay._getPassphraseField = function () {
-    return $('vault-passphrase-' + this._getPasswordFieldId());
+    return $(BASE_NAME + 'passphrase-' + this._getPasswordFieldId());
 };
 
 Overlay._getServicenameField = function () {
-    return $('vault-servicename-' + this._getPasswordFieldId());
+    return $(BASE_NAME + 'servicename-' + this._getPasswordFieldId());
 };
 
 Overlay._generateButtonSubmit = function (pwField) {
@@ -63,26 +65,28 @@ Overlay._createDiv = function (pwField, pwId) {
         showPassword = document.createElement('input'),
         showPasswordLabel = document.createElement('label');
 
-    closeImg.id = 'vault-close-icon-' + pwId;
-    closeImg.className = 'vault-close-icon';
+    closeImg.id = BASE_NAME + 'close-icon-' + pwId;
+    closeImg.className = BASE_NAME + 'close-icon';
     closeImg.src = this._closeImgUrl;
     closeImg.alt = chrome.i18n.getMessage("close");
 
-    closeDiv.id = 'vault-close-' + pwId;
+    closeDiv.id = BASE_NAME + 'close-' + pwId;
     closeDiv.className = 'vault-close';
     closeDiv.title = chrome.i18n.getMessage("close");
     closeDiv.appendChild(closeImg);
 
+    var serviceId = BASE_NAME + 'servicename-' + pwId;
     serviceElementLabel.innerText = chrome.i18n.getMessage("serviceNameLabel");
-    serviceElementLabel.htmlFor = 'vault-servicename-' + pwId;
-    serviceElement.id = 'vault-servicename-' + pwId;
+    serviceElementLabel.htmlFor = serviceId;
+    serviceElement.id = serviceId;
     serviceElement.className = 'vault-servicename';
     serviceElement.type = 'text';
     serviceElement.placeholder = this._generator.getDomainname();
 
+    var passphraseId = BASE_NAME + 'passphrase-' + pwId;
     pwElementLabel.innerText = chrome.i18n.getMessage("passphraseLabel");
-    pwElementLabel.htmlFor = 'vault-passphrase-' + pwId;
-    pwElement.id = 'vault-passphrase-' + pwId;
+    pwElementLabel.htmlFor = passphraseId;
+    pwElement.id = passphraseId;
     pwElement.className = 'vault-passphrase';
     pwElement.type = 'password';
     pwElement.value = '';
@@ -96,7 +100,7 @@ Overlay._createDiv = function (pwField, pwId) {
     serviceDiv.appendChild(serviceElementLabel);
     serviceDiv.appendChild(serviceElement);
 
-    submitButton.id = 'vault-generate-' + pwId;
+    submitButton.id = BASE_NAME + 'generate-' + pwId;
     submitButton.className = 'vault-generate';
     submitButton.type = 'button';
     submitButton.value = chrome.i18n.getMessage("submitButtonText");
@@ -104,10 +108,11 @@ Overlay._createDiv = function (pwField, pwId) {
         submitButton.value = chrome.i18n.getMessage("submitButtonTextAlt");
     }
 
-    showPassword.id = 'vault-show-password-' + pwId;
+    var showPasswordId = BASE_NAME + 'show-password-' + pwId;
+    showPassword.id = showPasswordId;
     showPassword.type = 'checkbox';
     showPasswordLabel.innerText = chrome.i18n.getMessage("showPasswordLabel");
-    showPasswordLabel.htmlFor = 'vault-show-password-' + pwId;
+    showPasswordLabel.htmlFor = showPasswordId;
     showPasswordLabel.className = 'description-label';
     showPasswordContainer.className = "vault-show-pw-container";
     showPasswordContainer.title = chrome.i18n.getMessage("showPasswordTitle");
@@ -118,7 +123,7 @@ Overlay._createDiv = function (pwField, pwId) {
     generateDiv.className = 'vault-button-container';
     generateDiv.appendChild(submitButton);
 
-    overlayDiv.id = 'vault-generator-overlay-' + pwId;
+    overlayDiv.id = BASE_NAME + 'generator-overlay-' + pwId;
     overlayDiv.className = 'vault-generator-overlay';
 
     dialogDiv.className = 'vault-generator-dialog';
@@ -146,11 +151,11 @@ Overlay._create = function (pwField, pwFieldId) {
 
     this._createDiv(pwField, pwFieldId);
 
-    on($('vault-generate-' + pwFieldId), 'click', function () {
+    on($(BASE_NAME + 'generate-' + pwFieldId), 'click', function () {
         that._generateButtonSubmit(pwField);
     });
 
-    on($('vault-show-password-' + pwFieldId), 'change', function () {
+    on($(BASE_NAME + 'show-password-' + pwFieldId), 'change', function () {
         that._passwordField.showPw = this.checked;
 
         // immediately hide password again!
@@ -263,7 +268,7 @@ Overlay.init = function (settings, passwordField, loginField, generator) {
         this.activate();
     }
 
-    this._id = 'vault-generator-overlay-' + pwFieldId;
+    this._id = BASE_NAME + 'generator-overlay-' + pwFieldId;
     this._create(this._passwordField.getField(), pwFieldId);
 
     return this;
