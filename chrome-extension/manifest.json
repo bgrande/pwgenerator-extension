@@ -40,7 +40,7 @@
             "lib/crypto-js.js",
             "lib/vault.js",
             "lib/core.js",
-            "app/generator.js",
+            "lib/generator.js",
             "app/overlay.js",
             "app/generate.js"
         ],
