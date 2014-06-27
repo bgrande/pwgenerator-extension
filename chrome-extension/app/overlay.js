@@ -33,7 +33,6 @@ PasswordField.getField = function () {
 };
 
 PasswordField.init = function (pwField) {
-console.log(pwField);
     var pwString;
 
     if (pwField.id) {
