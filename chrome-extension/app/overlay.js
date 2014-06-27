@@ -221,7 +221,7 @@ Overlay._setServicename = function () {
     var servicename = this._getServicenameField(),
         result = null;
 
-    if (this._loginField) {
+    if (this._loginField && servicename.value) {
         result = this._generator.getServicename(servicename.value, this._loginField.getField());
     }
 
