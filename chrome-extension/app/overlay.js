@@ -33,6 +33,7 @@ PasswordField.getField = function () {
 };
 
 PasswordField.init = function (pwField) {
+console.log(pwField);
     var pwString;
 
     if (pwField.id) {
@@ -44,7 +45,7 @@ PasswordField.init = function (pwField) {
             pwString += '1';
         }
 
-        this._id = pwString;
+        this._id = pwField.id = pwString;
     } else {
         this._id = pwField.id = this._generateId();
     }
