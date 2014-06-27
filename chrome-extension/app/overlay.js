@@ -219,7 +219,11 @@ Overlay._createDiv = function (pwField, pwId) {
 
 Overlay._setServicename = function () {
     var servicename = this._getServicenameField(),
+        result = null;
+
+    if (this._loginField) {
         result = this._generator.getServicename(servicename.value, this._loginField.getField());
+    }
 
     if (result) {
         servicename.value = result;
