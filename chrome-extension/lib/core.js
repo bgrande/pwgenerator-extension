@@ -70,9 +70,12 @@ var DEFAULT_SETTINGS = {
                 symbols: '!"#$%&\'()*+,./:;<=>?@[\\]^{}~'
             },
             'nodejitsu.com': {
-                space:0,
+                space: 0,
                 dash: 0,
                 symbol: 0
+            },
+            'check24.de': {
+                length: 15
             }
         },
 
