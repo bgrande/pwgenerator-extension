@@ -65,6 +65,9 @@ var DEFAULT_SETTINGS = {
                 length: 16,
                 symbols: '!%&/()=*+#.,:;'
             },
+            'wordpress.com': {
+                symbols: '!%&()=*+#.,:;'
+            },
             'zooplus.de': {
                 length: 20,
                 symbols: '!"#$%&\'()*+,./:;<=>?@[\\]^{}~'
