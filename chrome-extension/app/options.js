@@ -94,7 +94,7 @@ var saveOptions = function (length, repeat, iteration, required, autosend, defSe
         requiredLength    = parseInt(required.value, 10),
         autosendChecked   = autosend.checked,
         defServicenameVal = defServicename.value,
-        servicenameVal    = undefined,
+        servicenameType    = undefined,
         passRepeat, genIteration, value, settings = {}, i, n;
 
     passRepeat = !repeat.value ? 0: parseInt(repeat.value, 10);
@@ -113,18 +113,18 @@ var saveOptions = function (length, repeat, iteration, required, autosend, defSe
     }
 
     if (servicename.checked) {
-        servicenameVal = servicename.value;
+        servicenameType = servicename.value;
     } else if (prefix.checked) {
-        servicenameVal = prefix.value;
+        servicenameType = prefix.value;
     } else if (suffix.checked) {
-        servicenameVal = suffix.value;
+        servicenameType = suffix.value;
     }
 
     settings.plength = passLength;
     settings.repeat = passRepeat;
     settings.iteration = genIteration;
     settings.autosend = autosendChecked;
-    settings.servicename = servicenameVal;
+    settings.servicename = servicenameType;
     settings.requiredLength = requiredLength;
     settings.defServicename = defServicenameVal;
 

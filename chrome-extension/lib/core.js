@@ -8,10 +8,8 @@ var DEFAULT_SETTINGS = {
         upper: null,
         number: null,
         dash: null,
-        space: 0,
-        symbol: 0,
-        prefix: false,
-        suffix: false,
+        space: null,
+        symbol: null,
 
         autosend: false,
         servicename: 'prefix',
@@ -64,8 +62,15 @@ var DEFAULT_SETTINGS = {
                 symbol: 0
             },
             'hosteurope.de': {
-                length: 16
-                // @todo symbols | and \ are not allowed
+                length: 16,
+                symbols: '!%&/()=*+#.,:;'
+            },
+            'wordpress.com': {
+                symbols: '!%&()=*+#.,:;'
+            },
+            'zooplus.de': {
+                length: 20,
+                symbols: '!"#$%&\'()*+,./:;<=>?@[\\]^{}~'
             },
             'nodejitsu.com': {
                 space: 0,

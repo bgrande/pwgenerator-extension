@@ -1,7 +1,7 @@
 {
   "name": "__MSG_extName__",
   "short_name": "EasyPassword",
-  "version": "1.6.3",
+  "version": "1.7.0",
   "manifest_version": 2,
   "author": "Benedikt Grande",
   "description": "__MSG_extDescription__",
@@ -40,6 +40,8 @@
             "lib/crypto-js.js",
             "lib/vault.js",
             "lib/core.js",
+            "lib/generator.js",
+            "app/overlay.js",
             "lib/generator.js",
             "app/overlay.js",
             "app/generate.js"

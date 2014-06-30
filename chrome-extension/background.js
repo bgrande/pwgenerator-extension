@@ -45,7 +45,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
             var settings = JSON.parse(items.settings), key, isNew = false;
 
             for (key in DEFAULT_SETTINGS) {
-                if (DEFAULT_SETTINGS.hasOwnProperty(key) && !settings.hasOwnProperty(key) ) {
+                if ((DEFAULT_SETTINGS.hasOwnProperty(key) && !settings.hasOwnProperty(key)) || key === 'serviceExceptions') {
                     settings[key] = DEFAULT_SETTINGS[key];
                     isNew = true;
                 }
