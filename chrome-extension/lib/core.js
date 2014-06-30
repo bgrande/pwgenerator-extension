@@ -74,6 +74,9 @@ var DEFAULT_SETTINGS = {
             },
             'check24.de': {
                 length: 15
+            },
+            'kabeldeutschland.de': {
+                space: 0
             }
         },
 
