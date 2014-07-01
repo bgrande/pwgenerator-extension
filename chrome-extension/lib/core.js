@@ -82,6 +82,11 @@ var DEFAULT_SETTINGS = {
             },
             'kabeldeutschland.de': {
                 space: 0
+            },
+            'paket.de': {
+                length: 13,
+                space: 0,
+                symbols: '!&/()=?*+)'
             }
         },
 
