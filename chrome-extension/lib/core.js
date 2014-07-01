@@ -70,7 +70,7 @@ var DEFAULT_SETTINGS = {
             },
             'zooplus.de': {
                 length: 20,
-                symbols: '!"#$%&\'()*+,./:;<=>?@[\\]^{}~'
+                symbols: '!#$%&\'()*+,./=?[\\]^{}~'
             },
             'nodejitsu.com': {
                 space: 0,
@@ -86,7 +86,7 @@ var DEFAULT_SETTINGS = {
             'paket.de': {
                 length: 13,
                 space: 0,
-                symbols: '!&/()=?*+)'
+                symbols: '!&/()=?*+'
             }
         },
 
