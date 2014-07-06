@@ -9,7 +9,7 @@ if (!overlays) {
 }
 
 var overlayFactory = function (settings, passwordElement, domainname) {
-    var domainService = Object.create(DomainService).init(DEFAULT_SETTINGS.serviceExceptions, domainname),
+    var domainService = Object.create(DomainService).init(settings.serviceExceptions, domainname),
         loginField = Object.create(LoginField).init(settings.userFieldList),
         passwordField = Object.create(PasswordField).init(passwordElement),
         generator = Object.create(Generator).init(settings, domainService);
