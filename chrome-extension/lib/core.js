@@ -316,6 +316,11 @@ Helper.getLoginForm = function (pwField) {
     return false;
 };
 
+/**
+ * generates a random servicename
+ *
+ * @returns {string}
+ */
 Helper.getRandomServicename = function () {
     return Math.random().toString(36).substring(7) + '@';
 };
