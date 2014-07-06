@@ -28,7 +28,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 });
 
 chrome.runtime.onInstalled.addListener(function (details) {
-    DEFAULT_SETTINGS.defServicename = Math.random().toString(36).substring(7) + '@';
+    DEFAULT_SETTINGS.defServicename = Helper.getRandomServicename();
 
     chrome.storage.sync.get('settings', function (items) {
         if (items.settings === undefined) {
