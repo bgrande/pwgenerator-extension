@@ -127,7 +127,7 @@ var on = function (element, event, listener) {
  * handles specific domain extensions
  */
 var DomainService = {
-    _serviceName: '',
+    _domainName: '',
     _rules: null,
     _setPasswordRules: null,
     _setDomainname: null,
@@ -148,17 +148,17 @@ DomainService._setDomainname = function (domain) {
         }
     }
 
-    this._serviceName = domainname;
+    this._domainName = domainname;
 };
 
 DomainService._setPasswordRules = function (settings) {
-    if (settings && settings[this._serviceName]) {
-        this._rules = settings[this._serviceName];
+    if (settings && settings[this._domainName]) {
+        this._rules = settings[this._domainName];
     }
 };
 
 DomainService.getDomainname = function () {
-    return this._serviceName;
+    return this._domainName;
 };
 
 DomainService.getPasswordRules = function () {
