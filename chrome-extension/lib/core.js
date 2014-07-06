@@ -10,6 +10,7 @@ var DEFAULT_SETTINGS = {
         dash: null,
         space: null,
         symbol: null,
+        isVaultCompatible: true,
 
         autosend: false,
         servicename: 'prefix',

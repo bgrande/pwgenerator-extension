@@ -4,6 +4,7 @@ var required    = $('required'),
     length      = $('vlength'),
     repeat      = $('repeat'),
     iteration   = $('iteration'),
+    compatible  = $('compatible'),
     autosend    = $('autosend'),
     servicename = $('servicename'),
     prefix      = $('prefix'),
@@ -68,8 +69,12 @@ var getOptionSettings = function (settings) {
         required.value = settings.requiredLength;
     }
 
-    if (undefined !== settings.autosend) {
+    if (settings.autosend !== undefined) {
         autosend.checked = settings.autosend;
+    }
+
+    if (settings.isVaultCompatible !== undefined) {
+        compatible.checked = settings.isVaultCompatible;
     }
 
     switch (settings.servicename) {
@@ -89,12 +94,13 @@ var getOptionSettings = function (settings) {
     }
 };
 
-var saveOptions = function (length, repeat, iteration, required, autosend, defServicename, servicename, prefix, suffix) {
+var saveOptions = function (length, repeat, iteration, required, compatible, autosend, defServicename, servicename, prefix, suffix) {
     var passLength        = parseInt(length.value, 10),
         requiredLength    = parseInt(required.value, 10),
+        compatibleChecked = compatible.checked,
         autosendChecked   = autosend.checked,
         defServicenameVal = defServicename.value,
-        servicenameType    = undefined,
+        servicenameType   = undefined,
         passRepeat, genIteration, value, settings = {}, i, n;
 
     passRepeat = !repeat.value ? 0: parseInt(repeat.value, 10);
@@ -123,6 +129,7 @@ var saveOptions = function (length, repeat, iteration, required, autosend, defSe
     settings.plength = passLength;
     settings.repeat = passRepeat;
     settings.iteration = genIteration;
+    settings.isVaultCompatible = compatibleChecked;
     settings.autosend = autosendChecked;
     settings.servicename = servicenameType;
     settings.requiredLength = requiredLength;
@@ -134,7 +141,7 @@ var saveOptions = function (length, repeat, iteration, required, autosend, defSe
 on($('save-options'), 'click', function () {
     var status = $('option-status');
 
-    saveOptions(length, repeat, iteration, required, autosend, defServicename, servicename, prefix, suffix);
+    saveOptions(length, repeat, iteration, required, compatible, autosend, defServicename, servicename, prefix, suffix);
 
     // let user know it's saved
     status.style.display = 'block';

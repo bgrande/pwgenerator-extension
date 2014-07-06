@@ -20,6 +20,9 @@
     "iterationLabel": {
         "message": "Iteration"
     },
+    "compatibleLabel": {
+        "message": "Zu getvau.lt kompatibel bleiben"
+    },
     "autosendLabel": {
         "message": "Formular automatisch nach Einfügen des Passworts abschicken"
     },

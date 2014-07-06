@@ -87,10 +87,10 @@ input.text, input.password {
   font-family: Monaco, Courier New, monospace;
 }
 
-.autosend, .servicename {
+.autosend, .servicename, .compatible {
     width: 100%;
 }
-.autosend label, #autosend, .servicename label, #servicename, #def-servicename {
+.autosend label, #autosend, .servicename label, #servicename, #def-servicename, .compatible label, #compatible {
     display: inline;
     width: auto;
     margin-right: 3%;

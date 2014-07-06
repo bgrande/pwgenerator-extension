@@ -86,6 +86,7 @@ Generator._setGeneratorSettings = function (settings) {
     generatorSettings.autosend = settings.autosend;
     generatorSettings.servicename = settings.servicename;
     generatorSettings.defServicename = settings.defServicename;
+    generatorSettings.isVaultCompatible = settings.isVaultCompatible;
 
     this.generatorSettings = generatorSettings;
 };

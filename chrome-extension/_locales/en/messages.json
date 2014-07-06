@@ -23,6 +23,9 @@
     "iterationLabel": {
         "message": "Iteration"
     },
+    "compatibleLabel": {
+        "message": "Stay getvau.lt compatible"
+    },
     "autosendLabel": {
         "message": "Automatically send form after insert"
     },
