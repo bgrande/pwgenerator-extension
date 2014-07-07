@@ -241,7 +241,8 @@ Helper.fixDuplicateIds = function (nodeList) {
  * @returns {Boolean}
  */
 Helper.isOverlay = function (pwField) {
-    return pwField && pwField.id && pwField.id.match(/^vault-passphrase-/);
+    // @todo this is easy password handler only
+    return pwField && pwField.id && pwField.id.match(/^easy-password-passphrase/);
 };
 
 /**
