@@ -20,6 +20,10 @@ Generator.generatePassword = function (phraseValue, saltValue) {
                 pwRules['symbol'] = 0;
             }
 
+            if (this.generatorSettings.isVaultCompatible && pwRules) {
+                pwRules['iteration'] = 8;
+            }
+
             vaultSettings = Helper.mergeObject(this._vaultSettings, pwRules);
             vaultSettings.phrase = phraseValue;
             pwValue = new Vault(vaultSettings).generate(saltValue);
