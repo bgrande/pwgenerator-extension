@@ -290,7 +290,7 @@ Overlay._create = function (pwField, pwFieldId) {
         }
     });
 
-    on($('vault-close-' + pwFieldId), 'click', function () {
+    on($(BASE_NAME + 'close-' + pwFieldId), 'click', function () {
         that.close();
     });
 
