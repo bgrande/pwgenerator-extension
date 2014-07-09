@@ -134,6 +134,7 @@ Overlay._createDiv = function (pwField, pwId) {
         serviceDiv = document.createElement('div'),
         passDiv = document.createElement('div'),
         generateDiv = document.createElement('div'),
+        settingsDiv = document.createElement('div'),
         closeDiv = document.createElement('div'),
         closeImg = document.createElement('img'),
         serviceElementLabel = document.createElement('label'),
@@ -211,8 +212,12 @@ Overlay._createDiv = function (pwField, pwId) {
     dialogDiv.appendChild(passDiv);
     dialogDiv.appendChild(generateDiv);
 
+   // settingsDiv.className = 'vault-generator-overlay overlay-settings';
+   // settingsDiv.id = BASE_NAME + 'overlay-settings';
+
     overlayDiv.appendChild(closeDiv);
     overlayDiv.appendChild(dialogDiv);
+   // overlayDiv.appendChild(settingsDiv);
 
     pwField.parentNode.appendChild(overlayDiv);
 };
@@ -298,17 +303,20 @@ Overlay._create = function (pwField, pwFieldId) {
 };
 
 Overlay.activate = function () {
-    var passphrase = this._getPassphraseField();
+    var passphrase = this._getPassphraseField(),
+        servicename = this._getServicenameField().value;
 
     this.toggle(true);
 
-    if (!this._isClosed) {
+    //if (!this._isClosed) {
         passphrase.focus();
-    }
+    //}
 
     this._isClosed = false;
 
-    this._setServicename();
+    if (!servicename || this._generator.getDomainname() === servicename) {
+        this._setServicename();
+    }
 };
 
 Overlay.close = function () {
@@ -339,9 +347,12 @@ Overlay.init = function (settings, passwordField, loginField, generator) {
     on(this._passwordField.getField(), 'focus', function () {
         if (!that._isClosed) {
             that.activate();
-        } else {
-            that._isClosed = false;
         }
+
+        // make sure the overlay does not pop up again after closing
+        setTimeout(function () {
+            that._isClosed = false;
+        }, 300);
     });
 
     // make sure the overlay will be loaded even if the password field is already active

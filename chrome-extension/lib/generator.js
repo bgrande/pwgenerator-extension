@@ -44,10 +44,6 @@ Generator.getDomainname = function () {
 Generator.getServicename = function (servicename, loginField) {
     var domainname = this.getDomainname();
 
-    if (servicename && domainname !== servicename) {
-        return false;
-    }
-
     switch (this.generatorSettings.servicename) {
         case 'login':
             if (loginField === undefined) {
