@@ -24,8 +24,10 @@ chrome.storage.sync.get('settings', function (items) {
             settings = (undefined !== items.settings) ? Helper.mergeObject(DEFAULT_SETTINGS, JSON.parse(items.settings)) : DEFAULT_SETTINGS,
             pwLength = passwords.length, i;
 
-        // set chrome specific url getting for close icon
+        // set chrome specific url getting for close and extend icons
         settings.imgUrl = chrome.extension.getURL('images/close.png');
+        settings.arrowUp = chrome.extension.getURL('images/arrow-up.png');
+        settings.arrowDown = chrome.extension.getURL('images/arrow-down.png');
 
         if (pwLength > 0) {
             // there are pages using the same id twice...

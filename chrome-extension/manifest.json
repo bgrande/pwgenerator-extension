@@ -57,7 +57,9 @@
     "https://*/*"
   ],
   "web_accessible_resources": [
-    "images/close.png"
+    "images/close.png",
+    "images/arrow-down.png",
+    "images/arrow-up.png"
   ],
   "options_page": "options.html",
   "minimum_chrome_version": "29"

@@ -101,11 +101,13 @@ input.text, input.password {
 }
 
 table label {
-  display: inline;
+    display: inline;
+    font-size: 1em;
 }
+
 table input.text {
-  display: inline;
-  width: 1em;
+    display: inline;
+    width: 1em;
 }
 
 table {
@@ -114,9 +116,7 @@ table {
   margin-top: 1em;
   width: 100%;
 }
-table label {
-  font-size: 1em;
-}
+
 table th, table td {
   border-left: 1px solid #ccc;
   padding: 4px 0;

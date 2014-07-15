@@ -105,5 +105,8 @@
     "showPasswordTitle": {
         "message": "Be careful! Make sure nobody is behind you!",
         "description": "Overlay show password checkbox title text"
+    },
+    "extendSettings": {
+        "message": "Adjust settings"
     }
 }

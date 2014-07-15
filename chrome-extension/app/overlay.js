@@ -87,11 +87,16 @@ var Overlay = {
     _passwordField: null,
     _id: '',
     _isClosed: false,
-    _closeImgUrl: ''
+    _closeImgUrl: '',
+    _arrowUpImgUrl: '',
+    _arrowDownImgUrl: '',
+    _settingsOverwrite: false
 };
 
 Overlay._setImgUrls = function (settings) {
     this._closeImgUrl = settings.imgUrl;
+    this._arrowDownImgUrl = settings.arrowDown;
+    this._arrowUpImgUrl = settings.arrowUp;
 };
 
 Overlay._getPasswordFieldId = function () {
@@ -137,6 +142,8 @@ Overlay._createDiv = function (pwField, pwId) {
         settingsDiv = document.createElement('div'),
         closeDiv = document.createElement('div'),
         closeImg = document.createElement('img'),
+        extendImg = document.createElement('img'),
+        extendDiv = document.createElement('div'),
         serviceElementLabel = document.createElement('label'),
         serviceElement = document.createElement('input'),
         pwElementLabel = document.createElement('label'),
@@ -152,7 +159,7 @@ Overlay._createDiv = function (pwField, pwId) {
     closeImg.alt = chrome.i18n.getMessage("close");
 
     closeDiv.id = BASE_NAME + 'close-' + pwId;
-    closeDiv.className = 'vault-close';
+    closeDiv.className = 'close';
     closeDiv.title = chrome.i18n.getMessage("close");
     closeDiv.appendChild(closeImg);
 
@@ -160,7 +167,7 @@ Overlay._createDiv = function (pwField, pwId) {
     serviceElementLabel.innerText = chrome.i18n.getMessage("serviceNameLabel");
     serviceElementLabel.htmlFor = serviceId;
     serviceElement.id = serviceId;
-    serviceElement.className = 'vault-servicename';
+    serviceElement.className = 'servicename';
     serviceElement.type = 'text';
     serviceElement.placeholder = this._generator.getDomainname();
 
@@ -168,21 +175,21 @@ Overlay._createDiv = function (pwField, pwId) {
     pwElementLabel.innerText = chrome.i18n.getMessage("passphraseLabel");
     pwElementLabel.htmlFor = passphraseId;
     pwElement.id = passphraseId;
-    pwElement.className = 'vault-passphrase';
+    pwElement.className = 'passphrase';
     pwElement.type = 'password';
     pwElement.value = '';
     pwElement.placeholder = chrome.i18n.getMessage("passphrasePlaceholder");
 
-    passDiv.className = 'vault-pass-container';
+    passDiv.className = 'pass-container';
     passDiv.appendChild(pwElementLabel);
     passDiv.appendChild(pwElement);
 
-    serviceDiv.className = 'vault-service-container';
+    serviceDiv.className = 'service-container';
     serviceDiv.appendChild(serviceElementLabel);
     serviceDiv.appendChild(serviceElement);
 
     submitButton.id = BASE_NAME + 'generate-' + pwId;
-    submitButton.className = 'vault-generate';
+    submitButton.className = 'generate';
     submitButton.type = 'button';
     submitButton.value = chrome.i18n.getMessage("submitButtonText");
     if (this._generator.generatorSettings.autosend) {
@@ -195,29 +202,94 @@ Overlay._createDiv = function (pwField, pwId) {
     showPasswordLabel.innerText = chrome.i18n.getMessage("showPasswordLabel");
     showPasswordLabel.htmlFor = showPasswordId;
     showPasswordLabel.className = 'description-label';
-    showPasswordContainer.className = "vault-show-pw-container";
+    showPasswordContainer.className = "show-pw-container";
     showPasswordContainer.title = chrome.i18n.getMessage("showPasswordTitle");
     showPasswordContainer.appendChild(showPassword);
     showPasswordContainer.appendChild(showPasswordLabel);
     passDiv.appendChild(showPasswordContainer);
 
-    generateDiv.className = 'vault-button-container';
+    extendDiv.id = BASE_NAME + 'extend-' + pwId;
+    extendDiv.className = 'extend';
+    extendDiv.title = chrome.i18n.getMessage("extendSettings");
+    extendImg.src = this._arrowDownImgUrl;
+    extendDiv.appendChild(extendImg);
+
+    generateDiv.className = 'button-container';
     generateDiv.appendChild(submitButton);
 
     overlayDiv.id = BASE_NAME + 'generator-overlay-' + pwId;
-    overlayDiv.className = 'vault-generator-overlay';
+    overlayDiv.className = 'generator-overlay';
 
-    dialogDiv.className = 'vault-generator-dialog';
+    dialogDiv.className = 'generator-dialog';
     dialogDiv.appendChild(serviceDiv);
     dialogDiv.appendChild(passDiv);
     dialogDiv.appendChild(generateDiv);
 
-   // settingsDiv.className = 'vault-generator-overlay overlay-settings';
-   // settingsDiv.id = BASE_NAME + 'overlay-settings';
+    settingsDiv.className = 'overlay-settings';
+    settingsDiv.id = BASE_NAME + 'overlay-settings' + pwId;
+    settingsDiv.style.display = 'none';
+    settingsDiv.innerHTML = '<div class="sub">' +
+        '   <div class="length">' +
+        '       <label for="vlength" id="length-label">' + chrome.i18n.getMessage("lengthLabel") + '</label>' +
+        '       <input type="text" min="0" class="text" name="vlength" id="vlength" value="20" autocomplete="on">' +
+        '   </div>' +
+        '   <div class="repeat">' +
+        '       <label for="repeat" id="repeat-label">' + chrome.i18n.getMessage("repeatLabel") + '</label>' +
+        '       <input maxlength="2" type="text" class="text" name="repeat" id="repeat" value="" autocomplete="on">' +
+        '   </div>' +
+        '</div>' +
+        '<div class="field">' +
+        '   <table>' +
+        '     <thead>' +
+        '       <tr>' +
+        '           <td></td>' +
+        '           <th scope="col">a&ndash;z</th>' +
+        '           <th scope="col">A&ndash;Z</th>' +
+        '           <th scope="col">0&ndash;9</th>' +
+        '           <th scope="col">- / _</th>' +
+        '           <th scope="col" id="space-head">SPACE</th>' +
+        '           <th scope="col" id="symbol-description">!@#$%</th>' +
+        '       </tr>' +
+        '     </thead>' +
+        '     <tbody>' +
+        '       <tr>' +
+        '           <th scope="row">' +
+        '               <label for="required" id="required-label">' + chrome.i18n.getMessage("requiredLabel") + '</label>' +
+        '               (<input maxlength="2" type="text" class="text" name="required" id="required" value="2" autocomplete="off">)' +
+        '           </th>' +
+        '           <td><input type="radio" name="lower" value="required"></td>' +
+        '           <td><input type="radio" name="upper" value="required"></td>' +
+        '           <td><input type="radio" name="number" value="required"></td>' +
+        '           <td><input type="radio" name="dash" value="required"></td>' +
+        '           <td><input type="radio" name="space" value="required"></td>' +
+        '           <td><input type="radio" name="symbol" value="required"></td>' +
+        '       </tr>' +
+        '       <tr>' +
+        '           <th scope="row" id="allowed-label">Allowed</th>' +
+        '           <td><input type="radio" name="lower" value="allowed" checked="checked"></td>' +
+        '           <td><input type="radio" name="upper" value="allowed" checked="checked"></td>' +
+        '           <td><input type="radio" name="number" value="allowed" checked="checked"></td>' +
+        '           <td><input type="radio" name="dash" value="allowed" checked="checked"></td>' +
+        '           <td><input type="radio" name="space" value="allowed" checked="checked"></td>' +
+        '           <td><input type="radio" name="symbol" value="allowed" checked="checked"></td>' +
+        '       </tr>' +
+        '       <tr>' +
+        '           <th scope="row" id="forbidden-label">Forbidden</th>' +
+        '           <td><input type="radio" name="lower" value="forbidden"></td>' +
+        '           <td><input type="radio" name="upper" value="forbidden"></td>' +
+        '           <td><input type="radio" name="number" value="forbidden"></td>' +
+        '           <td><input type="radio" name="dash" value="forbidden"></td>' +
+        '           <td><input type="radio" name="space" value="forbidden"></td>' +
+        '           <td><input type="radio" name="symbol" value="forbidden"></td>' +
+        '       </tr>' +
+        '     </tbody>' +
+        '   </table>' +
+        '</div>';
 
     overlayDiv.appendChild(closeDiv);
     overlayDiv.appendChild(dialogDiv);
-   // overlayDiv.appendChild(settingsDiv);
+    overlayDiv.appendChild(extendDiv);
+    overlayDiv.appendChild(settingsDiv);
 
     pwField.parentNode.appendChild(overlayDiv);
 };
@@ -299,6 +371,19 @@ Overlay._create = function (pwField, pwFieldId) {
         that.close();
     });
 
+    on($(BASE_NAME + 'extend-' + pwFieldId), 'click', function () {
+        var extension = $(BASE_NAME + 'overlay-settings' + pwFieldId);
+
+        if (extension.style.display === 'none') {
+            extension.style.display = 'table';
+            this.firstChild.src = that._arrowUpImgUrl;
+            that._settingsOverwrite = true;
+        } else {
+            extension.style.display = 'none';
+            this.firstChild.src = that._arrowDownImgUrl;
+        }
+    });
+
     this._setServicename();
 };
 
@@ -308,6 +393,7 @@ Overlay.activate = function () {
 
     this.toggle(true);
 
+    // @todo do we need that anymore?
     //if (!this._isClosed) {
         passphrase.focus();
     //}

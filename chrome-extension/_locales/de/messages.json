@@ -91,5 +91,8 @@
     },
     "showPasswordTitle": {
         "message": "Vorsicht! Stellen Sie sicher, dass niemand hinter Ihnen steht!"
+    },
+    "extendSettings": {
+        "message": "Einstellungen anpassen"
     }
 }
