@@ -94,5 +94,8 @@
     },
     "extendSettings": {
         "message": "Einstellungen anpassen"
+    },
+    "saveLabel": {
+        "message": "Speichern"
     }
 }

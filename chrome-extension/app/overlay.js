@@ -237,6 +237,10 @@ Overlay._createDiv = function (pwField, pwId) {
         '       <label for="repeat" id="repeat-label">' + chrome.i18n.getMessage("repeatLabel") + '</label>' +
         '       <input maxlength="2" type="text" class="text" name="repeat" id="repeat" value="" autocomplete="on">' +
         '   </div>' +
+        '   <div class="save">' +
+        '       <input maxlength="2" type="checkbox" class="text" name="save" id="save" value="" autocomplete="on">' +
+        '       <label for="save" id="repeat-label">' + chrome.i18n.getMessage("saveLabel") + '</label>' +
+        '   </div>' +
         '</div>' +
         '<div class="field">' +
         '   <table>' +

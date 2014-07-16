@@ -165,6 +165,7 @@ label.description-label {
     display: inline;
     float: left;
     margin-right: .5em;
+    height: auto;
 }
 
 .overlay-settings label {
@@ -172,10 +173,22 @@ label.description-label {
     margin-top: .5em;
 }
 
-.overlay-settings .length, .overlay-settings .repeat {
+.overlay-settings .length, .overlay-settings .repeat, .overlay-settings .save {
     float: left;
     margin-right: 1em;
     margin-bottom: 1em;
+}
+
+.overlay-settings .save {
+    float: right;
+}
+
+.overlay-settings #save {
+    margin: .5em .3em 0 0 !important;
+}
+
+.overlay-settings .save label {
+    font-weight: bold;
 }
 
 .overlay-settings input.text {
@@ -183,18 +196,11 @@ label.description-label {
     background-color: #dddddd !important;
     font-size: 1em;
     width: 3em;
+    height: auto;
 }
 
 .overlay-settings table label {
     display: inline;
-}
-
-.overlay-settings table input.text {
-    border: 0;
-    height: auto;
-    background-color: #ceceb0;
-    width: 1em;
-    float: none !important;
 }
 
 .overlay-settings table {
@@ -202,6 +208,14 @@ label.description-label {
     clear: both;
     margin-top: 1em;
     width: 100%;
+}
+
+.overlay-settings table input.text {
+    border: 0;
+    height: 1.5em;
+    background-color: #ceceb0;
+    width: 1em;
+    float: none !important;
 }
 
 .overlay-settings table th, .overlay-settings table td {

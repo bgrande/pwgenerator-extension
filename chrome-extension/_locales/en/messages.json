@@ -108,5 +108,8 @@
     },
     "extendSettings": {
         "message": "Adjust settings"
+    },
+    "saveLabel": {
+        "message": "Save"
     }
 }
