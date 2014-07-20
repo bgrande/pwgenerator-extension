@@ -11,7 +11,7 @@ chrome.browserAction.onClicked.addListener(function (tab) {
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (!request || (request.event !== 'countChange' && request.event !== 'saveOverwrite')) {
-        return;
+        return false;
     }
 
     switch (request.event) {
@@ -36,11 +36,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 chrome.storage.sync.get('settings', function (items) {
                     var settings = JSON.parse(items.settings);
                     settings['serviceExceptions'] = Helper.mergeObject(settings['serviceExceptions'], newSettings);
-
-                    saveSettings(settings);
+                    setChromeSettings(settings);
                 });
             }
+            break;
     }
+
+    return false;
 });
 
 chrome.runtime.onInstalled.addListener(function (details) {
@@ -68,6 +70,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
                     for (serviceKey in DEFAULT_SETTINGS[key]) {
                         if (DEFAULT_SETTINGS[key].hasOwnProperty(serviceKey) && !settings[key].hasOwnProperty(serviceKey)) {
                             settings[key][serviceKey] = DEFAULT_SETTINGS[key][serviceKey];
+                            isNew = true;
                         }
                         // @todo for else we might compare every single element and contribute new user settings?
                     }
