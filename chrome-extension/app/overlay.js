@@ -447,10 +447,7 @@ Overlay.activate = function () {
 
     this.toggle(true);
 
-    // @todo do we need that anymore?
-    //if (!this._isClosed) {
-        passphrase.focus();
-    //}
+    passphrase.focus();
 
     this._isClosed = false;
 
