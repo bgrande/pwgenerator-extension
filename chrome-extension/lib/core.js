@@ -84,6 +84,11 @@ var DEFAULT_SETTINGS = {
             'kabeldeutschland.de': {
                 space: 0
             },
+            'unitymedia.de': {
+                space: 0,
+                symbols: '/+=]',
+                dash: 0
+            },
             'paket.de': {
                 length: 13,
                 space: 0,
@@ -325,3 +330,87 @@ Helper.getLoginForm = function (pwField) {
 Helper.getRandomServicename = function () {
     return Math.random().toString(36).substring(7) + '@';
 };
+
+/**
+ * get input type radio values
+ *
+ * @param {string} name
+ * @returns {*}
+ */
+Helper.getRadio = function (name) {
+    var inputs = document.getElementsByTagName('input'), input, i, n;
+
+    for (i = 0, n = inputs.length; i < n; i++) {
+        input = inputs[i];
+        if (input.type === 'radio' && input.name === name && input.checked) {
+            return input.value;
+        }
+    }
+
+    return null;
+};
+
+/**
+ * Set radio by name
+ *
+ * @param {String} name
+ * @param {int} value
+ */
+Helper.setRadio = function (name, value) {
+    var inputs = document.getElementsByTagName('input'), input, i, n;
+
+    for (i = 0, n = inputs.length; i < n; i++) {
+        input = inputs[i];
+        if (input.type === 'radio' && input.name === name) {
+            switch (input.value) {
+                case 'required':
+                    input.checked = (value && value > 0);
+                    break;
+                case 'allowed':
+                    input.checked = (value === null);
+                    break;
+                case 'forbidden':
+                    input.checked = (value === 0);
+                    break;
+            }
+        }
+    }
+};
+
+/**
+ * Get current vault type settings
+ *
+ * @param {Object} settings
+ * @param {int} requiredLength
+ * @returns {Object}
+ */
+Helper.getTypeSettings = function (settings, requiredLength) {
+    var i, n, value;
+
+    for (i = 0, n = TYPES.length; i < n; i++) {
+        value = this.getRadio(TYPES[i]);
+
+        if (value === 'forbidden') {
+            settings[TYPES[i]] = 0;
+        } else if (value === 'required') {
+            settings[TYPES[i]] = requiredLength;
+        } else {
+            settings[TYPES[i]] = null;
+        }
+    }
+
+    return settings;
+};
+
+/**
+ * set all vault radio types
+ *
+ * @param {Object} settings
+ */
+Helper.setTypeSettings = function (settings) {
+    var i, n;
+
+    for (i = 0, n = TYPES.length; i < n; i++) {
+        Helper.setRadio(TYPES[i], settings[TYPES[i]]);
+    }
+}

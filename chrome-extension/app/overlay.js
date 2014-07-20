@@ -111,13 +111,61 @@ Overlay._getServicenameField = function () {
     return $(BASE_NAME + 'servicename-' + this._getPasswordFieldId());
 };
 
+Overlay._getOverwriteSettings = function () {
+    var length = parseInt($('vlength').value, 10),
+        repeat = parseInt($('repeat').value, 10),
+        required = parseInt($('required').value, 10),
+        save = $('save').checked,
+        serviceException = {};
+
+    if (length) {
+        serviceException['length'] = length;
+    }
+
+    if (repeat) {
+        serviceException['repeat'] = repeat;
+    }
+
+    if (required) {
+        serviceException['requiredLength'] = required;
+    }
+
+    if (save) {
+        // @todo save settings for domain
+        // this._generator.getDomainname();
+    }
+
+    serviceException = Helper.getTypeSettings(serviceException, required);
+
+    return serviceException;
+};
+
+Overlay._setOverwriteSettings = function (settings) {
+    if (settings.hasOwnProperty('length') && settings.length) {
+        $('vlength').value = settings.length;
+    }
+
+    if (settings.hasOwnProperty('repeat') && settings.repeat) {
+        $('repeat').value = settings.repeat;
+    }
+
+    if (settings.hasOwnProperty('requiredLength') && settings.requiredLength) {
+        $('required').value = settings.requiredLength;
+    }
+};
+
 Overlay._generateButtonSubmit = function (pwField) {
     var passPhrase = this._getPassphraseField(),
         serviceSalt = this._getServicenameField(),
         newPassword,
-        loginFormNumber;
+        loginFormNumber,
+        overwriteSettings;
 
-    newPassword = this._generator.generatePassword(passPhrase.value, serviceSalt.value);
+    if (this._settingsOverwrite) {
+        overwriteSettings = this._getOverwriteSettings();
+    }
+
+    newPassword = this._generator.generatePassword(passPhrase.value, serviceSalt.value, overwriteSettings);
     pwField.type = (this._passwordField.showPw) ? 'text' : 'password';
     pwField.value = newPassword;
 
@@ -231,7 +279,7 @@ Overlay._createDiv = function (pwField, pwId) {
     settingsDiv.innerHTML = '<div class="sub">' +
         '   <div class="length">' +
         '       <label for="vlength" id="length-label">' + chrome.i18n.getMessage("lengthLabel") + '</label>' +
-        '       <input type="text" min="0" class="text" name="vlength" id="vlength" value="20" autocomplete="on">' +
+        '       <input maxlength="4" type="text" min="0" class="text" name="vlength" id="vlength" value="20" autocomplete="on">' +
         '   </div>' +
         '   <div class="repeat">' +
         '       <label for="repeat" id="repeat-label">' + chrome.i18n.getMessage("repeatLabel") + '</label>' +
@@ -259,7 +307,7 @@ Overlay._createDiv = function (pwField, pwId) {
         '       <tr>' +
         '           <th scope="row">' +
         '               <label for="required" id="required-label">' + chrome.i18n.getMessage("requiredLabel") + '</label>' +
-        '               (<input maxlength="2" type="text" class="text" name="required" id="required" value="2" autocomplete="off">)' +
+        '               (<input maxlength="1" type="text" class="text" name="required" id="required" value="2" autocomplete="off">)' +
         '           </th>' +
         '           <td><input type="radio" name="lower" value="required"></td>' +
         '           <td><input type="radio" name="upper" value="required"></td>' +
@@ -382,6 +430,8 @@ Overlay._create = function (pwField, pwFieldId) {
             extension.style.display = 'table';
             this.firstChild.src = that._arrowUpImgUrl;
             that._settingsOverwrite = true;
+            Helper.setTypeSettings(that._generator._vaultSettings);
+            that._setOverwriteSettings(that._generator._vaultSettings);
         } else {
             extension.style.display = 'none';
             this.firstChild.src = that._arrowDownImgUrl;

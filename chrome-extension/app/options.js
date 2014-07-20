@@ -11,47 +11,12 @@ var required    = $('required'),
     suffix      = $('suffix'),
     defServicename = $('def-servicename');
 
-var getRadio = function (name) {
-    var inputs = document.getElementsByTagName('input'), input, i, n;
-
-    for (i = 0, n = inputs.length; i < n; i++) {
-        input = inputs[i];
-        if (input.type === 'radio' && input.name === name && input.checked) {
-            return input.value;
-        }
-    }
-
-    return null;
-};
-
-var setRadio = function (name, value) {
-    var inputs = document.getElementsByTagName('input'), input, i, n;
-
-    for (i = 0, n = inputs.length; i < n; i++) {
-        input = inputs[i];
-        if (input.type === 'radio' && input.name === name) {
-            switch (input.value) {
-                case 'required':
-                    input.checked = (value && value > 0);
-                    break;
-                case 'allowed':
-                    input.checked = (value === null);
-                    break;
-                case 'forbidden':
-                    input.checked = (value === 0);
-                    break;
-            }
-        }
-    }
-};
-
-// retrieve already stored options
+/**
+ * retrieve already stored options
+ * @param {Object} settings
+ */
 var getOptionSettings = function (settings) {
-    var i, n;
-
-    for (i = 0, n = TYPES.length; i < n; i++) {
-        setRadio(TYPES[i], settings[TYPES[i]]);
-    }
+    Helper.setTypeSettings(settings);
 
     if (settings.repeat) {
         repeat.value = settings.repeat;
@@ -94,6 +59,20 @@ var getOptionSettings = function (settings) {
     }
 };
 
+/**
+ * Save given options into store
+ *
+ * @param {HTMLInputElement} length
+ * @param {HTMLInputElement} repeat
+ * @param {HTMLInputElement} iteration
+ * @param {HTMLInputElement} required
+ * @param {HTMLInputElement} compatible
+ * @param {HTMLInputElement} autosend
+ * @param {HTMLInputElement} defServicename
+ * @param {HTMLInputElement} servicename
+ * @param {HTMLInputElement} prefix
+ * @param {HTMLInputElement} suffix
+ */
 var saveOptions = function (length, repeat, iteration, required, compatible, autosend, defServicename, servicename, prefix, suffix) {
     var passLength        = parseInt(length.value, 10),
         requiredLength    = parseInt(required.value, 10),
@@ -101,22 +80,12 @@ var saveOptions = function (length, repeat, iteration, required, compatible, aut
         autosendChecked   = autosend.checked,
         defServicenameVal = defServicename.value,
         servicenameType   = undefined,
-        passRepeat, genIteration, value, settings = {}, i, n;
+        passRepeat, genIteration, settings = {};
 
     passRepeat = !repeat.value ? 0: parseInt(repeat.value, 10);
     genIteration = !iteration.value ? 0: parseInt(iteration.value, 10);
 
-    for (i = 0, n = TYPES.length; i < n; i++) {
-        value = getRadio(TYPES[i]);
-
-        if (value === 'forbidden') {
-            settings[TYPES[i]] = 0;
-        } else if (value === 'required') {
-            settings[TYPES[i]] = requiredLength;
-        } else {
-            settings[TYPES[i]] = null;
-        }
-    }
+    settings = Helper.getTypeSettings(settings, requiredLength);
 
     if (servicename.checked) {
         servicenameType = servicename.value;

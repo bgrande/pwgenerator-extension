@@ -6,7 +6,7 @@ var Generator = {
     _domainService: null
 };
 
-Generator.generatePassword = function (phraseValue, saltValue) {
+Generator.generatePassword = function (phraseValue, saltValue, overwriteSettings) {
     var pwValue,
         vaultSettings,
         pwRules;
@@ -14,6 +14,10 @@ Generator.generatePassword = function (phraseValue, saltValue) {
     try {
         if (saltValue && phraseValue) {
             pwRules = this._domainService.getPasswordRules();
+
+            if (overwriteSettings) {
+                pwRules = Helper.mergeObject(pwRules || {}, overwriteSettings);
+            }
 
             if (this.generatorSettings.isVaultCompatible && pwRules && pwRules.hasOwnProperty('symbols')) {
                 pwRules['symbols'] = null;
@@ -80,6 +84,7 @@ Generator._setVaultSettings = function (settings) {
     vaultSettings.length = undefined !== settings.plength ? settings.plength : settings.length;
     vaultSettings.repeat = settings.repeat;
     vaultSettings.iteration = settings.iteration;
+    vaultSettings.requiredLength = settings.requiredLength;
 
     for (i = 0, n = TYPES.length; i < n; i++) {
         vaultSettings[TYPES[i]] = settings[TYPES[i]];
