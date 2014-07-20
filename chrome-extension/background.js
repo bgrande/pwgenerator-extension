@@ -10,20 +10,36 @@ chrome.browserAction.onClicked.addListener(function (tab) {
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    if (!request || request.event !== 'countChange') {
+    if (!request || (request.event !== 'countChange' && request.event !== 'saveOverwrite')) {
         return;
     }
 
-    if (request.overlayCount && 0 !== request.overlayCount) {
-        chrome.browserAction.setBadgeText({
-            text: '' + request.overlayCount,
-            tabId: sender.tab.id
-        });
-    } else {
-        chrome.browserAction.setBadgeText({
-            text: '',
-            tabId: sender.tab.id
-        });
+    switch (request.event) {
+        case 'countChange':
+            if (request.overlayCount && request.overlayCount !== 0) {
+                chrome.browserAction.setBadgeText({
+                    text: '' + request.overlayCount,
+                    tabId: sender.tab.id
+                });
+            } else {
+                chrome.browserAction.setBadgeText({
+                    text: '',
+                    tabId: sender.tab.id
+                });
+            }
+            break;
+
+        case 'saveOverwrite':
+            if (request.settings && typeof(request.settings) === 'object') {
+                var newSettings = request.settings;
+
+                chrome.storage.sync.get('settings', function (items) {
+                    var settings = JSON.parse(items.settings);
+                    settings['serviceExceptions'] = Helper.mergeObject(settings['serviceExceptions'], newSettings);
+
+                    saveSettings(settings);
+                });
+            }
     }
 });
 
@@ -42,24 +58,33 @@ chrome.runtime.onInstalled.addListener(function (details) {
 
     if (details.reason === 'chrome_update' || details.reason === 'update') {
         chrome.storage.sync.get('settings', function (items) {
-            var settings = JSON.parse(items.settings), key, isNew = false;
+            var settings = JSON.parse(items.settings), key, serviceKey, isNew = false;
 
             for (key in DEFAULT_SETTINGS) {
-                if ((DEFAULT_SETTINGS.hasOwnProperty(key) && !settings.hasOwnProperty(key)) || key === 'serviceExceptions') {
+                if (DEFAULT_SETTINGS.hasOwnProperty(key) && !settings.hasOwnProperty(key)) {
                     settings[key] = DEFAULT_SETTINGS[key];
                     isNew = true;
+                } else if (key === 'serviceExceptions') {
+                    for (serviceKey in DEFAULT_SETTINGS[key]) {
+                        if (DEFAULT_SETTINGS[key].hasOwnProperty(serviceKey) && !settings[key].hasOwnProperty(serviceKey)) {
+                            settings[key][serviceKey] = DEFAULT_SETTINGS[key][serviceKey];
+                        }
+                        // @todo for else we might compare every single element and contribute new user settings?
+                    }
                 }
             }
 
             if (isNew === true) {
-                chrome.storage.sync.set({
-                    settings: JSON.stringify(settings)
-                });
+                setChromeSettings(settings);
             }
         });
     } else {
-        chrome.storage.sync.set({
-            settings: JSON.stringify(DEFAULT_SETTINGS)
-        });
+        setChromeSettings(DEFAULT_SETTINGS);
     }
 });
+
+var setChromeSettings = function (settings) {
+    chrome.storage.sync.set({
+        settings: JSON.stringify(settings)
+    });
+};

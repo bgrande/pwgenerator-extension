@@ -116,28 +116,31 @@ Overlay._getOverwriteSettings = function () {
         repeat = parseInt($('repeat').value, 10),
         required = parseInt($('required').value, 10),
         save = $('save').checked,
-        serviceException = {};
+        serviceRules = {};
 
     if (length) {
-        serviceException['length'] = length;
+        serviceRules['length'] = length;
     }
 
     if (repeat) {
-        serviceException['repeat'] = repeat;
+        serviceRules['repeat'] = repeat;
     }
 
     if (required) {
-        serviceException['requiredLength'] = required;
+        serviceRules['requiredLength'] = required;
     }
+
+    serviceRules = Helper.getTypeSettings(serviceRules, required);
 
     if (save) {
-        // @todo save settings for domain
-        // this._generator.getDomainname();
+        var serviceExceptions = {};
+
+        serviceExceptions[this._generator.getDomainname()] = serviceRules;
+        chrome.runtime.sendMessage({event: 'saveOverwrite', settings: serviceExceptions});
+        // @todo we might want to ask the user to contribute the new settings
     }
 
-    serviceException = Helper.getTypeSettings(serviceException, required);
-
-    return serviceException;
+    return serviceRules;
 };
 
 Overlay._setOverwriteSettings = function (settings) {
