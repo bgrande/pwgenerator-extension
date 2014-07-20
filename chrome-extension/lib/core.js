@@ -413,4 +413,4 @@ Helper.setTypeSettings = function (settings) {
     for (i = 0, n = TYPES.length; i < n; i++) {
         Helper.setRadio(TYPES[i], settings[TYPES[i]]);
     }
-}
+};
