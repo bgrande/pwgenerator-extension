@@ -246,7 +246,7 @@ Helper.fixDuplicateIds = function (nodeList) {
  * @returns {Boolean}
  */
 Helper.isOverlay = function (pwField) {
-    // @todo this is easy password handler only
+    // @todo this is easy password handler (overlay) only
     return pwField && pwField.id && pwField.id.match(/^easy-password-passphrase/);
 };
 
@@ -258,7 +258,7 @@ Helper.isOverlay = function (pwField) {
  * @returns {Boolean}
  */
 Helper.hasOverlay = function (pwField) {
-    // @todo this is easy password handler only
+    // @todo this is easy password handler (overlay) only
     return pwField && pwField.id && $(BASE_NAME + 'generator-overlay-' + pwField.id);
 };
 
