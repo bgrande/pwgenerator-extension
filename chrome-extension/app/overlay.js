@@ -138,7 +138,7 @@ Overlay._getOverwriteSettings = function () {
         serviceExceptions[this._generator.getDomainname()] = serviceRules;
         chrome.runtime.sendMessage({event: 'saveOverwrite', settings: serviceExceptions});
         // @todo we might want to ask the user to contribute the new settings
-        // @todo we need an overview with all exceptions and corresponding (c)rud
+        // @todo we need an overview with all exceptions and corresponding (cr)ud
     }
 
     return serviceRules;
@@ -431,7 +431,6 @@ Overlay._create = function (pwField, pwFieldId) {
         var extension = $(BASE_NAME + 'overlay-settings' + pwFieldId);
 
         if (extension.style.display === 'none') {
-            // @todo build a getter for passwordRules
             var vaultSettings = Helper.mergeObject(
                 that._generator._vaultSettings,
                 that._generator._domainService.getPasswordRules()
