@@ -77,6 +77,16 @@ chrome.runtime.onInstalled.addListener(function (details) {
                 }
             }
 
+            // migrate plength to length -> @todo can be deleted with 2.0
+            if (settings.plength) {
+                if (!settings.length) {
+                    settings.length = settings.plength;
+                }
+
+                delete settings.plength;
+                isNew = true;
+            }
+
             if (isNew === true) {
                 setChromeSettings(settings);
             }

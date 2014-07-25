@@ -26,8 +26,8 @@ var getOptionSettings = function (settings) {
         iteration.value = settings.iteration;
     }
 
-    if (settings.plength) {
-        length.value = settings.plength;
+    if (settings.length) {
+        length.value = settings.length;
     }
 
     if (settings.requiredLength) {
@@ -95,7 +95,7 @@ var saveOptions = function (length, repeat, iteration, required, compatible, aut
         servicenameType = suffix.value;
     }
 
-    settings.plength = passLength;
+    settings.length = passLength;
     settings.repeat = passRepeat;
     settings.iteration = genIteration;
     settings.isVaultCompatible = compatibleChecked;
