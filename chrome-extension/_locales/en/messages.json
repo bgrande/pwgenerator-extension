@@ -111,5 +111,11 @@
     },
     "saveLabel": {
         "message": "Save"
+    },
+    "reloadTitle": {
+        "message": "Reload overlays"
+    },
+    "disableTitle": {
+        "message": "Disable overlays"
     }
 }

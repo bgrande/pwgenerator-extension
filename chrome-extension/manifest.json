@@ -1,7 +1,7 @@
 {
   "name": "__MSG_extName__",
   "short_name": "EasyPassword",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "manifest_version": 2,
   "author": "Benedikt Grande",
   "description": "__MSG_extDescription__",
@@ -25,7 +25,8 @@
         "19": "images/icon19.png",
         "32": "images/icon32.png"
     },
-    "default_title": "__MSG_extTitle__"
+    "default_title": "__MSG_extTitle__",
+    "default_popup": "popup.html"
   },
   "content_scripts": [
       {

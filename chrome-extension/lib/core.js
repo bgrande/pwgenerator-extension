@@ -98,7 +98,8 @@ var DEFAULT_SETTINGS = {
 
         imgUrl: 'images/close.png'
     },
-    TYPES = 'lower upper number dash space symbol'.split(' ');
+    TYPES = 'lower upper number dash space symbol'.split(' '),
+    UUID = '1e9632fa-e9b3-4a49-ab3b-e17256b83ff9';
 
 var $ = function (selector) {
     var element = document.getElementById(selector);
@@ -122,8 +123,10 @@ var on = function (element, event, listener) {
     for (var i = 0, n = event.length; i < n; i++) {
         if (element.addEventListener) {
             element.addEventListener(event[i], listener, true);
-        } else {
+        } else if (element.attachEvent) {
             element.attachEvent('on' + event[i], listener);
+        } else {
+            throw new Error('element not type of EventTarget');
         }
     }
 };

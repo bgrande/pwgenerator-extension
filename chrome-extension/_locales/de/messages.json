@@ -97,5 +97,11 @@
     },
     "saveLabel": {
         "message": "Speichern"
+    },
+    "reloadTitle": {
+        "message": "Overlays neu laden"
+    },
+    "disableTitle": {
+        "message": "Overlays deaktivieren"
     }
 }

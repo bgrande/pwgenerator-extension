@@ -1,16 +1,23 @@
 'use strict';
 
-chrome.browserAction.onClicked.addListener(function (tab) {
+var allowedEvents = {
+    'countChange': 1,
+    'saveOverwrite': 1,
+    'reload': 1,
+    'disable': 1
+};
+
+/*chrome.browserAction.onClicked.addListener(function (tab) {
     chrome.tabs.executeScript(tab.id, { file: "lib/crypto-js-3.1.2.js", allFrames: true }, function () {});
     chrome.tabs.executeScript(tab.id, { file: "lib/vault.js", allFrames: true }, function () {});
     chrome.tabs.executeScript(tab.id, { file: "lib/core.js", allFrames: true }, function () {});
     chrome.tabs.executeScript(tab.id, { file: "lib/generator.js", allFrames: true }, function () {});
     chrome.tabs.executeScript(tab.id, { file: "app/overlay.js", allFrames: true }, function () {});
     chrome.tabs.executeScript(tab.id, { file: "app/generate.js", allFrames: true }, function () {});
-});
+});*/
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    if (!request || (request.event !== 'countChange' && request.event !== 'saveOverwrite')) {
+    if (!request || (allowedEvents[request.event]) === 0) {
         return false;
     }
 
@@ -40,6 +47,21 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 });
             }
             break;
+
+        case 'reload':
+            chrome.tabs.executeScript(null, { file: "lib/crypto-js-3.1.2.js", allFrames: true }, function () {});
+            chrome.tabs.executeScript(null, { file: "lib/vault.js", allFrames: true }, function () {});
+            chrome.tabs.executeScript(null, { file: "lib/core.js", allFrames: true }, function () {});
+            chrome.tabs.executeScript(null, { file: "lib/generator.js", allFrames: true }, function () {});
+            chrome.tabs.executeScript(null, { file: "app/overlay.js", allFrames: true }, function () {});
+            chrome.tabs.executeScript(null, { file: "app/generate.js", allFrames: true }, function () {});
+            break;
+
+        case 'disable':
+            chrome.tabs.executeScript(null, { code: "window.overlays = null", allFrames: true }, function () {});
+            //chrome.runtime.sendMessage({event: 'countChange', overlayCount: 0});
+            // @todo send message to contentscript and remove already loaded files
+            // @todo or (maybe easier) set var to prevent overlay from loading
     }
 
     return false;

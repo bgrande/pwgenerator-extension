@@ -6,119 +6,125 @@
     <link rel="stylesheet" type="text/css" href="./css/options.css">
   </head>
   <body>
+    <div class="topbar"></div>
 
-    <div class="form">
-      <div class="sub">
-        <div class="length">
-          <label for="vlength" id="length-label">Password length</label>
-          <input type="text" min="0" class="text" name="vlength" id="vlength" value="20" autocomplete="off">
+    <div class="container">
+        <div class="form">
+          <div class="sub">
+            <div class="length">
+              <label for="vlength" id="length-label">Password length</label>
+              <input type="text" min="0" class="text" name="vlength" id="vlength" value="20" autocomplete="off">
+            </div>
+
+            <div class="iteration">
+              <label for="iteration" id="iteration-label">Max iteration</label>
+              <input maxlength="2" type="text" class="text" name="repeat" id="iteration" value="8" autocomplete="off" autocapitalize="off">
+            </div>
+
+            <div class="repeat">
+              <label for="repeat" id="repeat-label">Max repetition</label>
+              <input maxlength="2" type="text" class="text" name="repeat" id="repeat" value="" autocomplete="off">
+            </div>
+
+            <div class="compatible">
+                <input type="checkbox" name="compatible" id="compatible" value="1" checked="checked" autocomplete="off">
+                <label for="compatible" id="compatible-label">Stay getvau.lt compatible</label>
+            </div>
+
+            <div class="autosend">
+                <input type="checkbox" name="autosend" id="autosend" value="1" checked="checked" autocomplete="off">
+                <label for="autosend" id="autosend-label">Automatically send form after insert</label>
+            </div>
+
+            <div>
+                &nbsp;
+            </div>
+
+            <div class="servicename">
+                <input type="radio" name="servicename" id="servicename" value="login" autocomplete="off">
+                <label for="servicename" id="servicename-label">Use loginname as Servicename</label>
+            </div>
+
+            <div class="servicename">
+              <label for="def-servicename" id="defservicename-label">Use </label>
+              <input type="text" class="text" name="def-servicename" id="def-servicename" value="" autocomplete="off">
+
+              <input type="radio" name="servicename" id="prefix" value="prefix" checked="checked" autocomplete="off">
+              <label for="prefix" id="defservicename-prefix-label">as prefix</label>
+
+              <input type="radio" name="servicename" id="suffix" value="suffix" autocomplete="off">
+              <label for="suffix" id="defservicename-suffix-label">as suffix</label>
+            </div>
+
+            <div>
+                &nbsp;
+            </div>
+
+            <div class="field">
+              <table>
+                <thead>
+                  <tr>
+                    <td></td>
+                    <th scope="col">a&ndash;z</th>
+                    <th scope="col">A&ndash;Z</th>
+                    <th scope="col">0&ndash;9</th>
+                    <th scope="col">- / _</th>
+                    <th scope="col" id="space-head">SPACE</th>
+                    <th scope="col" id="symbol-description">!@#$%</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">
+                      <label for="required" id="required-label">Required</label>
+                      (<input maxlength="2" type="text" class="text" name="required" id="required" value="2" autocomplete="off">)
+                    </th>
+                    <td><input type="radio" name="lower" value="required"></td>
+                    <td><input type="radio" name="upper" value="required"></td>
+                    <td><input type="radio" name="number" value="required"></td>
+                    <td><input type="radio" name="dash" value="required"></td>
+                    <td><input type="radio" name="space" value="required"></td>
+                    <td><input type="radio" name="symbol" value="required"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row" id="allowed-label">Allowed</th>
+                    <td><input type="radio" name="lower" value="allowed" checked="checked"></td>
+                    <td><input type="radio" name="upper" value="allowed" checked="checked"></td>
+                    <td><input type="radio" name="number" value="allowed" checked="checked"></td>
+                    <td><input type="radio" name="dash" value="allowed" checked="checked"></td>
+                    <td><input type="radio" name="space" value="allowed" checked="checked"></td>
+                    <td><input type="radio" name="symbol" value="allowed" checked="checked"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row" id="forbidden-label">Forbidden</th>
+                    <td><input type="radio" name="lower" value="forbidden"></td>
+                    <td><input type="radio" name="upper" value="forbidden"></td>
+                    <td><input type="radio" name="number" value="forbidden"></td>
+                    <td><input type="radio" name="dash" value="forbidden"></td>
+                    <td><input type="radio" name="space" value="forbidden"></td>
+                    <td><input type="radio" name="symbol" value="forbidden"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
 
-        <div class="iteration">
-          <label for="iteration" id="iteration-label">Max iteration</label>
-          <input maxlength="2" type="text" class="text" name="repeat" id="iteration" value="8" autocomplete="off" autocapitalize="off">
+        <div class="generator">
+            <a href="#" id="cancel-options">Cancel</a>
+            <a href="#" id="save-options">Save</a>
+            <div class="break"></div>
         </div>
 
-        <div class="repeat">
-          <label for="repeat" id="repeat-label">Max repetition</label>
-          <input maxlength="2" type="text" class="text" name="repeat" id="repeat" value="" autocomplete="off">
-        </div>
-
-        <div class="compatible">
-            <input type="checkbox" name="compatible" id="compatible" value="1" checked="checked" autocomplete="off">
-            <label for="compatible" id="compatible-label">Stay getvau.lt compatible</label>
-        </div>
-
-        <div class="autosend">
-            <input type="checkbox" name="autosend" id="autosend" value="1" checked="checked" autocomplete="off">
-            <label for="autosend" id="autosend-label">Automatically send form after insert</label>
-        </div>
-
-        <div>
-            &nbsp;
-        </div>
-
-        <div class="servicename">
-            <input type="radio" name="servicename" id="servicename" value="login" autocomplete="off">
-            <label for="servicename" id="servicename-label">Use loginname as Servicename</label>
-        </div>
-
-        <div class="servicename">
-          <label for="def-servicename" id="defservicename-label">Use </label>
-          <input type="text" class="text" name="def-servicename" id="def-servicename" value="" autocomplete="off">
-
-          <input type="radio" name="servicename" id="prefix" value="prefix" checked="checked" autocomplete="off">
-          <label for="prefix" id="defservicename-prefix-label">as prefix</label>
-
-          <input type="radio" name="servicename" id="suffix" value="suffix" autocomplete="off">
-          <label for="suffix" id="defservicename-suffix-label">as suffix</label>
-        </div>
-
-        <div>
-            &nbsp;
-        </div>
-
-        <div class="field">
-          <table>
-            <thead>
-              <tr>
-                <td></td>
-                <th scope="col">a&ndash;z</th>
-                <th scope="col">A&ndash;Z</th>
-                <th scope="col">0&ndash;9</th>
-                <th scope="col">- / _</th>
-                <th scope="col" id="space-head">SPACE</th>
-                <th scope="col" id="symbol-description">!@#$%</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">
-                  <label for="required" id="required-label">Required</label>
-                  (<input maxlength="2" type="text" class="text" name="required" id="required" value="2" autocomplete="off">)
-                </th>
-                <td><input type="radio" name="lower" value="required"></td>
-                <td><input type="radio" name="upper" value="required"></td>
-                <td><input type="radio" name="number" value="required"></td>
-                <td><input type="radio" name="dash" value="required"></td>
-                <td><input type="radio" name="space" value="required"></td>
-                <td><input type="radio" name="symbol" value="required"></td>
-              </tr>
-              <tr>
-                <th scope="row" id="allowed-label">Allowed</th>
-                <td><input type="radio" name="lower" value="allowed" checked="checked"></td>
-                <td><input type="radio" name="upper" value="allowed" checked="checked"></td>
-                <td><input type="radio" name="number" value="allowed" checked="checked"></td>
-                <td><input type="radio" name="dash" value="allowed" checked="checked"></td>
-                <td><input type="radio" name="space" value="allowed" checked="checked"></td>
-                <td><input type="radio" name="symbol" value="allowed" checked="checked"></td>
-              </tr>
-              <tr>
-                <th scope="row" id="forbidden-label">Forbidden</th>
-                <td><input type="radio" name="lower" value="forbidden"></td>
-                <td><input type="radio" name="upper" value="forbidden"></td>
-                <td><input type="radio" name="number" value="forbidden"></td>
-                <td><input type="radio" name="dash" value="forbidden"></td>
-                <td><input type="radio" name="space" value="forbidden"></td>
-                <td><input type="radio" name="symbol" value="forbidden"></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+          <div class="generator" id="option-status">
+              Options Saved!
+          </div>
     </div>
 
-    <div class="generator">
-      <div class="sub" id="option-status">
-          Options Saved!
-      </div>
-      <div class="sub">
-          <button id="cancel-options">Cancel</button>
-          <button id="save-options">Save</button>
-      </div>
-      <div class="sub" id="link-to-vault">
-          <span id="link-to-vault-1">You can also use</span> <a href="https://getvau.lt/"><span id="link-text">the original vault</span></a> <span id="link-to-vault-2">to generate your passwords</span>.
-      </div>
+    <div class="container">
+        <div class="sub" id="link-to-vault">
+            <span id="link-to-vault-1">You can also use</span> <a href="https://getvau.lt/"><span id="link-text">the original vault</span></a> <span id="link-to-vault-2">to generate your passwords</span>.
+        </div>
     </div>
 
     <script type="text/javascript" src="./lib/core.js"></script>

@@ -1,21 +1,39 @@
 body, input {
-  background: #fff;
-  color: #666;
+  background: #ffffff;
+  color: #666666;
   font: 18px/1.5 FreeSans, Helvetica, Arial, sans-serif;
   margin: 0;
   padding: 0;
 }
 
-.sub {
-  margin: 0 auto;
-  padding: 0 1em 1.5em;
-  width: 600px;
+.topbar {
+    position: relative;
+    margin: 0 0 2rem 0;
+    width: 100%;
+    height: 2rem;
+    background-color: #3399ff;
 }
+
+.container {
+    position: relative;
+    margin: 1rem auto;
+    box-shadow: 3px 3px 10px #888888;
+    min-width: 800px;
+    width: 50%;
+}
+
 .form {
-  background: #f4f4f4;
-  border-top: 1px solid #999;
-  border-bottom: 1px solid #999;
+    position: relative;
+    height: auto;
 }
+
+.sub {
+    margin: 0 auto;
+    padding: 0 1em 1.5em;
+    width: 600px;
+    clear: both;
+}
+
 .info .sub {
   padding-bottom: 0;
 }
@@ -46,9 +64,7 @@ label {
 label span {
   color: #999;
 }
-.form input {
-  background: #f4f4f4;
-}
+
 input.text, input.password {
   border: none;
   border-bottom: 1px solid #666;
@@ -83,8 +99,9 @@ input.text, input.password {
     clear: right;
 }
 
-.generator input {
-  font-family: Monaco, Courier New, monospace;
+.generator {
+    width: 600px;
+    margin: 1rem auto;
 }
 
 .autosend, .servicename, .compatible {
@@ -142,11 +159,6 @@ table th:first-child, table td:first-child {
   border: none;
 }
 
-@media (max-width: 800px) {
-  body { font-size: 14px; }
-  .sub { margin: 0; width: auto; }
-}
-
 #option-status {
     display: none;
     color: #ff1100;
@@ -159,9 +171,14 @@ table th:first-child, table td:first-child {
     text-align: center;
 }
 
+.break {
+    clear: both
+}
+
 #save-options, #cancel-options {
+    position: relative;
+    display: inline;
     padding: 1em;
-    width: 30%;
     font-weight: bold;
     margin: .6em 0;
     float: right;
@@ -172,5 +189,20 @@ table th:first-child, table td:first-child {
 }
 
 #link-to-vault {
-    clear: both;
+    padding: 1.5em;
+}
+
+.container.small {
+    min-width: 300px;
+}
+
+.close-container {
+    float: right;
+    padding: 5px;
+}
+
+@media (max-width: 800px) {
+    body { font-size: 14px; }
+    .container {width: 100%; box-shadow: none; border: 0;}
+    .sub {width: auto;}
 }
