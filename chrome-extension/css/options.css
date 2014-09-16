@@ -161,10 +161,9 @@ table th:first-child, table td:first-child {
 
 #option-status {
     display: none;
-    color: #ff1100;
+ /*   color: #ff1100;*/
     font-weight: bold;
     text-align: center;
-    height: 20px;
 }
 
 #required {
@@ -199,6 +198,22 @@ table th:first-child, table td:first-child {
 .close-container {
     float: right;
     padding: 5px;
+}
+
+.dialog-container {
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    padding: 5px;
+    z-index: 10;
+    width: 300px;
+    margin-left: -150px;
+    height: 30px;
+    margin-top: -15px;
+    box-shadow: 1px 1px 2px #888888;
+    color: #ffffff;
+    background-color: #333333;
+    opacity: 0.8;
 }
 
 @media (max-width: 800px) {
