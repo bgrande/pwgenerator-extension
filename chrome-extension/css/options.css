@@ -104,6 +104,10 @@ input.text, input.password {
     margin: 1rem auto;
 }
 
+.generator input {
+    font-family: Monaco, Courier New, monospace;
+}
+
 .autosend, .servicename, .compatible {
     width: 100%;
 }
@@ -218,6 +222,7 @@ table th:first-child, table td:first-child {
 
 @media (max-width: 800px) {
     body { font-size: 14px; }
-    .container {width: 100%; box-shadow: none; border: 0;}
+    .container {width: 100%; box-shadow: none; border: 0; min-width: 0}
+    .generator {width: auto;}
     .sub {width: auto;}
 }
