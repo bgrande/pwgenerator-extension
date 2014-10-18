@@ -91,7 +91,19 @@ var Overlay = {
     _arrowUpImgUrl: '',
     _arrowDownImgUrl: '',
     _settingsOverwrite: false,
-    _pwFieldListeners: {}
+    _pwFieldListeners: {
+        focus: function () {
+            var that = this;
+            if (!this._isClosed) {
+                this.activate();
+            }
+
+            // make sure the overlay does not pop up again after closing
+            setTimeout(function () {
+                this._isClosed = false;
+            }, 300);
+        }
+    }
 };
 
 Overlay._setImgUrls = function (settings) {
@@ -512,18 +524,7 @@ Overlay.init = function (settings, passwordField, loginField, generator) {
     /**
      * @todo listener object should be part of the pwField Object
      */
-    this._pwFieldListeners['focus'] = function () {
-        if (!that._isClosed) {
-            that.activate();
-        }
-
-        // make sure the overlay does not pop up again after closing
-        setTimeout(function () {
-            that._isClosed = false;
-        }, 300);
-    };
-
-    on(this._passwordField.getField(), 'focus', this._pwFieldListeners['focus']);
+    on(this._passwordField.getField(), 'focus', this._pwFieldListeners['focus'].bind(this));
 
     // make sure the overlay will be loaded even if the password field is already active
     if (true === this._isClosed && passwordField === document.activeElement) {

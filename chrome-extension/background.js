@@ -67,9 +67,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
         case 'disable':
             var activeTabId, newIconPath;
-            //if (overlays) { var i = 0, length = overlays.length; for ( ;i < length; i++) { overlays[i].detach(); } }
             chrome.tabs.executeScript(null, { code: "if (generatorOverlays) { var i = 0, length = generatorOverlays.length; for ( ;i < length; i++) { generatorOverlays[i].detach(); } generatorOverlays = null; }", allFrames: true }, function () {});
-            //chrome.tabs.executeScript(null, { code: "generatorOverlays[0].detach(); console.log(generatorOverlays)", allFrames: true }, function () {});
 
             doInCurrentTab(function (tab) {
                 activeTabId = tab.id;
