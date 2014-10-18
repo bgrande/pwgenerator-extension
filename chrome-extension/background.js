@@ -75,6 +75,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     text: 'off',
                     tabId: activeTabId
                 });
+                // @todo use canvas for icon changing (set to grey and reverse)
                 /*chrome.browserAction.setIcon({
                     path: newIconPath,
                     tabId: activeTabId
