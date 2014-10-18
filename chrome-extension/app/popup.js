@@ -20,6 +20,7 @@ on($('close-window'), 'click', function (e) {
     closeWindow();
 });
 
+
 var reloadTitle  = chrome.i18n.getMessage("reloadTitle"),
     disableTitle = chrome.i18n.getMessage("disableTitle");
 

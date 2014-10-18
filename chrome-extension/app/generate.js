@@ -3,9 +3,9 @@
  * -----------------------------------------------------
  */
 'use strict';
-// make overlays globally available but keep old on reload
-if (!overlays) {
-    var overlays = [];
+// make overlays globally available but keep old on possible file reload
+if (!generatorOverlays) {
+    var generatorOverlays = [];
 }
 
 var overlayFactory = function (settings, passwordElement, domainname) {
@@ -37,22 +37,22 @@ chrome.storage.sync.get('settings', function (items) {
             settings.autosend = (settings.autosend === true && pwLength === 1);
 
             for (i = 0; i < pwLength; i++) {
-                if (!overlays[i] && !Helper.isOverlay(passwords[i]) && !Helper.hasOverlay(passwords[i])) {
-                    overlays[i] = overlayFactory(settings, passwords[i]);
+                if (!generatorOverlays[i] && !Helper.isOverlay(passwords[i]) && !Helper.hasOverlay(passwords[i])) {
+                    generatorOverlays[i] = overlayFactory(settings, passwords[i]);
                 }
             }
         } else if (pwLength === 0 && password) {
             // field does not have a password type - better use no autosend to prevent misbehaviour
             settings.autosend = false;
 
-            if (!overlays[0] && !Helper.isOverlay(password) && !Helper.hasOverlay(password)) {
-                overlays[0] = overlayFactory(settings, password);
+            if (!generatorOverlays[0] && !Helper.isOverlay(password) && !Helper.hasOverlay(password)) {
+                generatorOverlays[0] = overlayFactory(settings, password);
             }
         }
 
         // show count of existing overlays
-        if (0 < overlays.length) {
-            chrome.runtime.sendMessage({event: 'countChange', overlayCount: overlays.length});
+        if (0 < generatorOverlays.length) {
+            chrome.runtime.sendMessage({event: 'countChange', overlayCount: generatorOverlays.length});
         }
     } catch (exception) {
         console.error(exception);

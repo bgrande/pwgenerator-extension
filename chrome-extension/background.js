@@ -8,13 +8,28 @@ var allowedEvents = {
 };
 
 /*chrome.browserAction.onClicked.addListener(function (tab) {
-    chrome.tabs.executeScript(tab.id, { file: "lib/crypto-js-3.1.2.js", allFrames: true }, function () {});
+    chrome.tabs.executeScript(tab.id, { file: "lib/crypto-js.js", allFrames: true }, function () {});
     chrome.tabs.executeScript(tab.id, { file: "lib/vault.js", allFrames: true }, function () {});
     chrome.tabs.executeScript(tab.id, { file: "lib/core.js", allFrames: true }, function () {});
     chrome.tabs.executeScript(tab.id, { file: "lib/generator.js", allFrames: true }, function () {});
     chrome.tabs.executeScript(tab.id, { file: "app/overlay.js", allFrames: true }, function () {});
     chrome.tabs.executeScript(tab.id, { file: "app/generate.js", allFrames: true }, function () {});
 });*/
+
+var setChromeSettings = function (settings) {
+    chrome.storage.sync.set({
+        settings: JSON.stringify(settings)
+    });
+};
+
+var doInCurrentTab = function (tabCallback) {
+    chrome.tabs.query(
+        { currentWindow: true, active: true },
+        function (tabArray) {
+            tabCallback(tabArray[0]);
+        }
+    );
+};
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (!request || (allowedEvents[request.event]) === 0) {
@@ -23,17 +38,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
     switch (request.event) {
         case 'countChange':
-            if (request.overlayCount && request.overlayCount !== 0) {
-                chrome.browserAction.setBadgeText({
-                    text: '' + request.overlayCount,
-                    tabId: sender.tab.id
-                });
-            } else {
-                chrome.browserAction.setBadgeText({
-                    text: '',
-                    tabId: sender.tab.id
-                });
-            }
+            chrome.browserAction.setBadgeText({
+                text: (request.overlayCount && request.overlayCount !== 0) ? '' + request.overlayCount : '',
+                tabId: sender.tab.id
+            });
             break;
 
         case 'saveOverwrite':
@@ -49,7 +57,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             break;
 
         case 'reload':
-            chrome.tabs.executeScript(null, { file: "lib/crypto-js-3.1.2.js", allFrames: true }, function () {});
+            chrome.tabs.executeScript(null, { file: "lib/crypto-js.js", allFrames: true }, function () {});
             chrome.tabs.executeScript(null, { file: "lib/vault.js", allFrames: true }, function () {});
             chrome.tabs.executeScript(null, { file: "lib/core.js", allFrames: true }, function () {});
             chrome.tabs.executeScript(null, { file: "lib/generator.js", allFrames: true }, function () {});
@@ -58,10 +66,24 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             break;
 
         case 'disable':
-            chrome.tabs.executeScript(null, { code: "window.overlays = null", allFrames: true }, function () {});
-            //chrome.runtime.sendMessage({event: 'countChange', overlayCount: 0});
-            // @todo send message to contentscript and remove already loaded files
-            // @todo or (maybe easier) set var to prevent overlay from loading
+            var activeTabId, newIconPath;
+            //if (overlays) { var i = 0, length = overlays.length; for ( ;i < length; i++) { overlays[i].detach(); } }
+            chrome.tabs.executeScript(null, { code: "if (generatorOverlays) { var i = 0, length = generatorOverlays.length; for ( ;i < length; i++) { generatorOverlays[i].detach(); } generatorOverlays = null; }", allFrames: true }, function () {});
+            //chrome.tabs.executeScript(null, { code: "generatorOverlays[0].detach(); console.log(generatorOverlays)", allFrames: true }, function () {});
+
+            doInCurrentTab(function (tab) {
+                activeTabId = tab.id;
+                chrome.browserAction.setBadgeText({
+                    text: 'off',
+                    tabId: activeTabId
+                });
+                /*chrome.browserAction.setIcon({
+                    path: newIconPath,
+                    tabId: activeTabId
+                });*/
+            });
+
+            // @todo deactivate for next instances and change the button
     }
 
     return false;
@@ -116,9 +138,3 @@ chrome.runtime.onInstalled.addListener(function (details) {
         setChromeSettings(DEFAULT_SETTINGS);
     }
 });
-
-var setChromeSettings = function (settings) {
-    chrome.storage.sync.set({
-        settings: JSON.stringify(settings)
-    });
-};

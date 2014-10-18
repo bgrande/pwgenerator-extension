@@ -90,7 +90,8 @@ var Overlay = {
     _closeImgUrl: '',
     _arrowUpImgUrl: '',
     _arrowDownImgUrl: '',
-    _settingsOverwrite: false
+    _settingsOverwrite: false,
+    _pwFieldListeners: {}
 };
 
 Overlay._setImgUrls = function (settings) {
@@ -158,7 +159,7 @@ Overlay._setOverwriteSettings = function (settings) {
     }
 };
 
-Overlay._generateButtonSubmit = function (pwField) {
+Overlay._buttonSubmit = function (pwField) {
     var passPhrase = this._getPassphraseField(),
         serviceSalt = this._getServicenameField(),
         newPassword,
@@ -176,7 +177,7 @@ Overlay._generateButtonSubmit = function (pwField) {
     this.close();
 
     if (this._generator.generatorSettings.autosend && !this._passwordField.showPw) {
-        loginFormNumber = Helper .getLoginForm(pwField);
+        loginFormNumber = Helper.getLoginForm(pwField);
         if ('number' === typeof loginFormNumber) {
             document.forms[loginFormNumber].submit();
         }
@@ -366,7 +367,7 @@ Overlay._create = function (pwField, pwFieldId) {
     this._createDiv(pwField, pwFieldId);
 
     on($(BASE_NAME + 'generate-' + pwFieldId), 'click', function () {
-        that._generateButtonSubmit(pwField);
+        that._buttonSubmit(pwField);
     });
 
     on($(BASE_NAME + 'show-password-' + pwFieldId), 'change', function () {
@@ -386,7 +387,7 @@ Overlay._create = function (pwField, pwFieldId) {
         switch (e.keyCode) {
             case 13:
                 e.preventDefault();
-                that._generateButtonSubmit(pwField);
+                that._buttonSubmit(pwField);
                 break;
             case 27:
                 that.close();
@@ -394,13 +395,15 @@ Overlay._create = function (pwField, pwFieldId) {
         }
     });
 
+    this._pwFieldListeners['click'] = function (e) {
+        Helper.cancelEventPropagation(e);
+    };
+
     /** try preventing another events from bubbling or catching */
     on(this._getPassphraseField(), ['blur', 'click', 'keyup', 'keypress', 'change'], function (e) {
         Helper.cancelEventPropagation(e);
     });
-    on(pwField, ['click', 'keyup', 'keypress', 'change'], function (e) {
-        Helper.cancelEventPropagation(e);
-    });
+    on(pwField, ['click', 'keyup', 'keypress', 'change'], this._pwFieldListeners['click']);
 
     on(this._getServicenameField(), 'keydown', function (e) {
         Helper.cancelEventPropagation(e);
@@ -471,6 +474,22 @@ Overlay.close = function () {
     this._passwordField.getField().focus();
 };
 
+Overlay.detach = function () {
+    this.close();
+
+    /**
+     * @todo listener event detaching should be part of the pwField Object
+     * @todo doesn't seem to work with multiple password fields per page (only last element really seems to be detached)
+     */
+    this._passwordField.getField().removeEventListener('focus', this._pwFieldListeners['focus'], true);
+    this._passwordField.getField().removeEventListener('click', this._pwFieldListeners['click'], true);
+    this._passwordField.getField().removeEventListener('keyup', this._pwFieldListeners['click'], true);
+    this._passwordField.getField().removeEventListener('keypress', this._pwFieldListeners['click'], true);
+    this._passwordField.getField().removeEventListener('change', this._pwFieldListeners['click'], true);
+
+    $(this._id).remove();
+};
+
 Overlay.toggle = function (status) {
     var display = 'none';
 
@@ -490,7 +509,10 @@ Overlay.init = function (settings, passwordField, loginField, generator) {
     var pwFieldId = this._getPasswordFieldId(),
         that = this;
 
-    on(this._passwordField.getField(), 'focus', function () {
+    /**
+     * @todo listener object should be part of the pwField Object
+     */
+    this._pwFieldListeners['focus'] = function () {
         if (!that._isClosed) {
             that.activate();
         }
@@ -499,7 +521,9 @@ Overlay.init = function (settings, passwordField, loginField, generator) {
         setTimeout(function () {
             that._isClosed = false;
         }, 300);
-    });
+    };
+
+    on(this._passwordField.getField(), 'focus', this._pwFieldListeners['focus']);
 
     // make sure the overlay will be loaded even if the password field is already active
     if (true === this._isClosed && passwordField === document.activeElement) {
