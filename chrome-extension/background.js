@@ -7,15 +7,6 @@ var allowedEvents = {
     'disable': 1
 };
 
-/*chrome.browserAction.onClicked.addListener(function (tab) {
-    chrome.tabs.executeScript(tab.id, { file: "lib/crypto-js.js", allFrames: true }, function () {});
-    chrome.tabs.executeScript(tab.id, { file: "lib/vault.js", allFrames: true }, function () {});
-    chrome.tabs.executeScript(tab.id, { file: "lib/core.js", allFrames: true }, function () {});
-    chrome.tabs.executeScript(tab.id, { file: "lib/generator.js", allFrames: true }, function () {});
-    chrome.tabs.executeScript(tab.id, { file: "app/overlay.js", allFrames: true }, function () {});
-    chrome.tabs.executeScript(tab.id, { file: "app/generate.js", allFrames: true }, function () {});
-});*/
-
 var setChromeSettings = function (settings) {
     chrome.storage.sync.set({
         settings: JSON.stringify(settings)
