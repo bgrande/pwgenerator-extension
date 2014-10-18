@@ -3,3 +3,5 @@ atlassian-ide-plugin.xml
 chrome-extension.crx
 chrome-extension.pem
 key.pem
+*.zip
+temp
