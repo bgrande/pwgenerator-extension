@@ -102,6 +102,9 @@ var Overlay = {
             setTimeout(function () {
                 this._isClosed = false;
             }, 300);
+        },
+        click: function (e) {
+            Helper.cancelEventPropagation(e);
         }
     }
 };
@@ -406,10 +409,6 @@ Overlay._create = function (pwField, pwFieldId) {
                 break;
         }
     });
-
-    this._pwFieldListeners['click'] = function (e) {
-        Helper.cancelEventPropagation(e);
-    };
 
     /** try preventing another events from bubbling or catching */
     on(this._getPassphraseField(), ['blur', 'click', 'keyup', 'keypress', 'change'], function (e) {
