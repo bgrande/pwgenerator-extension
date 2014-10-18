@@ -235,7 +235,7 @@ Helper.fixDuplicateIds = function (nodeList) {
     for (i = 0; i < n; i++) {
         for (j = i + 1; j < n; j++) {
             if (nodeList[i].id === nodeList[j].id) {
-                nodeList[j].id = 'passid1';
+                nodeList[j].id += '-' + Math.random().toString(16).substring(7);
             }
         }
     }
