@@ -220,6 +220,11 @@ table th:first-child, table td:first-child {
     opacity: 0.8;
 }
 
+.menu-item {
+    width: auto;
+    margin-left: 1em;
+}
+
 @media (max-width: 800px) {
     body { font-size: 14px; }
     .container {width: 100%; box-shadow: none; border: 0; min-width: 0}
