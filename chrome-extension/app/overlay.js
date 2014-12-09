@@ -337,7 +337,7 @@ Overlay._createDiv = function (pwField, pwId) {
         '           <td><input type="radio" name="symbol" value="required"></td>' +
         '       </tr>' +
         '       <tr>' +
-        '           <th scope="row" id="easy-password-allowed-label">Allowed</th>' +
+        '           <th scope="row" id="easy-password-allowed-label">' + chrome.i18n.getMessage("allowedLabel") + '</th>' +
         '           <td><input type="radio" name="lower" value="allowed" checked="checked"></td>' +
         '           <td><input type="radio" name="upper" value="allowed" checked="checked"></td>' +
         '           <td><input type="radio" name="number" value="allowed" checked="checked"></td>' +
@@ -346,7 +346,7 @@ Overlay._createDiv = function (pwField, pwId) {
         '           <td><input type="radio" name="symbol" value="allowed" checked="checked"></td>' +
         '       </tr>' +
         '       <tr>' +
-        '           <th scope="row" id="easy-password-forbidden-label">Forbidden</th>' +
+        '           <th scope="row" id="easy-password-forbidden-label">' + chrome.i18n.getMessage("forbiddenLabel") + '</th>' +
         '           <td><input type="radio" name="lower" value="forbidden"></td>' +
         '           <td><input type="radio" name="upper" value="forbidden"></td>' +
         '           <td><input type="radio" name="number" value="forbidden"></td>' +
