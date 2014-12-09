@@ -1,4 +1,4 @@
-.generator-overlay {
+.easy-password-generator-overlay {
     position: absolute;
     opacity: 0.85;
     background-color: #ceceb2;
@@ -15,7 +15,7 @@
     border-radius: 0 0 5px 0 !important;
 }
 
-.generator-overlay input {
+.easy-password-generator-overlay input {
     margin: 0 !important;
     padding: 0 !important;
     font-size: 12px !important;
@@ -24,7 +24,7 @@
     line-height: 23px !important;
 }
 
-.generator-overlay input[type=checkbox] {
+.easy-password-generator-overlay input[type=checkbox] {
     margin-top: 0.2em !important;
     width: 13px !important;
     height: 13px !important;
@@ -34,7 +34,7 @@
     position: inherit !important;
 }
 
-.generator-dialog {
+.easy-password-generator-dialog {
     width: 100%;
     height: auto;
     display: table;
@@ -43,26 +43,26 @@
     margin-bottom: 0.5em;
 }
 
-.service-container, .pass-container, .button-container {
+.easy-password-service-container, .easy-password-pass-container, .easy-password-button-container {
     max-width: 38%;
     margin-right: 0.3em !important;
     display: table-cell;
     float: left !important;
 }
 
-.button-container {
+.easy-password-button-container {
     width: 20% !important;
     height: 100% !important;
     float: right !important;
 }
 
-.show-pw-container {
+.easy-password-show-pw-container {
     margin-top: 1.5em !important;
     width: 102% !important;
     position: relative !important;
 }
 
-.service-container label, .pass-container label {
+.easy-password-service-container label, .easy-password-pass-container label {
     color: #000000 !important;
     display: block !important;
     font-weight: normal !important;
@@ -73,7 +73,7 @@
     text-align: left !important;
 }
 
-label.description-label {
+label.easy-password-description-label {
     margin-left: 0.3em !important;
     margin-top: 0.3em !important;
     font-size: 12px !important;
@@ -84,7 +84,7 @@ label.description-label {
     right: inherit !important;
 }
 
-.generate {
+.easy-password-generate {
     min-height: 50px !important;
     height: inherit !important;
     width: 100% !important;
@@ -99,7 +99,7 @@ label.description-label {
     background-color: #eeeeee !important;
 }
 
-.servicename, .passphrase {
+.easy-password-servicename, .easy-password-passphrase {
     width: 150px !important;
     height: 20px !important;
     border: 1px solid #333333 !important;
@@ -112,11 +112,11 @@ label.description-label {
     position: relative !important;
 }
 
-.passphrase {
+.easy-password-passphrase {
     margin-top: 0.3em !important;
 }
 
-.close {
+.easy-password-close {
     top: -7px;
     right: -6px;
     margin: 0;
@@ -127,7 +127,7 @@ label.description-label {
     height: 12px;
 }
 
-.close img {
+.easy-password-close img {
     position: absolute;
     margin: 0;
     padding: 0;
@@ -137,7 +137,7 @@ label.description-label {
 }
 
 /** ---- overlay settings overwrite ---- */
-.extend {
+.easy-password-extend {
     position: absolute !important;
     bottom: 5px !important;
     left: 0 !important;
@@ -148,7 +148,7 @@ label.description-label {
     height: 5px !important;
 }
 
-.overlay-settings {
+.easy-password-overlay-settings {
     display: none;
     position: relative !important;
     border-top: 2px dashed #333333 !important;
@@ -157,45 +157,44 @@ label.description-label {
     padding-top: 1em !important;
 }
 
-.overlay-settings .sub {
+.easy-password-overlay-settings .easy-password-sub {
     display: inline !important;
 }
 
-.overlay-settings label, .overlay-settings input.text {
+.easy-password-overlay-settings label, .easy-password-overlay-settings input.easy-password-text {
     display: inline;
     float: left;
     margin-right: .5em;
     height: auto !important;
 }
 
-.overlay-settings label {
+.easy-password-overlay-settings label {
     color: #555555 !important;
     margin-top: .5em;
 }
 
-.overlay-settings .length, .overlay-settings .repeat, .overlay-settings .save {
+.easy-password-overlay-settings .easy-password-length, .easy-password-overlay-settings .easy-password-repeat, .easy-password-overlay-settings .easy-password-savebox {
     float: left !important;
-    margin-right: 1em !important;
+    margin-right: .8em !important;
     margin-bottom: 1em !important;
 }
 
-.overlay-settings .save {
+.easy-password-overlay-settings .easy-password-savebox {
     float: right !important;
-}
-
-.overlay-settings #save {
-    margin: .5em .3em 0 0 !important;
-}
-
-.overlay-settings .save {
+    margin-right: 0 !important;
     width: auto !important;
 }
 
-.overlay-settings .save label {
+.easy-password-overlay-settings #easy-password-save {
+    margin: .5em .1em 0 0 !important;
+    width: 18px !important;
+}
+
+.easy-password-overlay-settings .easy-password-savebox label {
     font-weight: bold !important;
 }
 
-.overlay-settings input.text {
+.easy-password-overlay-settings input.easy-password-text {
     border: 1px solid #333333 !important;
     background-color: #dddddd !important;
     font-size: 1em !important;
@@ -203,18 +202,19 @@ label.description-label {
     height: auto !important;
 }
 
-.overlay-settings table label {
+.easy-password-overlay-settings table label {
     display: inline !important;
 }
 
-.overlay-settings table {
+.easy-password-overlay-settings table {
     border-collapse: collapse !important;
     clear: both !important;
     margin-top: 1em !important;
     width: 100% !important;
+    vertical-align: baseline;
 }
 
-.overlay-settings table input.text {
+.easy-password-overlay-settings table input.easy-password-text {
     border: 0 !important;
     height: 1.5em !important;
     background-color: #ceceb0 !important;
@@ -222,29 +222,33 @@ label.description-label {
     float: none !important;
 }
 
-.overlay-settings table th, .overlay-settings table td {
+.easy-password-overlay-settings table th, .easy-password-overlay-settings table td {
     border-left: 1px solid #ccc !important;
     padding: 4px 0 !important;
     text-align: left !important;
 }
-.overlay-settings table th {
+.easy-password-overlay-settings table th {
     color: #555555 !important;
     font-size: 90% !important;
     font-weight: bold !important;
     text-transform: uppercase !important;
     width: 30px !important;
 }
-.overlay-settings table thead th {
+.easy-password-overlay-settings table thead th {
     text-transform: none !important;
 }
-.overlay-settings table thead tr {
+.easy-password-overlay-settings table thead tr {
     border-bottom: 1px solid #ccc !important;
 }
 
-.overlay-settings table th:first-child, .overlay-settings table td:first-child {
+.easy-password-overlay-settings table th:first-child, .easy-password-overlay-settings table td:first-child {
     border: none !important;
 }
 
-.overlay-settings #required {
+.easy-password-overlay-settings #easy-password-required {
     text-align: center !important;
+}
+
+.easy-password-overlay-settings .easy-password-requiredbox {
+    vertical-align: baseline;
 }
