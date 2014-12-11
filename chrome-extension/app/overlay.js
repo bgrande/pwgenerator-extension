@@ -100,7 +100,7 @@ var Overlay = {
 
             // make sure the overlay does not pop up again after closing
             setTimeout(function () {
-                this._isClosed = false;
+                that._isClosed = false;
             }, 300);
         },
         click: function (e) {
@@ -369,7 +369,11 @@ Overlay._createDiv = function (pwField, pwId) {
 Overlay._setServicename = function () {
     var servicename = this._getServicenameField(),
         loginField = (this._loginField) ? this._loginField.getField() : null,
+        result;
+
+    if (servicename) {
         result = this._generator.getServicename(servicename.value, loginField);
+    }
 
     if (result) {
         servicename.value = result;
@@ -466,15 +470,18 @@ Overlay._create = function (pwField, pwFieldId) {
 
 Overlay.activate = function () {
     var passphrase = this._getPassphraseField(),
-        servicename = this._getServicenameField().value;
+        servicename = this._getServicenameField(),
+        servicenameValue = (servicename) ? servicename.value : null;
 
     this.toggle(true);
 
-    passphrase.focus();
+    if (passphrase) {
+        passphrase.focus();
+    }
 
     this._isClosed = false;
 
-    if (!servicename || this._generator.getDomainname() === servicename) {
+    if (!servicenameValue || this._generator.getDomainname() === servicenameValue) {
         this._setServicename();
     }
 };
@@ -508,7 +515,9 @@ Overlay.toggle = function (status) {
         display = 'block';
     }
 
-    $(this._id).style.display = display;
+    if ($(this._id)) {
+        $(this._id).style.display = display;
+    }
 };
 
 Overlay.init = function (settings, passwordField, loginField, generator) {
