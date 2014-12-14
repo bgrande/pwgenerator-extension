@@ -14,7 +14,15 @@
         <delete dir="temp" />
     </target>
 
-    <target name="prepare" depends="clean, get-vendor, create-temp, check-key, copy-key">
+    <target name="setversion">
+        <replaceregexp file="${extension-dir}/manifest.json"
+                       match='"version": "(.*)",'
+                       replace='"version": "${project-version}",'
+                       byline="true"
+                />
+    </target>
+
+    <target name="prepare" depends="clean, get-vendor, create-temp, check-key, copy-key, setversion">
         <exec executable="git">
             <arg value="tag" />
             <arg value="v${project-version}" />
