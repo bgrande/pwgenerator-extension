@@ -126,7 +126,7 @@ var on = function (element, event, listener) {
         } else if (element.attachEvent) {
             element.attachEvent('on' + event[i], listener);
         } else {
-            throw new Error('element not type of EventTarget');
+            throw new Error('element not of type EventTarget');
         }
     }
 };
