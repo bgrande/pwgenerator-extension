@@ -35,6 +35,7 @@
             "https://*/*"
         ],
         "css": [
+            "css/reset.css",
             "css/style.css"
         ],
         "js": [

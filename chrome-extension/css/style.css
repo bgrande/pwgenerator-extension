@@ -9,7 +9,7 @@
     border: 1px solid #333333;
     padding: 6px !important;
     display: none;
-    font-family: sans-serif;
+    font-family: Arial, sans-serif;
     font-size: 12px !important;
     box-shadow: 3px 3px 10px #888888 !important;
     border-radius: 0 0 5px 0 !important;
@@ -251,4 +251,8 @@ label.easy-password-description-label {
 
 .easy-password-overlay-settings .easy-password-requiredbox {
     vertical-align: baseline;
+}
+
+.easy-password-overlay-settings .easy-password-length input, .easy-password-overlay-settings .easy-password-repeat input {
+    width: 2.5em !important;
 }
