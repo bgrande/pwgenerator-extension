@@ -93,6 +93,10 @@ var DEFAULT_SETTINGS = {
                 length: 13,
                 space: 0,
                 symbols: '!&/()=?*+'
+            },
+            'adac.de': {
+                space: 0,
+                symbols: '#/*-+_'
             }
         },
 

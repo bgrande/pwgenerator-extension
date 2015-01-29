@@ -11,7 +11,26 @@ var cancelOptions = function () {
 };
 
 chrome.storage.sync.get('settings', function (items) {
-    getOptionSettings(JSON.parse(items.settings));
+    var settings = JSON.parse(items.settings), service, serviceList = '', definition;
+
+    getOptionSettings(settings);
+
+    return;
+    // @todo extend and move into own object/method as well as in general options.js
+    for (service in settings.serviceExceptions)
+    {
+        if (settings.serviceExceptions.hasOwnProperty(service)) {
+            serviceList += '<div><span>' + service + ': </span>';
+                for (definition in settings.serviceExceptions[service]) {
+                    if (settings.serviceExceptions[service].hasOwnProperty(definition)) {
+                        serviceList += '<span>' + definition + ': '+ settings.serviceExceptions[service][definition] + ' - </span>';
+                    }
+                }
+            serviceList += '</div>';
+        }
+    }
+
+    $('show-saved-options').innerHTML = serviceList;
 });
 
 (function () {
