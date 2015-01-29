@@ -94,6 +94,11 @@ var DEFAULT_SETTINGS = {
                 space: 0,
                 symbols: '!&/()=?*+'
             },
+            'postpay.de': {
+                length: 13,
+                space: 0,
+                symbols: '!&/()=?*+'
+            },
             'adac.de': {
                 space: 0,
                 symbols: '#/*-+_'
