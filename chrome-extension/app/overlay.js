@@ -86,22 +86,21 @@ var Overlay = {
     _generator: null,
     _passwordField: null,
     _id: '',
-    _isClosed: false,
+    _isOpened: false,
     _closeImgUrl: '',
     _arrowUpImgUrl: '',
     _arrowDownImgUrl: '',
     _settingsOverwrite: false,
     _pwFieldListeners: {
         focus: function () {
-            var that = this;
-            if (!this._isClosed) {
+            if (!this._isOpened) {
                 this.activate();
             }
 
             // make sure the overlay does not pop up again after closing
             setTimeout(function () {
-                that._isClosed = false;
-            }, 300);
+                this._isOpened = true;
+            }.bind(this), 300);
         },
         click: function (e) {
             Helper.cancelEventPropagation(e);
@@ -154,7 +153,7 @@ Overlay._getOverwriteSettings = function () {
         serviceExceptions[this._generator.getDomainname()] = serviceRules;
         chrome.runtime.sendMessage({event: 'saveOverwrite', settings: serviceExceptions});
         // @todo we might want to ask the user to contribute the new settings
-        // @todo we need an overview with all exceptions and corresponding (cr)ud
+        // @todo we need an overview (located in options) with all exceptions and corresponding (cr)ud
     }
 
     return serviceRules;
@@ -479,7 +478,7 @@ Overlay.activate = function () {
         passphrase.focus();
     }
 
-    this._isClosed = false;
+    this._isOpened = true;
 
     if (!servicenameValue || this._generator.getDomainname() === servicenameValue) {
         this._setServicename();
@@ -488,14 +487,19 @@ Overlay.activate = function () {
 
 Overlay.close = function () {
     this.toggle(false);
-    this._isClosed = true;
+
+    // make sure the overlay does not pop up again after closing
+    setTimeout(function () {
+        this._isOpened = false;
+    }.bind(this), 300);
+
     this._passwordField.getField().focus();
 };
 
 Overlay.detach = function () {
     this.close();
 
-    /**
+    /*
      * @todo listener event detaching should be part of the pwField Object
      * @todo doesn't seem to work with multiple password fields per page (only last element really seems to be detached)
      */
@@ -526,16 +530,13 @@ Overlay.init = function (settings, passwordField, loginField, generator) {
     this._generator = generator;
     this._setImgUrls(settings);
 
-    var pwFieldId = this._getPasswordFieldId(),
-        that = this;
+    var pwFieldId = this._getPasswordFieldId();
 
-    /**
-     * @todo listener object should be part of the pwField Object
-     */
+    // @todo listener object should be part of the pwField Object
     on(this._passwordField.getField(), 'focus', this._pwFieldListeners['focus'].bind(this));
 
     // make sure the overlay will be loaded even if the password field is already active
-    if (true === this._isClosed && passwordField === document.activeElement) {
+    if (false === this._isOpened && passwordField === document.activeElement) {
         this.activate();
     }
 
