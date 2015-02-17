@@ -229,6 +229,10 @@ table th:first-child, table td:first-child {
     width: 12px;
 }
 
+.topbar.popup {
+    margin-bottom: .5em;
+}
+
 @media (max-width: 800px) {
     body { font-size: 14px; }
     .container {width: 100%; box-shadow: none; border: 0; min-width: 0}
