@@ -225,6 +225,10 @@ table th:first-child, table td:first-child {
     margin-left: 1em;
 }
 
+.menu-item img {
+    width: 12px;
+}
+
 @media (max-width: 800px) {
     body { font-size: 14px; }
     .container {width: 100%; box-shadow: none; border: 0; min-width: 0}
