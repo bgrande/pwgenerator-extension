@@ -11,6 +11,8 @@
     <property name="folder-to-zip" value="${project-name}-${project-version}" />
     <property name="manifest-path" value="${extension-dir}/manifest.json" />
 
+    <!-- @todo add target to check tests before creating release -->
+
     <target name="clean">
         <delete file="${build-dir}/${project-name}.zip" />
         <delete dir="temp" />
