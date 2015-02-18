@@ -5,9 +5,11 @@
     <property name="build-dir" value="build" />
     <property name="extension-dir" value="chrome-extension" />
     <property name="vendor-dir" value="vendor/vault" />
-    <property name="project-version" value="1.9.3" />
+    <property name="version-file-path" value="version" />
+    <loadfile property="project-version" srcFile="${version-file-path}" />
     <property name="project-name" value="password-generator" />
     <property name="folder-to-zip" value="${project-name}-${project-version}" />
+    <property name="manifest-path" value="${extension-dir}/manifest.json" />
 
     <target name="clean">
         <delete file="${build-dir}/${project-name}.zip" />
@@ -21,8 +23,8 @@
     <target name="updategit">
         <exec executable="git">
             <arg value="commit" />
-            <arg value="chrome-extension/manifest.json" />
-            <arg value="build.xml" />
+            <arg value="${manifest-path}" />
+            <arg value="${version-file-path}" />
             <arg value="-m" />
             <arg value="version bump for manifest" />
         </exec>
@@ -71,6 +73,17 @@
     <target name="get-vendor">
         <get src="https://raw.githubusercontent.com/bgrande/vault/master/lib/vault.js" dest="chrome-extension/lib/vault.js" />
         <get src="https://raw.githubusercontent.com/jcoglan/vault-cipher/master/lib/crypto-js.js" dest="chrome-extension/lib/crypto-js.js" />
+    </target>
+
+    <target name="build-info">
+        <echo message="build dir: ${build-dir}" />
+        <echo message="extension dir: ${extension-dir}" />
+        <echo message="vendor dir: ${vendor-dir}" />
+        <echo message="project name: ${project-name}" />
+        <echo message="version: ${project-version}" />
+        <echo message="folder to zip: ${folder-to-zip}" />
+        <echo message="files to commit: ${manifest-path}, ${version-file-path}" />
+        <echo message="git tag to be created: v${project-version}" />
     </target>
 
 </project>
