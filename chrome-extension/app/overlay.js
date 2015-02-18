@@ -127,10 +127,10 @@ Overlay._getServicenameField = function () {
 };
 
 Overlay._getOverwriteSettings = function () {
-    var length = parseInt($('easy-password-vlength').value, 10),
-        repeat = parseInt($('easy-password-repeat').value, 10),
-        required = parseInt($('easy-password-required').value, 10),
-        save = $('easy-password-save').checked,
+    var length = parseInt($(BASE_NAME + 'vlength').value, 10),
+        repeat = parseInt($(BASE_NAME + 'repeat').value, 10),
+        required = parseInt($(BASE_NAME + 'required').value, 10),
+        save = $(BASE_NAME + 'save').checked,
         serviceRules = {};
 
     if (length) {
@@ -161,15 +161,15 @@ Overlay._getOverwriteSettings = function () {
 
 Overlay._setOverwriteSettings = function (settings) {
     if (settings.hasOwnProperty('length') && settings.length) {
-        $('easy-password-vlength').value = settings.length;
+        $(BASE_NAME + 'vlength').value = settings.length;
     }
 
     if (settings.hasOwnProperty('repeat') && settings.repeat) {
-        $('easy-password-repeat').value = settings.repeat;
+        $(BASE_NAME + 'repeat').value = settings.repeat;
     }
 
     if (settings.hasOwnProperty('requiredLength') && settings.requiredLength) {
-        $('easy-password-required').value = settings.requiredLength;
+        $(BASE_NAME + 'required').value = settings.requiredLength;
     }
 };
 
@@ -295,21 +295,21 @@ Overlay._createDiv = function (pwField, pwId) {
     settingsDiv.className = BASE_NAME + 'overlay-settings';
     settingsDiv.id = BASE_NAME + 'overlay-settings' + pwId;
     settingsDiv.style.display = 'none';
-    settingsDiv.innerHTML = '<div class="easy-password-sub">' +
-        '   <div class="easy-password-length">' +
-        '       <label for="easy-password-vlength" id="easy-password-length-label">' + chrome.i18n.getMessage("lengthLabel") + '</label>' +
-        '       <input maxlength="4" type="text" min="0" class="easy-password-text" name="vlength" id="easy-password-vlength" value="20" autocomplete="on">' +
+    settingsDiv.innerHTML = '<div class="' + BASE_NAME + 'sub">' +
+        '   <div class="' + BASE_NAME + 'length">' +
+        '       <label for="' + BASE_NAME + 'vlength" id="' + BASE_NAME + 'length-label">' + chrome.i18n.getMessage("lengthLabel") + '</label>' +
+        '       <input maxlength="4" type="text" min="0" class="' + BASE_NAME + 'text" name="vlength" id="' + BASE_NAME + 'vlength" value="20" autocomplete="on">' +
         '   </div>' +
-        '   <div class="easy-password-repeat">' +
-        '       <label for="easy-password-repeat" id="easy-password-repeat-label">' + chrome.i18n.getMessage("repeatLabel") + '</label>' +
-        '       <input maxlength="2" type="text" class="easy-password-text" name="repeat" id="easy-password-repeat" value="" autocomplete="on">' +
+        '   <div class="' + BASE_NAME + 'repeat">' +
+        '       <label for="' + BASE_NAME + 'repeat" id="' + BASE_NAME + 'repeat-label">' + chrome.i18n.getMessage("repeatLabel") + '</label>' +
+        '       <input maxlength="2" type="text" class="' + BASE_NAME + 'text" name="repeat" id="' + BASE_NAME + 'repeat" value="" autocomplete="on">' +
         '   </div>' +
-        '   <div class="easy-password-savebox">' +
-        '       <input maxlength="2" type="checkbox" class="easy-password-text" name="save" id="easy-password-save" value="" autocomplete="on">' +
-        '       <label for="easy-password-save" id="easy-password-save-label">' + chrome.i18n.getMessage("saveLabel") + '</label>' +
+        '   <div class="' + BASE_NAME + 'savebox">' +
+        '       <input maxlength="2" type="checkbox" class="' + BASE_NAME + 'text" name="save" id="' + BASE_NAME + 'save" value="" autocomplete="on">' +
+        '       <label for="' + BASE_NAME + 'save" id="' + BASE_NAME + 'save-label">' + chrome.i18n.getMessage("saveLabel") + '</label>' +
         '   </div>' +
         '</div>' +
-        '<div class="easy-password-field">' +
+        '<div class="' + BASE_NAME + 'field">' +
         '   <table>' +
         '     <thead>' +
         '       <tr>' +
@@ -318,15 +318,15 @@ Overlay._createDiv = function (pwField, pwId) {
         '           <th scope="col">A&ndash;Z</th>' +
         '           <th scope="col">0&ndash;9</th>' +
         '           <th scope="col">- / _</th>' +
-        '           <th scope="col" id="easy-password-space-head">SPACE</th>' +
-        '           <th scope="col" id="easy-password-symbol-description">!@#$%</th>' +
+        '           <th scope="col" id="' + BASE_NAME + 'space-head">SPACE</th>' +
+        '           <th scope="col" id="' + BASE_NAME + 'symbol-description">!@#$%</th>' +
         '       </tr>' +
         '     </thead>' +
         '     <tbody>' +
         '       <tr>' +
-        '           <th scope="row" class="easy-password-requiredbox">' +
-        '               <label for="required" id="easy-password-required-label">' + chrome.i18n.getMessage("requiredLabel") + '</label>' +
-        '               (<input maxlength="1" type="text" class="easy-password-text" name="required" id="easy-password-required" value="2" autocomplete="off">)' +
+        '           <th scope="row" class="' + BASE_NAME + 'requiredbox">' +
+        '               <label for="required" id="' + BASE_NAME + 'required-label">' + chrome.i18n.getMessage("requiredLabel") + '</label>' +
+        '               (<input maxlength="1" type="text" class="' + BASE_NAME + 'text" name="required" id="' + BASE_NAME + 'required" value="2" autocomplete="off">)' +
         '           </th>' +
         '           <td><input type="radio" name="lower" value="required"></td>' +
         '           <td><input type="radio" name="upper" value="required"></td>' +
@@ -336,7 +336,7 @@ Overlay._createDiv = function (pwField, pwId) {
         '           <td><input type="radio" name="symbol" value="required"></td>' +
         '       </tr>' +
         '       <tr>' +
-        '           <th scope="row" id="easy-password-allowed-label">' + chrome.i18n.getMessage("allowedLabel") + '</th>' +
+        '           <th scope="row" id="' + BASE_NAME + 'allowed-label">' + chrome.i18n.getMessage("allowedLabel") + '</th>' +
         '           <td><input type="radio" name="lower" value="allowed" checked="checked"></td>' +
         '           <td><input type="radio" name="upper" value="allowed" checked="checked"></td>' +
         '           <td><input type="radio" name="number" value="allowed" checked="checked"></td>' +
@@ -345,7 +345,7 @@ Overlay._createDiv = function (pwField, pwId) {
         '           <td><input type="radio" name="symbol" value="allowed" checked="checked"></td>' +
         '       </tr>' +
         '       <tr>' +
-        '           <th scope="row" id="easy-password-forbidden-label">' + chrome.i18n.getMessage("forbiddenLabel") + '</th>' +
+        '           <th scope="row" id="' + BASE_NAME + 'forbidden-label">' + chrome.i18n.getMessage("forbiddenLabel") + '</th>' +
         '           <td><input type="radio" name="lower" value="forbidden"></td>' +
         '           <td><input type="radio" name="upper" value="forbidden"></td>' +
         '           <td><input type="radio" name="number" value="forbidden"></td>' +
