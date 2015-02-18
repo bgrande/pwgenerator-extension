@@ -102,6 +102,9 @@ var DEFAULT_SETTINGS = {
             'adac.de': {
                 space: 0,
                 symbols: '#/*-+_'
+            },
+            'seedmatch.de': {
+                space: 0
             }
         },
 
