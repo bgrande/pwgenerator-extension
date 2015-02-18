@@ -22,6 +22,7 @@
         <exec executable="git">
             <arg value="commit" />
             <arg value="chrome-extension/manifest.json" />
+            <arg value="build.xml" />
             <arg value="-m" />
             <arg value="version bump for manifest" />
         </exec>
