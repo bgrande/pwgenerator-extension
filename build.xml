@@ -6,7 +6,9 @@
     <property name="extension-dir" value="chrome-extension" />
     <property name="vendor-dir" value="vendor/vault" />
     <property name="version-file-path" value="version" />
+    <property name="changelog-path" value="Changelog" />
     <loadfile property="project-version" srcFile="${version-file-path}" />
+    <loadfile property="old-changes" srcFile="${changelog-path}" />
     <property name="project-name" value="password-generator" />
     <property name="folder-to-zip" value="${project-name}-${project-version}" />
     <property name="manifest-path" value="${extension-dir}/manifest.json" />
@@ -22,11 +24,30 @@
         <replaceregexp file="${extension-dir}/manifest.json" match='"version": "(.*)",' replace='"version": "${project-version}",' byline="true" />
     </target>
 
+    <target name="update-changelog">
+        <exec executable="git" outputProperty="last-tag">
+            <arg value="describe" />
+            <arg value="--tags" />
+            <arg value="--abbrev=0" />
+        </exec>
+        <exec executable="git" outputProperty="recent-changes">
+            <arg value="log" />
+            <arg value="${last-tag}..HEAD" />
+            <arg value="--oneline" />
+        </exec>
+        <echo file="${changelog-path}">${project-version}
+${recent-changes}
+
+${old-changes}
+        </echo>
+    </target>
+
     <target name="updategit">
         <exec executable="git">
             <arg value="commit" />
             <arg value="${manifest-path}" />
             <arg value="${version-file-path}" />
+            <arg value="${changelog-path}" />
             <arg value="-m" />
             <arg value="version bump for manifest" />
         </exec>
@@ -49,7 +70,7 @@
         </exec>
     </target>
 
-    <target name="prepare" depends="clean, get-vendor, create-temp, check-key, copy-key, setversion, updategit">
+    <target name="prepare" depends="clean, get-vendor, create-temp, check-key, copy-key, setversion, update-changelog, updategit">
         <copy todir="temp/${folder-to-zip}">
             <fileset dir="${extension-dir}" />
         </copy>
@@ -80,6 +101,7 @@
     <target name="build-info">
         <echo message="build dir: ${build-dir}" />
         <echo message="extension dir: ${extension-dir}" />
+        <echo message="changelog file: ${changelog-path}" />
         <echo message="vendor dir: ${vendor-dir}" />
         <echo message="project name: ${project-name}" />
         <echo message="version: ${project-version}" />
