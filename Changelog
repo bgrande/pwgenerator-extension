@@ -1,0 +1,16 @@
+v1.9.3
+65271f1 todo doc
+c67f5b3 use version file for version changes added tag to show current release info
+ddb328e commit changed build xml as well
+b70c75a version bump
+
+v1.9.2
+90064ca version bump for manifest
+f55121e use constant for vendor prefix
+51f7d7e added another domain rule
+ec8cbd0 smaller margin to top
+d66ea7b smaller symbols in popup
+7a6ed9f version bump for manifest
+f18fea6 also commit updated manifest after automatic version bump
+f3d2bdc 'version bump for manifest'
+d257af7 manifest version update
