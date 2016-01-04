@@ -2,6 +2,7 @@
 
 <project name="build" default="zip" basedir=".">
 
+    <property name="temp-dir" value="temp" />
     <property name="build-dir" value="build" />
     <property name="extension-dir" value="chrome-extension" />
     <property name="vendor-dir" value="vendor/vault" />
@@ -17,7 +18,7 @@
 
     <target name="clean">
         <delete file="${build-dir}/${project-name}.zip" />
-        <delete dir="temp" />
+        <delete dir="${temp-dir}" />
     </target>
 
     <target name="setversion">
@@ -71,7 +72,7 @@ ${old-changes}
     </target>
 
     <target name="prepare" depends="clean, get-vendor, create-temp, check-key, copy-key, setversion, update-changelog, updategit">
-        <copy todir="temp/${folder-to-zip}">
+        <copy todir="${temp-dir}/${folder-to-zip}">
             <fileset dir="${extension-dir}" />
         </copy>
     </target>
@@ -81,16 +82,16 @@ ${old-changes}
     </target>
 
     <target name="create-temp">
-        <mkdir dir="temp" />
-        <mkdir dir="temp/${folder-to-zip}" />
+        <mkdir dir="${temp-dir}" />
+        <mkdir dir="${temp-dir}/${folder-to-zip}" />
     </target>
 
     <target name="copy-key" if="key.present">
-        <copy file="src/key.pem" todir="temp/${folder-to-zip}/" />
+        <copy file="src/key.pem" todir="${temp-dir}/${folder-to-zip}/" />
     </target>
 
     <target name="zip" depends="prepare">
-        <zip destfile="${build-dir}/${project-name}-${project-version}.zip" basedir="temp/${folder-to-zip}" />
+        <zip destfile="${build-dir}/${project-name}-${project-version}.zip" basedir="${temp-dir}/${folder-to-zip}" />
     </target>
 
     <target name="get-vendor">
