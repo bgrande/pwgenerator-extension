@@ -120,5 +120,8 @@
     },
     "disableTitle": {
         "message": "Disable overlays"
+    },
+    "savedPageOptions": {
+        "message": "Saved user defined page options"
     }
 }

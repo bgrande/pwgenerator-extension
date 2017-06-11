@@ -106,5 +106,8 @@
     },
     "disableTitle": {
         "message": "Overlays deaktivieren"
+    },
+    "savedPageOptions": {
+        "message": "Gespeicherte benutzerdefinierte Seitenoptionen"
     }
 }

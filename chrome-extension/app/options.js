@@ -44,7 +44,7 @@ var getOptionSettings = function (settings) {
     }
 
     if (settings.useBrowserAction !== undefined) {
-        compatible.useBrowserAction = settings.useBrowserAction;
+        // useBrowserAction.checked = settings.useBrowserAction;
     }
 
     switch (settings.servicename) {
@@ -86,7 +86,7 @@ var saveOptions = function (length, repeat, iteration, required, compatible, use
         autosendChecked   = autosend.checked,
         defServicenameVal = defServicename.value,
         servicenameType   = undefined,
-        useBrowserActionChecked = useBrowserAction.checked,
+        //useBrowserActionChecked = useBrowserAction.checked,
         passRepeat, genIteration, settings = {};
 
     passRepeat = !repeat.value ? 0: parseInt(repeat.value, 10);
@@ -106,7 +106,7 @@ var saveOptions = function (length, repeat, iteration, required, compatible, use
     settings.repeat = passRepeat;
     settings.iteration = genIteration;
     settings.isVaultCompatible = compatibleChecked;
-    settings.useBrowserAction = useBrowserActionChecked;
+    // settings.useBrowserAction = useBrowserActionChecked;
     settings.autosend = autosendChecked;
     settings.servicename = servicenameType;
     settings.requiredLength = requiredLength;

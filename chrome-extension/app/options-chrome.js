@@ -54,14 +54,16 @@ chrome.storage.sync.get('settings', function (items) {
         cancelOptionsText = chrome.i18n.getMessage("cancelOptions"),
         linkText = chrome.i18n.getMessage("linkText"),
         linkText1 = chrome.i18n.getMessage("linkText1"),
-        linkText2 = chrome.i18n.getMessage("linkText2");
+        linkText2 = chrome.i18n.getMessage("linkText2"),
+        savedPageOptions = chrome.i18n.getMessage("savedPageOptions");
+
 
     document.title = optionsTitle;
     $('length-label').innerText = lengthLabel;
     $('repeat-label').innerText = repeatLabel;
     $('iteration-label').innerText = iterationLabel;
     $('compatible-label').innerText = compatibleLabel;
-    $('use-browser-action-label').innerText = browserActionLabel;
+    //$('use-browser-action-label').innerText = browserActionLabel;
     $('autosend-label').innerText = autosendLabel;
     $('servicename-label').innerText = servicenameLabel;
     $('defservicename-label').innerText = defservicenameLabel;
@@ -77,6 +79,7 @@ chrome.storage.sync.get('settings', function (items) {
     $('link-text').innerText = linkText;
     $('link-to-vault-1').innerText = linkText1;
     $('link-to-vault-2').innerText = linkText2;
+    $('saved-page-options').innerText = savedPageOptions;
 
     // set symbol description
     $('symbol-description').title = '!"#$%&\'()*+,./:;<=>?@[\\]^{|}~';
