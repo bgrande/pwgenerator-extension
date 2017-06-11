@@ -15,7 +15,6 @@ chrome.storage.sync.get('settings', function (items) {
 
     getOptionSettings(settings);
 
-    return;
     // @todo extend and move into own object/method as well as in general options.js
     for (service in settings.serviceExceptions)
     {
@@ -41,6 +40,7 @@ chrome.storage.sync.get('settings', function (items) {
         iterationLabel = chrome.i18n.getMessage("iterationLabel"),
         autosendLabel = chrome.i18n.getMessage("autosendLabel"),
         compatibleLabel = chrome.i18n.getMessage("compatibleLabel"),
+        browserActionLabel = chrome.i18n.getMessage("browserActionLabel"),
         servicenameLabel = chrome.i18n.getMessage("servicenameOptionLabel"),
         defservicenameLabel = chrome.i18n.getMessage("defservicenameLabel"),
         defservicenamePrefixLabel = chrome.i18n.getMessage("defservicenamePrefixLabel"),
@@ -61,6 +61,7 @@ chrome.storage.sync.get('settings', function (items) {
     $('repeat-label').innerText = repeatLabel;
     $('iteration-label').innerText = iterationLabel;
     $('compatible-label').innerText = compatibleLabel;
+    $('use-browser-action-label').innerText = browserActionLabel;
     $('autosend-label').innerText = autosendLabel;
     $('servicename-label').innerText = servicenameLabel;
     $('defservicename-label').innerText = defservicenameLabel;
