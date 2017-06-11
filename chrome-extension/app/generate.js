@@ -24,6 +24,14 @@ chrome.storage.sync.get('settings', function (items) {
             settings = (undefined !== items.settings) ? Helper.mergeObject(DEFAULT_SETTINGS, JSON.parse(items.settings)) : DEFAULT_SETTINGS,
             pwLength = passwords.length, i;
 
+        if (settings.useBrowserAction) {
+            // @todo open browser action popup with password generation input fields
+            // -> 1. is there a way to use the logic within the popup as well? -> just inject into popup
+            // -> 2. make popup more beautiful
+            // -> 3. increase UX
+            return;
+        }
+
         // set chrome specific url getting for close and extend icons
         settings.imgUrl = chrome.extension.getURL('images/close.png');
         settings.arrowUp = chrome.extension.getURL('images/arrow-up.png');
