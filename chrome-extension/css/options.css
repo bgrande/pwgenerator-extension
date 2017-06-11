@@ -111,7 +111,7 @@ input.text, input.password {
 .autosend, .servicename, .compatible {
     width: 100%;
 }
-.autosend label, #autosend, .servicename label, #servicename, #def-servicename, .compatible label, #compatible {
+.autosend label, #autosend, .servicename label, #servicename, #def-servicename, .compatible label, #compatible, .use-browser-action label, #use-browser-action {
     display: inline;
     width: auto;
     margin-right: 3%;

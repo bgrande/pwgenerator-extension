@@ -9,7 +9,8 @@ var required    = $('required'),
     servicename = $('servicename'),
     prefix      = $('prefix'),
     suffix      = $('suffix'),
-    defServicename = $('def-servicename');
+    defServicename = $('def-servicename'),
+    useBrowserAction = $('use-browser-action');
 
 /**
  * retrieve already stored options
@@ -42,6 +43,10 @@ var getOptionSettings = function (settings) {
         compatible.checked = settings.isVaultCompatible;
     }
 
+    if (settings.useBrowserAction !== undefined) {
+        compatible.useBrowserAction = settings.useBrowserAction;
+    }
+
     switch (settings.servicename) {
         case 'login':
             servicename.checked = true;
@@ -67,19 +72,21 @@ var getOptionSettings = function (settings) {
  * @param {HTMLInputElement} iteration
  * @param {HTMLInputElement} required
  * @param {HTMLInputElement} compatible
+ * @param [HTMLInputElement} useBrowserAction
  * @param {HTMLInputElement} autosend
  * @param {HTMLInputElement} defServicename
  * @param {HTMLInputElement} servicename
  * @param {HTMLInputElement} prefix
  * @param {HTMLInputElement} suffix
  */
-var saveOptions = function (length, repeat, iteration, required, compatible, autosend, defServicename, servicename, prefix, suffix) {
+var saveOptions = function (length, repeat, iteration, required, compatible, useBrowserAction, autosend, defServicename, servicename, prefix, suffix) {
     var passLength        = parseInt(length.value, 10),
         requiredLength    = parseInt(required.value, 10),
         compatibleChecked = compatible.checked,
         autosendChecked   = autosend.checked,
         defServicenameVal = defServicename.value,
         servicenameType   = undefined,
+        useBrowserActionChecked = useBrowserAction.checked,
         passRepeat, genIteration, settings = {};
 
     passRepeat = !repeat.value ? 0: parseInt(repeat.value, 10);
@@ -99,6 +106,7 @@ var saveOptions = function (length, repeat, iteration, required, compatible, aut
     settings.repeat = passRepeat;
     settings.iteration = genIteration;
     settings.isVaultCompatible = compatibleChecked;
+    settings.useBrowserAction = useBrowserActionChecked;
     settings.autosend = autosendChecked;
     settings.servicename = servicenameType;
     settings.requiredLength = requiredLength;
@@ -110,7 +118,7 @@ var saveOptions = function (length, repeat, iteration, required, compatible, aut
 on($('save-options'), 'click', function () {
     var status = $('option-status');
 
-    saveOptions(length, repeat, iteration, required, compatible, autosend, defServicename, servicename, prefix, suffix);
+    saveOptions(length, repeat, iteration, required, compatible, useBrowserAction, autosend, defServicename, servicename, prefix, suffix);
 
     // let user know it's saved
     status.style.display = 'block';

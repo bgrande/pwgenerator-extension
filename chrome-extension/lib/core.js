@@ -11,6 +11,7 @@ var DEFAULT_SETTINGS = {
         space: null,
         symbol: null,
         isVaultCompatible: true,
+        useBrowserAction: false,
 
         autosend: false,
         servicename: 'prefix',
@@ -338,7 +339,7 @@ Helper.getLoginForm = function (pwField) {
 };
 
 /**
- * generates a random servicename
+ * generates a (more or less) random servicename
  *
  * @returns {string}
  */
