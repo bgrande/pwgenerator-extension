@@ -33,14 +33,32 @@ PasswordField.getField = function () {
 };
 
 PasswordField.init = function (pwField) {
-    var pwString;
+    var pwString, i, l, testForDoubleId;
+
+    // always check for duplicate ids for different types if the id was set
+    if (pwField.id) {
+        testForDoubleId = document.querySelectorAll('[id="' + pwField.id + '"]');
+    }
+
+    // if we have the same id for different types of tags use the input fields
+    // it might not be any input field, though. Well then sth. went really wrong
+    if (testForDoubleId && testForDoubleId.length > 1) {
+        for (i = 0, l = testForDoubleId.length; i < l; i++) {
+            // overwrite pwField node if we found an input field
+            // overwrite the id to null as well to set it again
+            if (testForDoubleId.hasOwnProperty(i) && testForDoubleId[i].tagName === 'INPUT') {
+                pwField = testForDoubleId[i];
+                pwField.id = null;
+            }
+        }
+    }
 
     if (pwField.id) {
         this._id = pwField.id;
     } else if (pwField.name) {
         pwString = pwField.name.replace(/\[|\]|:|[ ]/g, '-').replace(/-+$/, '');
 
-        if ($(BASE_NAME + 'generator-overlay-' + pwString)) {
+        if ($(BASE_NAME + 'generator-overlay-' + pwString) || $(pwString)) {
             pwString += '1';
         }
 
@@ -367,7 +385,7 @@ Overlay._createDiv = function (pwField, pwId) {
 
 Overlay._setServicename = function () {
     var servicename = this._getServicenameField(),
-        loginField = (this._loginField) ? this._loginField.getField() : null,
+        loginField = (this._loginField) ? this._loginField.getField() : undefined,
         result;
 
     if (servicename) {
