@@ -1,3 +1,21 @@
+1.9.4
+4e5cc3b do not remove zipped package
+a623833 use bugfix version
+c92c6c9 just use random ids instead of using the name
+6b78a6e extend double id handling
+594a3bc add translation for option list text; temporarily disable popup feature
+4290914 fix option markup
+db871d0 add break point for useBrowserAction set increase version
+47f5302 show overwritten page options
+0a779ee prepare new feature to use browser action popup instead of overlay
+08ead70 use a var for tempdir
+94cffd6 automatically update changelog while build
+b9fae78 added changelog
+65271f1 todo doc
+c67f5b3 use version file for version changes added tag to show current release info
+ddb328e commit changed build xml as well
+b70c75a version bump
+
 v1.9.3
 65271f1 todo doc
 c67f5b3 use version file for version changes added tag to show current release info
@@ -14,3 +32,4 @@ d66ea7b smaller symbols in popup
 f18fea6 also commit updated manifest after automatic version bump
 f3d2bdc 'version bump for manifest'
 d257af7 manifest version update
+        
