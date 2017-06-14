@@ -17,7 +17,6 @@
     <!-- @todo add target to check tests before creating release -->
 
     <target name="clean">
-        <delete file="${build-dir}/${project-name}.zip" />
         <delete dir="${temp-dir}" />
     </target>
 
