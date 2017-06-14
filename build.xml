@@ -70,7 +70,7 @@ ${old-changes}
         </exec>
     </target>
 
-    <target name="prepare" depends="clean, get-vendor, create-temp, check-key, copy-key, setversion, update-changelog, updategit">
+    <target name="prepare" depends="clean, create-temp, check-key, copy-key, setversion, update-changelog, updategit">
         <copy todir="${temp-dir}/${folder-to-zip}">
             <fileset dir="${extension-dir}" />
         </copy>
