@@ -50,7 +50,7 @@ chrome.storage.sync.get('settings', function (items) {
                     generatorOverlays[i] = overlayFactory(settings, passwords[i]);
                 }
             }
-        } else if (pwLength === 0 && password) {
+        } else if (pwLength === 0 && password && password.tagName === 'INPUT') {
             // field does not have a password type - better use no autosend to prevent misbehaviour
             settings.autosend = false;
 

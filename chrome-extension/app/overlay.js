@@ -55,14 +55,6 @@ PasswordField.init = function (pwField) {
 
     if (pwField.id) {
         this._id = pwField.id;
-    } else if (pwField.name) {
-        pwString = pwField.name.replace(/\[|\]|:|[ ]/g, '-').replace(/-+$/, '');
-
-        if ($(BASE_NAME + 'generator-overlay-' + pwString) || $(pwString)) {
-            pwString += '1';
-        }
-
-        this._id = pwField.id = pwString;
     } else {
         this._id = pwField.id = this._generateId();
     }
