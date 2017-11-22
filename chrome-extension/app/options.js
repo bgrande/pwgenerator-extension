@@ -72,7 +72,7 @@ var getOptionSettings = function (settings) {
  * @param {HTMLInputElement} iteration
  * @param {HTMLInputElement} required
  * @param {HTMLInputElement} compatible
- * @param [HTMLInputElement} useBrowserAction
+ * @param {HTMLInputElement} useBrowserAction
  * @param {HTMLInputElement} autosend
  * @param {HTMLInputElement} defServicename
  * @param {HTMLInputElement} servicename

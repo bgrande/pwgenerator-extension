@@ -307,7 +307,12 @@ Helper.mergeObject = function (first, second) {
 
     if (first && second) {
         for (attrName in second) {
-            if (second.hasOwnProperty(attrName)) {
+            if (!second.hasOwnProperty(attrName)) {
+                continue;
+            }
+            if ('object' === typeof first[attrName] && typeof second[attrName] === 'object') {
+                first[attrName] = this.mergeObject(first[attrName], second[attrName]);
+            } else {
                 first[attrName] = second[attrName];
             }
         }

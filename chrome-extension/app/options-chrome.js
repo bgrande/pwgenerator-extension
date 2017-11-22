@@ -1,8 +1,11 @@
 'use strict';
 
 var saveSettings = function (settings) {
-    chrome.storage.sync.set({
-        settings: JSON.stringify(settings)
+    chrome.storage.sync.get('settings', function (items) {
+        var newSettings = Helper.mergeObject(JSON.parse(items.settings), settings);
+        chrome.storage.sync.set({
+            settings: JSON.stringify(newSettings)
+        });
     });
 };
 
@@ -16,8 +19,7 @@ chrome.storage.sync.get('settings', function (items) {
     getOptionSettings(settings);
 
     // @todo extend and move into own object/method as well as in general options.js
-    for (service in settings.serviceExceptions)
-    {
+    for (service in settings.serviceExceptions) {
         if (settings.serviceExceptions.hasOwnProperty(service)) {
             serviceList += '<div><span>' + service + ': </span>';
                 for (definition in settings.serviceExceptions[service]) {
