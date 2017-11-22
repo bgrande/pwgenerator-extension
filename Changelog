@@ -1,3 +1,8 @@
+1.9.5
+
+9fe0f04 #29 implement deep merging; fix bug overwriting saved settings
+fee19d7 do not always update vendors
+
 1.9.4
 4e5cc3b do not remove zipped package
 a623833 use bugfix version
@@ -32,4 +37,5 @@ d66ea7b smaller symbols in popup
 f18fea6 also commit updated manifest after automatic version bump
 f3d2bdc 'version bump for manifest'
 d257af7 manifest version update
+        
         
