@@ -1,5 +1,4 @@
 1.9.5
-
 9fe0f04 #29 implement deep merging; fix bug overwriting saved settings
 fee19d7 do not always update vendors
 
