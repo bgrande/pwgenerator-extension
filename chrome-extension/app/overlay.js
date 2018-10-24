@@ -335,7 +335,7 @@ Overlay._createDiv = function (pwField, pwId) {
         '     <tbody>' +
         '       <tr>' +
         '           <th scope="row" class="' + BASE_NAME + 'requiredbox">' +
-        '               <label for="required" id="' + BASE_NAME + 'required-label">' + chrome.i18n.getMessage("requiredLabel") + '</label>' +
+        '               <label for="' + BASE_NAME + 'required" id="' + BASE_NAME + 'required-label">' + chrome.i18n.getMessage("requiredLabel") + '</label>' +
         '               (<input maxlength="1" type="text" class="' + BASE_NAME + 'text" name="required" id="' + BASE_NAME + 'required" value="2" autocomplete="off">)' +
         '           </th>' +
         '           <td><input type="radio" name="lower" value="required"></td>' +
