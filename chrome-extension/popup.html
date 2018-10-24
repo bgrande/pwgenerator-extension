@@ -1,29 +1,120 @@
 <!doctype html>
 <html>
-  <head>
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Easy Password Handling Popup</title>
     <link rel="stylesheet" type="text/css" href="./css/options.css">
     <script type="text/javascript" src="./lib/core.js"></script>
-  </head>
-  <body>
-      <div class="topbar popup">
-          <div class="close-container">
-              <a href="#" id="close-window">
-                  <img src="images/close.png" alt="close" id="close-window-img" />
-              </a>
-          </div>
-      </div>
-
-      <div class="container small">
-        <div class="menu-item">
-            <a href="#" id="reload-overlay"><img src="images/play.png" /> <span id="reload-title">Reload Overlays</span></a>
+</head>
+<body>
+<div class="topbar popup">
+    <div class="close-container">
+        <a href="#" id="close-window">
+            <img src="images/close.png" alt="close" id="close-window-img"/>
+        </a>
+    </div>
+</div>
+<!-- if overlays active: -->
+<div class="container small">
+    <div class="menu-item">
+        <a href="#" id="reload-overlay"><img src="images/play.png"/> <span id="reload-title">Reload Overlays</span></a>
+    </div>
+    <div class="menu-item">
+        <a href="#" id="disable-overlay"><img src="images/stop.png"/> <span
+                id="disable-title">Disable Overlays</span></a>
+    </div>
+</div>
+<!-- else use popup -->
+<!-- @todo use translations here!! -->
+<div id="easy-password-generator-overlay-pass" class="easy-password-generator-overlay" style="display: block;">
+    <div id="easy-password-close-pass" class="easy-password-close" title="">
+        <img id="easy-password-close-icon-pass" class="easy-password-close-icon" src="images/close.png" alt="close button">
+    </div>
+    <div class="easy-password-generator-dialog">
+        <div class="easy-password-service-container">
+            <label id="easy-password-service-label" for="easy-password-servicename-pass">Service name</label>
+            <input id="easy-password-servicename-pass" class="easy-password-servicename" type="text" placeholder="localhost">
         </div>
-        <div class="menu-item">
-            <a href="#" id="disable-overlay"><img src="images/stop.png" /> <span id="disable-title">Disable Overlays</span></a>
+        <div class="easy-password-pass-container">
+            <label id="easy-password-passphrase-label" for="easy-password-passphrase-pass">Passphrase</label>
+            <input id="easy-password-passphrase-pass" class="easy-password-passphrase" type="password" placeholder="best pass ever">
+            <div class="easy-password-show-pw-container" title="Be careful! Make sure nobody is behind you!">
+                <input id="easy-password-show-password-pass" type="checkbox">
+                <label for="easy-password-show-password-pass" class="easy-password-description-label">Show generated pw</label>
+            </div>
         </div>
-      </div>
+        <div class="easy-password-button-container">
+            <input id="easy-password-generate-pass" class="easy-password-generate" type="button" value="Generate &amp; Login">
+        </div>
+    </div>
+    <div id="easy-password-extend-pass" class="easy-password-extend" title="Adjust settings">
+        <img src="images/arrow-down.png" alt="expand options button">
+    </div>
+    <div class="easy-password-overlay-settings" id="easy-password-overlay-settingspass" style="display: none;">
+        <div class="easy-password-sub">
+            <div class="easy-password-length">
+                <label for="easy-password-vlength" id="easy-password-length-label">Password length</label>
+                <input maxlength="4" type="text" min="0" class="easy-password-text" name="vlength" id="easy-password-vlength" value="20" autocomplete="on">
+            </div>
+            <div class="easy-password-repeat">
+                <label for="easy-password-repeat" id="easy-password-repeat-label">Max repetition</label>
+                <input maxlength="2" type="text" class="easy-password-text" name="repeat" id="easy-password-repeat" value="" autocomplete="on">
+            </div>
+            <div class="easy-password-savebox">
+                <input maxlength="2" type="checkbox" class="easy-password-text" name="save" id="easy-password-save" value="" autocomplete="on">
+                <label for="easy-password-save" id="easy-password-save-label">Save</label>
+            </div>
+        </div>
+        <div class="easy-password-field">
+            <table>
+                <thead>
+                <tr>
+                    <td></td>
+                    <th scope="col">a–z</th>
+                    <th scope="col">A–Z</th>
+                    <th scope="col">0–9</th>
+                    <th scope="col">- / _</th>
+                    <th scope="col" id="easy-password-space-head">SPACE</th>
+                    <th scope="col" id="easy-password-symbol-description">!@#$%</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row" class="easy-password-requiredbox">
+                        <label for="easy-password-required" id="easy-password-required-label">Required</label>
+                        (<input maxlength="1" type="text" class="easy-password-text" name="required" id="easy-password-required" value="2" autocomplete="off">)
+                    </th>
+                    <td><input type="radio" name="lower" value="required"></td>
+                    <td><input type="radio" name="upper" value="required"></td>
+                    <td><input type="radio" name="number" value="required"></td>
+                    <td><input type="radio" name="dash" value="required"></td>
+                    <td><input type="radio" name="space" value="required"></td>
+                    <td><input type="radio" name="symbol" value="required"></td>
+                </tr>
+                <tr>
+                    <th scope="row" id="easy-password-allowed-label">Allowed</th>
+                    <td><input type="radio" name="lower" value="allowed" checked="checked"></td>
+                    <td><input type="radio" name="upper" value="allowed" checked="checked"></td>
+                    <td><input type="radio" name="number" value="allowed" checked="checked"></td>
+                    <td><input type="radio" name="dash" value="allowed" checked="checked"></td>
+                    <td><input type="radio" name="space" value="allowed" checked="checked"></td>
+                    <td><input type="radio" name="symbol" value="allowed" checked="checked"></td>
+                </tr>
+                <tr>
+                    <th scope="row" id="easy-password-forbidden-label">Forbidden</th>
+                    <td><input type="radio" name="lower" value="forbidden"></td>
+                    <td><input type="radio" name="upper" value="forbidden"></td>
+                    <td><input type="radio" name="number" value="forbidden"></td>
+                    <td><input type="radio" name="dash" value="forbidden"></td>
+                    <td><input type="radio" name="space" value="forbidden"></td>
+                    <td><input type="radio" name="symbol" value="forbidden"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
-      <script type="text/javascript" src="./app/popup.js"></script>
-  </body>
+<script type="text/javascript" src="./app/popup.js"></script>
+</body>
 </html>

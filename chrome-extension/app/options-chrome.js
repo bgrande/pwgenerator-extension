@@ -65,7 +65,7 @@ chrome.storage.sync.get('settings', function (items) {
     $('repeat-label').innerText = repeatLabel;
     $('iteration-label').innerText = iterationLabel;
     $('compatible-label').innerText = compatibleLabel;
-    //$('use-browser-action-label').innerText = browserActionLabel;
+    $('use-browser-popup-label').innerText = browserActionLabel;
     $('autosend-label').innerText = autosendLabel;
     $('servicename-label').innerText = servicenameLabel;
     $('defservicename-label').innerText = defservicenameLabel;

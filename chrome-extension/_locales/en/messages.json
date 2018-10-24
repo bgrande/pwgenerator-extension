@@ -26,8 +26,8 @@
     "compatibleLabel": {
         "message": "Stay getvau.lt compatible"
     },
-    "browserActionLabel": {
-        "message": "Use browser action instead of overlay"
+    "browserPopupLabel": {
+        "message": "Use browser popup instead of overlay (less convenient, more secure)"
     },
     "autosendLabel": {
         "message": "Automatically send form after insert"

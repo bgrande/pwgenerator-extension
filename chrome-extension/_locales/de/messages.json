@@ -23,8 +23,8 @@
     "compatibleLabel": {
         "message": "Zu getvau.lt kompatibel bleiben"
     },
-    "browserActionLabel": {
-        "message": "Browser Action popup anstatt Onpage Overlay verwenden"
+    "browserPopupLabel": {
+        "message": "Browser popup anstatt onpage overlay verwenden (weniger pratkisch, aber sicherer)"
     },
     "autosendLabel": {
         "message": "Formular automatisch nach Einfügen des Passworts abschicken"

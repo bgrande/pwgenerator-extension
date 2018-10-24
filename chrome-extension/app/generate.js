@@ -25,7 +25,7 @@ chrome.storage.sync.get('settings', function (items) {
             pwLength = passwords.length, i;
 
         if (settings.useBrowserAction) {
-            // @todo if any passwords, use browser action with password generation input fields
+            // @todo if any passwords, use browser popup with password generation input fields
             // it has to be
             // -> 1. is there a way to use the logic within the popup as well? -> just inject into popup
             // -> 2. make popup more beautiful
