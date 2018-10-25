@@ -1,0 +1,7 @@
+@media (max-width: 800px) {
+
+    .container {
+        min-width: 600px;
+        width: 600px;
+    }
+}

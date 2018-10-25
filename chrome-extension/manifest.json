@@ -1,7 +1,7 @@
 {
   "name": "__MSG_extName__",
   "short_name": "EasyPassword",
-  "version": "1.9.6",
+  "version": "1.10.0",
   "manifest_version": 2,
   "author": "Benedikt Grande",
   "description": "__MSG_extDescription__",
@@ -26,7 +26,25 @@
         "32": "images/icon32.png"
     },
     "default_title": "__MSG_extTitle__",
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "css": [
+        "css/reset.css",
+        "css/style.css",
+        "css/options.css",
+        "css/popup.css"
+      ],
+      "js": [
+        "lib/crypto-js.js",
+        "lib/vault.js",
+        "lib/core.js",
+        "lib/generator.js",
+        "app/fields.js",
+        "app/generate.js"
+      ]
   },
   "content_scripts": [
       {
@@ -43,9 +61,9 @@
             "lib/vault.js",
             "lib/core.js",
             "lib/generator.js",
+            "app/fields.js",
             "app/overlay.js",
-            "lib/generator.js",
-            "app/overlay.js",
+            "app/generateFactory.js",
             "app/generate.js"
         ],
         "run_at": "document_idle",

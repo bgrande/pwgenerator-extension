@@ -3,10 +3,12 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Easy Password Handling Popup</title>
+    <link rel="stylesheet" type="text/css" href="./css/reset.css">
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
     <link rel="stylesheet" type="text/css" href="./css/options.css">
-    <script type="text/javascript" src="./lib/core.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/popup.css">
 </head>
-<body>
+<body id="easy-password-browser-popup">
 <div class="topbar popup">
     <div class="close-container">
         <a href="#" id="close-window">
@@ -15,21 +17,17 @@
     </div>
 </div>
 <!-- if overlays active: -->
-<div class="container small">
+<div class="container small" id="popup-on-overlay">
     <div class="menu-item">
         <a href="#" id="reload-overlay"><img src="images/play.png"/> <span id="reload-title">Reload Overlays</span></a>
     </div>
     <div class="menu-item">
-        <a href="#" id="disable-overlay"><img src="images/stop.png"/> <span
-                id="disable-title">Disable Overlays</span></a>
+        <a href="#" id="disable-overlay"><img src="images/stop.png"/> <span id="disable-title">Disable Overlays</span></a>
     </div>
 </div>
+
 <!-- else use popup -->
-<!-- @todo use translations here!! -->
-<div id="easy-password-generator-overlay-pass" class="easy-password-generator-overlay" style="display: block;">
-    <div id="easy-password-close-pass" class="easy-password-close" title="">
-        <img id="easy-password-close-icon-pass" class="easy-password-close-icon" src="images/close.png" alt="close button">
-    </div>
+<div id="easy-password-generator-overlay-pass" class="container">
     <div class="easy-password-generator-dialog">
         <div class="easy-password-service-container">
             <label id="easy-password-service-label" for="easy-password-servicename-pass">Service name</label>
@@ -115,6 +113,12 @@
     </div>
 </div>
 
+<script type="text/javascript" src="./lib/crypto-js.js"></script>
+<script type="text/javascript" src="./lib/vault.js"></script>
+<script type="text/javascript" src="./lib/core.js"></script>
+<script type="text/javascript" src="./lib/generator.js"></script>
+<script type="text/javascript" src="./app/fields.js"></script>
 <script type="text/javascript" src="./app/popup.js"></script>
+
 </body>
 </html>

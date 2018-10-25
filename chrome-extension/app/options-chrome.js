@@ -42,7 +42,7 @@ chrome.storage.sync.get('settings', function (items) {
         iterationLabel = chrome.i18n.getMessage("iterationLabel"),
         autosendLabel = chrome.i18n.getMessage("autosendLabel"),
         compatibleLabel = chrome.i18n.getMessage("compatibleLabel"),
-        browserActionLabel = chrome.i18n.getMessage("browserActionLabel"),
+        browserPopupLabel = chrome.i18n.getMessage("browserPopupLabel"),
         servicenameLabel = chrome.i18n.getMessage("servicenameOptionLabel"),
         defservicenameLabel = chrome.i18n.getMessage("defservicenameLabel"),
         defservicenamePrefixLabel = chrome.i18n.getMessage("defservicenamePrefixLabel"),
@@ -65,7 +65,7 @@ chrome.storage.sync.get('settings', function (items) {
     $('repeat-label').innerText = repeatLabel;
     $('iteration-label').innerText = iterationLabel;
     $('compatible-label').innerText = compatibleLabel;
-    $('use-browser-popup-label').innerText = browserActionLabel;
+    $('use-browser-popup-label').innerText = browserPopupLabel;
     $('autosend-label').innerText = autosendLabel;
     $('servicename-label').innerText = servicenameLabel;
     $('defservicename-label').innerText = defservicenameLabel;
