@@ -363,7 +363,7 @@ Overlay._create = function (pwField, pwFieldId) {
     });
 
     on($(BASE_NAME + 'extend-' + pwFieldId), 'click', function () {
-        var extension = $(BASE_NAME + 'overlay-settings' + pwFieldId);
+        var extension = $(BASE_NAME + 'settings' + pwFieldId);
 
         if (extension.style.display === 'none') {
             var vaultSettings = Helper.mergeObject(
