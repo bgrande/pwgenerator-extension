@@ -263,7 +263,7 @@ Helper.fixDuplicateIds = function (nodeList) {
  */
 Helper.isOverlay = function (pwField) {
     // @todo this is easy password handler (overlay) only
-    return pwField && pwField.id && pwField.id.match(/^easy-password-passphrase/);
+    return pwField && pwField.id && pwField.id.match(/^eph-overlay-passphrase/);
 };
 
 /**

@@ -1,7 +1,46 @@
 @media (max-width: 800px) {
 
     .container {
-        min-width: 600px;
-        width: 600px;
+        width: 500px;
     }
+}
+
+.eph-container {
+    width: 500px;
+}
+
+.eph-hidden {
+    display: none;
+}
+
+.eph-overlay-extend {
+    position: relative !important;
+}
+
+.eph-overlay-generator-dialog {
+    width: 95%;
+    height: auto;
+    display: grid;
+    position: relative !important;
+    float: unset !important;
+    margin: 0 .5em .5em .5em;
+    grid-template-columns: 4fr 4fr 2fr;
+    grid-column-gap: .5em;
+}
+
+.eph-overlay-service-container, .eph-overlay-pass-container, .eph-overlay-button-container {
+    max-width: unset;
+    display: block;
+    float: unset !important;
+    margin-right: 0 !important;
+}
+
+.eph-overlay-button-container {
+    width: auto !important;
+    height: auto !important;
+    float: unset !important;
+}
+
+.eph-overlay-show-pw-container {
+    margin-top: 0.5em !important;
 }

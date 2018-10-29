@@ -1,4 +1,4 @@
-.easy-password-generator-overlay {
+.eph-overlay-generator-overlay {
     animation : none;
     animation-delay : 0;
     animation-direction : normal;
@@ -149,11 +149,11 @@
     z-index : auto;
 }
 
-.easy-password-generator-overlay input,
-.easy-password-generator-overlay label,
-.easy-password-generator-overlay select,
-.easy-password-generator-overlay button,
-.easy-password-generator-overlay textarea
+.eph-overlay-generator-overlay input,
+.eph-overlay-generator-overlay label,
+.eph-overlay-generator-overlay select,
+.eph-overlay-generator-overlay button,
+.eph-overlay-generator-overlay textarea
 {
     margin: 0;
     border: 0;
@@ -170,7 +170,7 @@
 }
 
 /* Remove the stupid outer glow in Webkit */
-.easy-password-generator-overlay input:focus
+.eph-overlay-generator-overlay input:focus
 {
     outline: 0;
 }
@@ -178,8 +178,8 @@
 /* Box Sizing Reset
 -----------------------------------------------*/
 /* All of our custom controls should be what we expect them to be */
-.easy-password-generator-overlay input,
-.easy-password-generator-overlay textarea
+.eph-overlay-generator-overlay input,
+.eph-overlay-generator-overlay textarea
 {
     -webkit-box-sizing: content-box;
     -moz-box-sizing: content-box;
@@ -187,13 +187,13 @@
 }
 
 /* These elements are usually rendered a certain way by the browser */
-.easy-password-generator-overlay button,
-.easy-password-generator-overlay input[type=reset],
-.easy-password-generator-overlay input[type=button],
-.easy-password-generator-overlay input[type=submit],
-.easy-password-generator-overlay input[type=checkbox],
-.easy-password-generator-overlay input[type=radio],
-.easy-password-generator-overlay select
+.eph-overlay-generator-overlay button,
+.eph-overlay-generator-overlay input[type=reset],
+.eph-overlay-generator-overlay input[type=button],
+.eph-overlay-generator-overlay input[type=submit],
+.eph-overlay-generator-overlay input[type=checkbox],
+.eph-overlay-generator-overlay input[type=radio],
+.eph-overlay-generator-overlay select
 {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -202,27 +202,27 @@
 
 /* Text Inputs
 -----------------------------------------------*/
-.easy-password-generator-overlay input[type=date],
-.easy-password-generator-overlay input[type=datetime],
-.easy-password-generator-overlay input[type=datetime-local],
-.easy-password-generator-overlay input[type=email],
-.easy-password-generator-overlay input[type=month],
-.easy-password-generator-overlay input[type=number],
-.easy-password-generator-overlay input[type=password],
-.easy-password-generator-overlay input[type=range],
-.easy-password-generator-overlay input[type=search],
-.easy-password-generator-overlay input[type=tel],
-.easy-password-generator-overlay input[type=text],
-.easy-password-generator-overlay input[type=time],
-.easy-password-generator-overlay input[type=url],
-.easy-password-generator-overlay input[type=week]
+.eph-overlay-generator-overlay input[type=date],
+.eph-overlay-generator-overlay input[type=datetime],
+.eph-overlay-generator-overlay input[type=datetime-local],
+.eph-overlay-generator-overlay input[type=email],
+.eph-overlay-generator-overlay input[type=month],
+.eph-overlay-generator-overlay input[type=number],
+.eph-overlay-generator-overlay input[type=password],
+.eph-overlay-generator-overlay input[type=range],
+.eph-overlay-generator-overlay input[type=search],
+.eph-overlay-generator-overlay input[type=tel],
+.eph-overlay-generator-overlay input[type=text],
+.eph-overlay-generator-overlay input[type=time],
+.eph-overlay-generator-overlay input[type=url],
+.eph-overlay-generator-overlay input[type=week]
 {
 }
 
 /* Button Controls
 -----------------------------------------------*/
-.easy-password-generator-overlay input[type=checkbox],
-.easy-password-generator-overlay input[type=radio]
+.eph-overlay-generator-overlay input[type=checkbox],
+.eph-overlay-generator-overlay input[type=radio]
 {
     width: 13px;
     height: 13px;
@@ -230,7 +230,7 @@
 
 /* File Uploads
 -----------------------------------------------*/
-.easy-password-generator-overlay input[type=file]
+.eph-overlay-generator-overlay input[type=file]
 {
 
 }
@@ -238,24 +238,24 @@
 /* Search Input
 -----------------------------------------------*/
 /* Make webkit render the search input like a normal text field */
-.easy-password-generator-overlay input[type=search]
+.eph-overlay-generator-overlay input[type=search]
 {
     -webkit-appearance: textfield;
     -webkit-box-sizing: content-box;
 }
 
 /* Turn off the recent search for webkit. It adds about 15px padding on the left */
-.easy-password-generator-overlay ::-webkit-search-decoration
+.eph-overlay-generator-overlay ::-webkit-search-decoration
 {
     display: none;
 }
 
 /* Buttons
 -----------------------------------------------*/
-.easy-password-generator-overlay button,
-.easy-password-generator-overlay input[type="reset"],
-.easy-password-generator-overlay input[type="button"],
-.easy-password-generator-overlay input[type="submit"]
+.eph-overlay-generator-overlay button,
+.eph-overlay-generator-overlay input[type="reset"],
+.eph-overlay-generator-overlay input[type="button"],
+.eph-overlay-generator-overlay input[type="submit"]
 {
     /* Fix IE7 display bug */
     overflow: visible;
@@ -263,7 +263,7 @@
 }
 
 /* IE8 and FF freak out if this rule is within another selector */
-.easy-password-generator-overlay ::-webkit-file-upload-button
+.eph-overlay-generator-overlay ::-webkit-file-upload-button
 {
     padding: 0;
     border: 0;
@@ -272,7 +272,7 @@
 
 /* Textarea
 -----------------------------------------------*/
-.easy-password-generator-overlay textarea
+.eph-overlay-generator-overlay textarea
 {
     /* Move the label to the top */
     vertical-align: top;
@@ -283,12 +283,12 @@
 
 /* Selects
 -----------------------------------------------*/
-.easy-password-generator-overlay select
+.eph-overlay-generator-overlay select
 {
 
 }
 
-.easy-password-generator-overlay select[multiple]
+.eph-overlay-generator-overlay select[multiple]
 {
     /* Move the label to the top */
     vertical-align: top;

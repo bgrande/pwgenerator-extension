@@ -1,6 +1,6 @@
 'use strict';
 
-var BASE_NAME = 'easy-password-';
+var BASE_NAME = 'eph-overlay-';
 
 /**
  * handle service specific password field
