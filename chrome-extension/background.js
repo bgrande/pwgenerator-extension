@@ -1,19 +1,21 @@
 'use strict';
 
-var allowedEvents = {
+let allowedEvents = {
     'countChange': 1,
     'saveOverwrite': 1,
+    'activePasswordField': 1,
+    'passwordFields': 1,
     'reload': 1,
     'disable': 1
 };
 
-var setChromeSettings = function (settings) {
+let setChromeSettings = function (settings) {
     chrome.storage.sync.set({
         settings: JSON.stringify(settings)
     });
 };
 
-var doInCurrentTab = function (tabCallback) {
+let doInCurrentTab = function (tabCallback) {
     chrome.tabs.query(
         { currentWindow: true, active: true },
         function (tabArray) {
@@ -23,7 +25,7 @@ var doInCurrentTab = function (tabCallback) {
 };
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    if (!request || (allowedEvents[request.event]) === 0) {
+    if (!request || (allowedEvents[request.event]) !== 1) {
         return false;
     }
 
@@ -37,14 +39,25 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
         case 'saveOverwrite':
             if (request.settings && typeof(request.settings) === 'object') {
-                var newSettings = request.settings;
+                let newSettings = request.settings;
 
                 chrome.storage.sync.get('settings', function (items) {
-                    var settings = JSON.parse(items.settings);
+                    let settings = JSON.parse(items.settings);
                     settings['serviceExceptions'] = Helper.mergeObject(settings['serviceExceptions'], newSettings);
                     setChromeSettings(settings);
                 });
             }
+            break;
+
+        case 'passwordFields':
+                // @todo update popup object with list of passwords, we have to mark the currently active as well (on message sender end)
+            break;
+
+        case 'activePasswordField':
+            let activePasswordField = request.fieldId ? request.fieldId : '';
+            console.log(activePasswordField);
+            chrome.browserAction.getPopup({tabId: sender.tab.id}, function () {window.popup.setActiveField(activePasswordField)});
+            chrome.browserAction.openPopup(function () {});
             break;
 
         case 'reload':
@@ -59,7 +72,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             break;
 
         case 'disable':
-            var activeTabId, newIconPath;
+            let activeTabId, newIconPath;
             chrome.tabs.executeScript(null, { code: "if (generatorOverlays) { var i = 0, length = generatorOverlays.length; for ( ;i < length; i++) { generatorOverlays[i].detach(); } generatorOverlays = null; }", allFrames: true }, function () {});
 
             doInCurrentTab(function (tab) {
@@ -96,7 +109,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
 
     if (details.reason === 'chrome_update' || details.reason === 'update') {
         chrome.storage.sync.get('settings', function (items) {
-            var settings = JSON.parse(items.settings), key, serviceKey, isNew = false;
+            let settings = JSON.parse(items.settings), key, serviceKey, isNew = false;
 
             for (key in DEFAULT_SETTINGS) {
                 if (DEFAULT_SETTINGS.hasOwnProperty(key) && !settings.hasOwnProperty(key)) {
