@@ -241,6 +241,7 @@ Helper.isCcTld = function (name) {
  * fix problem if a password field id does exist more than once on a page
  *
  * @param {NodeList} nodeList
+ * @return {NodeList}
  */
 Helper.fixDuplicateIds = function (nodeList) {
     var i, j, n = nodeList.length;
@@ -252,6 +253,8 @@ Helper.fixDuplicateIds = function (nodeList) {
             }
         }
     }
+
+    return nodeList;
 };
 
 /**
