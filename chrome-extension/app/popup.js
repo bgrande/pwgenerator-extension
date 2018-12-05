@@ -162,7 +162,7 @@ Popup.init = function (settings, passwordField, loginField, generator) {
 
         if (settings.useBrowserPopup == false) {
             $(BASE_NAME_POPUP + 'on-overlay').style.display = 'block';
-            $(BASE_NAME_POPUP + 'generator-overlay-pass').style.display = 'none';
+            $(BASE_NAME_POPUP + 'generator-overlay').style.display = 'none';
             $(BASE_NAME_POPUP + 'browser-popup').classList = 'popup-without-overlay';
 
             on($(BASE_NAME_POPUP + 'reload-overlay'), 'click', function (e) {
@@ -186,7 +186,7 @@ Popup.init = function (settings, passwordField, loginField, generator) {
 //  @todo images via chrome.extension.getUrl('path/to/image')!? -> shouldn't it work via html?
 
             $(BASE_NAME_POPUP + 'on-overlay').style.display = 'none';
-            $(BASE_NAME_POPUP + 'generator-overlay-pass').style.display = 'block';
+            $(BASE_NAME_POPUP + 'generator-overlay').style.display = 'block';
             $(BASE_NAME_POPUP + 'browser-popup').classList = 'popup-with-overlay';
 
             // @todo we need to get the currently active (if any: else dummy!) password field! via messages and content script which provides the current fields
