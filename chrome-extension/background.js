@@ -54,9 +54,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             break;
 
         case 'activePasswordField':
-            let activePasswordField = request.fieldId ? request.fieldId : '';
-            console.log(activePasswordField);
-            chrome.browserAction.getPopup({tabId: sender.tab.id}, function () {window.popup.setActiveField(activePasswordField)});
+            // chrome.browserAction. -- @todo check if popup already open
             chrome.browserAction.openPopup(function () {});
             break;
 

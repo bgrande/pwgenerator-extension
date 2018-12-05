@@ -1,8 +1,8 @@
 'use strict';
 
-var BASE_NAME_POPUP = 'eph-popup-';
+const BASE_NAME_POPUP = 'eph-popup-';
 
-var Popup = {
+let Popup = {
     _generator: null,
     _passwordField: null,
     _activeField: '',
@@ -32,12 +32,12 @@ Popup._getServicenameField = function () {
 };
 
 Popup._listenExtend = function _listenExtend() {
-    var that = this;
+    let that = this;
     on($(BASE_NAME_POPUP + 'extend'), 'click', function () {
-        var extension = $(BASE_NAME_POPUP + 'overlay-settings');
+        let extension = $(BASE_NAME_POPUP + 'overlay-settings');
 
         if (extension.style.display === 'none') {
-            var vaultSettings = Helper.mergeObject(
+            let vaultSettings = Helper.mergeObject(
                 that._generator._vaultSettings,
                 that._generator._domainService.getPasswordRules()
             );
@@ -69,7 +69,7 @@ Popup._setOverwriteSettings = function _setOverwriteSettings(settings) {
 };
 
 Popup._getOverwriteSettings = function () {
-    var length = parseInt($(BASE_NAME + 'vlength').value, 10),
+    let length = parseInt($(BASE_NAME + 'vlength').value, 10),
         repeat = parseInt($(BASE_NAME + 'repeat').value, 10),
         required = parseInt($(BASE_NAME + 'required').value, 10),
         save = $(BASE_NAME + 'save').checked,
@@ -90,7 +90,7 @@ Popup._getOverwriteSettings = function () {
     serviceRules = Helper.getTypeSettings(serviceRules, required);
 
     if (save) {
-        var serviceExceptions = {};
+        let serviceExceptions = {};
 
         serviceExceptions[this._generator.getDomainname()] = serviceRules;
         chrome.runtime.sendMessage({event: 'saveOverwrite', settings: serviceExceptions});
@@ -102,7 +102,7 @@ Popup._getOverwriteSettings = function () {
 };
 
 Popup._buttonSubmit = function (pwField) {
-    var passPhrase = this._getPassphraseField(),
+    let passPhrase = this._getPassphraseField(),
         serviceSalt = this._getServicenameField(),
         newPassword,
         loginFormNumber,
@@ -136,7 +136,7 @@ Popup.init = function (settings, passwordField, loginField, generator) {
     this._generator = generator;
     this._settings = settings;
 
-    var pwFieldId = this._getPasswordFieldId();
+    let pwFieldId = this._getPasswordFieldId();
 
     on(this._passwordField.getField(), 'focus', this._pwFieldListeners['focus'].bind(this));
 
@@ -146,8 +146,10 @@ Popup.init = function (settings, passwordField, loginField, generator) {
     return this;
 };
 
+let popup;
+
 (function () {
-    var closeWindow = function () {
+    let closeWindow = function () {
         window.close();
     };
 
@@ -158,7 +160,7 @@ Popup.init = function (settings, passwordField, loginField, generator) {
     });
 
     chrome.storage.sync.get('settings', function (items) {
-        var settings = (undefined !== items.settings) ? Helper.mergeObject(DEFAULT_SETTINGS, JSON.parse(items.settings)) : DEFAULT_SETTINGS;
+        let settings = (undefined !== items.settings) ? Helper.mergeObject(DEFAULT_SETTINGS, JSON.parse(items.settings)) : DEFAULT_SETTINGS;
 
         if (settings.useBrowserPopup == false) {
             $(BASE_NAME_POPUP + 'on-overlay').style.display = 'block';
@@ -175,7 +177,7 @@ Popup.init = function (settings, passwordField, loginField, generator) {
                 closeWindow();
             });
 
-            var reloadTitle = chrome.i18n.getMessage("reloadTitle"),
+            let reloadTitle = chrome.i18n.getMessage("reloadTitle"),
                 disableTitle = chrome.i18n.getMessage("disableTitle");
 
             $(BASE_NAME_POPUP + 'reload-title').innerText = reloadTitle;
@@ -191,16 +193,18 @@ Popup.init = function (settings, passwordField, loginField, generator) {
 
             // @todo we need to get the currently active (if any: else dummy!) password field! via messages and content script which provides the current fields
             // this might just only work with the current result-pass password field and we have to send a message to update the password in contentscript
-            var defaultPwField = $(BASE_NAME_POPUP + 'generator-result-pass');
+            let defaultPwField = $(BASE_NAME_POPUP + 'generator-result-pass');
 
 
-            var domainService = Object.create(DomainService).init(settings.serviceExceptions),
+            let domainService = Object.create(DomainService).init(settings.serviceExceptions),
                 loginField = Object.create(LoginField).init(settings.userFieldList),
                 passwordField = Object.create(PasswordField).init(defaultPwField),
-                generator = Object.create(Generator).init(settings, domainService),
+                generator = Object.create(Generator).init(settings, domainService);
+
+
                 popup = Object.create(Popup).init(settings, passwordField, loginField, generator);
 
-            var closeButtonTitle = chrome.i18n.getMessage("close"),
+            let closeButtonTitle = chrome.i18n.getMessage("close"),
                 serviceNameLabel = chrome.i18n.getMessage("serviceNameLabel"),
                 passphraseLabel = chrome.i18n.getMessage("passphraseLabel");
 
@@ -214,6 +218,24 @@ Popup.init = function (settings, passwordField, loginField, generator) {
         }
     });
 })();
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (request.event) {
+        switch (request.event) {
+            case 'activePasswordField':
+                let activePasswordField = request.fieldId ? request.fieldId : '';
+
+                setTimeout(function () {
+                    popup.setActiveField(activePasswordField);
+                }, 150);
+
+                break;
+
+            default:
+                sendResponse(null);
+        }
+    }
+});
 
 
 

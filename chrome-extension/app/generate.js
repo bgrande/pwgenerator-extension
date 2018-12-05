@@ -45,7 +45,7 @@ chrome.storage.sync.get('settings', function (items) {
                         fieldId = passwords[i].getAttribute('id');
                     }
                     on(passwords[i], 'click', function (e) {
-                       chrome.runtime.sendMessage({event: 'activePasswordField', fieldId: fieldId});
+                        chrome.runtime.sendMessage({event: 'activePasswordField', fieldId: fieldId});
                     });
 
                     generatorOverlays[i] = passwords[i];
