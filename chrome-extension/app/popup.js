@@ -5,7 +5,7 @@ const BASE_NAME_POPUP = 'eph-popup-';
 let Popup = {
     _generator: null,
     _passwordField: null,
-    _activeField: '',
+    _activeField: null,
     _loginField: null,
     _settings: null,
     _settingsOverwrite: false,
@@ -68,7 +68,8 @@ Popup._setOverwriteSettings = function _setOverwriteSettings(settings) {
     }
 };
 
-Popup._getOverwriteSettings = function () {
+Popup._getOverwriteSettings = function _getOverwriteSettings() {
+    // @todo this is a duplicate and has to be a separate object handling the settings overwrite
     let length = parseInt($(BASE_NAME + 'vlength').value, 10),
         repeat = parseInt($(BASE_NAME + 'repeat').value, 10),
         required = parseInt($(BASE_NAME + 'required').value, 10),
@@ -101,11 +102,11 @@ Popup._getOverwriteSettings = function () {
     return serviceRules;
 };
 
-Popup._buttonSubmit = function (pwField) {
+Popup._submit = function _submit() {
     let passPhrase = this._getPassphraseField(),
         serviceSalt = this._getServicenameField(),
         newPassword,
-        loginFormNumber,
+        // loginFormNumber,
         overwriteSettings;
 
     if (this._settingsOverwrite) {
@@ -113,21 +114,37 @@ Popup._buttonSubmit = function (pwField) {
     }
 
     newPassword = this._generator.generatePassword(passPhrase.value, serviceSalt.value, overwriteSettings);
-    pwField.type = (this._passwordField.showPw) ? 'text' : 'password';
-    pwField.value = newPassword;
-
-    if (this._generator.generatorSettings.autosend && !this._passwordField.showPw) {
-        loginFormNumber = Helper.getLoginForm(pwField);
-        if ('number' === typeof loginFormNumber) {
-            document.forms[loginFormNumber].submit();
-        }
-    }
 
     passPhrase.value = '';
+    return newPassword;
+};
+
+Popup.generate = function generate () {
+    let newPassword = this._submit(),
+        pwField = this._passwordField;
+
+    // @todo the following part needs to be part of the generate logic within the page as well
+    let type = (this._passwordField.showPw) ? 'text' : 'password',
+        autoSubmit = this._generator.generatorSettings.autosend && !this._passwordField.showPw;
+
+    pwField.type = type;
+    pwField.value = newPassword;
+
+    if (this._activeField) {
+        let pwData = {
+            fieldId: this._activeField,
+            password: newPassword,
+            type: type,
+            autoSubmit: autoSubmit
+        };
+
+        chrome.runtime.sendMessage({event: 'updatePassword', data: pwData});
+    }
 };
 
 Popup.setActiveField = function setActiveField(fieldId) {
     this._activeField = fieldId;
+    this._passwordField = Object.create(PasswordField).init($(fieldId)); // @todo this probably does not work (missing scope), so we either should send the object or do not use the pw field here at all
 };
 
 Popup.init = function (settings, passwordField, loginField, generator) {
@@ -195,18 +212,21 @@ let popup;
             // this might just only work with the current result-pass password field and we have to send a message to update the password in contentscript
             let defaultPwField = $(BASE_NAME_POPUP + 'generator-result-pass');
 
-
             let domainService = Object.create(DomainService).init(settings.serviceExceptions),
                 loginField = Object.create(LoginField).init(settings.userFieldList),
                 passwordField = Object.create(PasswordField).init(defaultPwField),
                 generator = Object.create(Generator).init(settings, domainService);
-
 
                 popup = Object.create(Popup).init(settings, passwordField, loginField, generator);
 
             let closeButtonTitle = chrome.i18n.getMessage("close"),
                 serviceNameLabel = chrome.i18n.getMessage("serviceNameLabel"),
                 passphraseLabel = chrome.i18n.getMessage("passphraseLabel");
+
+            on($(BASE_NAME_POPUP + 'generate'), 'click', function (e) {
+                // @todo send a message here to the actual tab (we do need a listener there!)
+                popup.generate();
+            });
 
             /*
             $(BASE_NAME_POPUP + 'close-pass').setAttribute('title', closeButtonTitle);
