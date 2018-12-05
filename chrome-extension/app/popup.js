@@ -8,6 +8,7 @@ let Popup = {
     _activeField: null,
     _loginField: null,
     _settings: null,
+    _showPassword: false,
     _settingsOverwrite: false,
     _pwFieldListeners: {
         focus: function (e) {
@@ -123,9 +124,8 @@ Popup.generate = function generate () {
     let newPassword = this._submit(),
         pwField = this._passwordField;
 
-    // @todo the following part needs to be part of the generate logic within the page as well
-    let type = (this._passwordField.showPw) ? 'text' : 'password',
-        autoSubmit = this._generator.generatorSettings.autosend && !this._passwordField.showPw;
+    let type = (this._showPassword) ? 'text' : 'password',
+        autoSubmit = this._generator.generatorSettings.autosend && !this._showPassword;
 
     pwField.type = type;
     pwField.value = newPassword;
@@ -154,6 +154,8 @@ Popup.init = function (settings, passwordField, loginField, generator) {
     this._settings = settings;
 
     let pwFieldId = this._getPasswordFieldId();
+
+    this._showPassword = $(BASE_NAME_POPUP + 'show-password').checked;
 
     on(this._passwordField.getField(), 'focus', this._pwFieldListeners['focus'].bind(this));
 

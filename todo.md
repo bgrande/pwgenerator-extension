@@ -2,7 +2,7 @@
 
 ## v1.10.0
     - use popup for password generation instead of overlay
-        - probably have to split up overlay.js a bit more
+        + probably have to split up overlay.js a bit more
         * pro:
             * more design possibilities and proof to work UI (no issues)
             * more secure
@@ -14,3 +14,8 @@
             * popup has to be opened manually
         - use translations
         - use image url resolving for popup as well (js)
+        - remove code duplications/resolve duplications and todos
+        - make overwrite extension work (or always show it?)
+        - remove obsolete code
+        - make sure we're using either popup or overlay!
+        - make sure options can set the overly/popup settings correctly
