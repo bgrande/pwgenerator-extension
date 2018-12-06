@@ -144,7 +144,7 @@ Popup.generate = function generate () {
 
 Popup.setActiveField = function setActiveField(fieldId) {
     this._activeField = fieldId;
-    this._passwordField = Object.create(PasswordField).init($(fieldId)); // @todo this probably does not work (missing scope), so we either should send the object or do not use the pw field here at all
+    //this._passwordField = Object.create(PasswordField).init($(fieldId)); // @todo this probably does not work (missing scope), so we either should send the object or do not use the pw field here at all
 };
 
 Popup.init = function (settings, passwordField, loginField, generator) {
@@ -225,10 +225,13 @@ let popup;
                 serviceNameLabel = chrome.i18n.getMessage("serviceNameLabel"),
                 passphraseLabel = chrome.i18n.getMessage("passphraseLabel");
 
-            on($(BASE_NAME_POPUP + 'generate'), 'click', function (e) {
-                // @todo send a message here to the actual tab (we do need a listener there!)
-                popup.generate();
-            });
+            setTimeout(function () {
+                on($(BASE_NAME_POPUP + 'generate-pass'), 'click', function (e) {
+                    if (popup) {
+                        popup.generate();
+                    }
+                });
+            }, 150);
 
             /*
             $(BASE_NAME_POPUP + 'close-pass').setAttribute('title', closeButtonTitle);
@@ -249,7 +252,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
                 setTimeout(function () {
                     popup.setActiveField(activePasswordField);
-                }, 150);
+                }, 100);
 
                 break;
 

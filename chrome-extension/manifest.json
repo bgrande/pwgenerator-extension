@@ -64,7 +64,8 @@
             "app/fields.js",
             "app/overlay.js",
             "app/generateFactory.js",
-            "app/generate.js"
+            "app/generate.js",
+            "app/listen.js"
         ],
         "run_at": "document_idle",
         "all_frames": true

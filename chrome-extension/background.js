@@ -6,7 +6,8 @@ let allowedEvents = {
     'activePasswordField': 1,
     'passwordFields': 1,
     'reload': 1,
-    'disable': 1
+    'disable': 1,
+    'updatePassword': 1
 };
 
 let setChromeSettings = function (settings) {
@@ -51,6 +52,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
         case 'passwordFields':
                 // @todo update popup object with list of passwords, we have to mark the currently active as well (on message sender end)
+            break;
+
+        case 'updatePassword':
+            console.log('meee');
+            console.log(request.data);
             break;
 
         case 'activePasswordField':
