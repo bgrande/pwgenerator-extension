@@ -157,14 +157,14 @@ var DomainService = {
 
 };
 
-DomainService._setDomainname = function (domain) {
+DomainService._setDomainname = function _setDomainname(domain) {
     var domainname = domain || document.domain,
         domainparts = domainname.split('.');
 
     // if it's an IP we just skip the domain handling
-    if (this._isIp(domainparts)) {
-        this._domainName = domainname;
+    if (this._isIp4(domainparts)) {
 console.log('this is an IP: ' + domainname);
+        this._domainName = domainname;
         return;
     }
 
@@ -185,28 +185,32 @@ DomainService._setPasswordRules = function _setPasswordRules(settings) {
     }
 };
 
-DomainService._isIp = function _isIp(domainparts) {
+DomainService._isIp4 = function _isIp4(domainparts) {
     if (domainparts.length !== 4) {
         return false;
     }
 
-    for (var i = 0, l = domainparts.length; i < l; i++) {
-        if (domainparts[i] <= 0 || domainparts[i] >= 255) {
+    if (parseInt(domainparts[0]) <= 0 || parseInt(domainparts[3]) <= 0) {
+        return false;
+    }
+
+    for (var i = 1, l = domainparts.length; i < l; i++) {
+        if (parseInt(domainparts[i]) < 0 || parseInt(domainparts[i]) >= 255) {
             return false;
         }
     }
     return true;
 };
 
-DomainService.getDomainname = function () {
+DomainService.getDomainname = function getDomainname() {
     return this._domainName;
 };
 
-DomainService.getPasswordRules = function () {
+DomainService.getPasswordRules = function getPasswordRules() {
     return this._rules;
 };
 
-DomainService.init = function (ruleSettings, domain) {
+DomainService.init = function init(ruleSettings, domain) {
     this._setDomainname(domain);
     this._setPasswordRules(ruleSettings);
 
