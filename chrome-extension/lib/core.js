@@ -161,6 +161,13 @@ DomainService._setDomainname = function (domain) {
     var domainname = domain || document.domain,
         domainparts = domainname.split('.');
 
+    // if it's an IP we just skip the domain handling
+    if (this._isIp(domainparts)) {
+        this._domainName = domainname;
+console.log('this is an IP: ' + domainname);
+        return;
+    }
+
     if (2 < domainparts.length) {
         domainname = domainparts[domainparts.length - 2] + '.' + domainparts[domainparts.length - 1];
 
@@ -172,10 +179,23 @@ DomainService._setDomainname = function (domain) {
     this._domainName = domainname;
 };
 
-DomainService._setPasswordRules = function (settings) {
+DomainService._setPasswordRules = function _setPasswordRules(settings) {
     if (settings && settings[this._domainName]) {
         this._rules = settings[this._domainName];
     }
+};
+
+DomainService._isIp = function _isIp(domainparts) {
+    if (domainparts.length !== 4) {
+        return false;
+    }
+
+    for (var i = 0, l = domainparts.length; i < l; i++) {
+        if (domainparts[i] <= 0 || domainparts[i] >= 255) {
+            return false;
+        }
+    }
+    return true;
 };
 
 DomainService.getDomainname = function () {
