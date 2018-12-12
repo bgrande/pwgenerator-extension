@@ -138,7 +138,13 @@ Popup.generate = function generate () {
             autoSubmit: autoSubmit
         };
 
-        chrome.runtime.sendMessage({event: 'updatePassword', data: pwData});
+        // @todo test this
+        chrome.tabs.query({currentWindow: true, active: true}, function (tabs) {
+            let activeTab = tabs[0];
+            chrome.tabs.sendMessage(activeTab.id, {event: "updatePassword", data: pwData});
+        });
+
+        //chrome.runtime.sendMessage({event: 'updatePassword', data: pwData});
     }
 };
 
