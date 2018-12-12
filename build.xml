@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="build" default="zip" basedir=".">
+<project name="build" default="build" basedir=".">
 
     <property name="temp-dir" value="temp" />
     <property name="build-dir" value="build" />
@@ -12,6 +12,7 @@
     <loadfile property="old-changes" srcFile="${changelog-path}" />
     <property name="project-name" value="password-generator" />
     <property name="folder-to-zip" value="${project-name}-${project-version}" />
+    <property name="folder-to-zip-ff" value="ff-${project-name}-${project-version}" />
     <property name="manifest-path" value="${extension-dir}/manifest.json" />
 
     <!-- @todo add target to check tests before creating release -->
@@ -22,6 +23,10 @@
 
     <target name="setversion">
         <replaceregexp file="${extension-dir}/manifest.json" match='"version": "(.*)",' replace='"version": "${project-version}",' byline="true" />
+    </target>
+
+    <target name="setffincognito">
+        <replaceregexp file="${extension-dir}/manifest.json" match='"incognito": "(.*)",' replace='"incognito": "split",' byline="true" />
     </target>
 
     <target name="update-changelog">
@@ -70,7 +75,7 @@ ${old-changes}
         </exec>
     </target>
 
-    <target name="prepare" depends="clean, create-temp, check-key, copy-key, setversion, update-changelog, updategit">
+    <target name="prepare" depends="clean, create-temp, check-key, copy-key, setversion">
         <copy todir="${temp-dir}/${folder-to-zip}">
             <fileset dir="${extension-dir}" />
         </copy>
@@ -97,6 +102,8 @@ ${old-changes}
         <get src="https://raw.githubusercontent.com/bgrande/vault/master/lib/vault.js" dest="chrome-extension/lib/vault.js" />
         <get src="https://raw.githubusercontent.com/jcoglan/vault-cipher/master/lib/crypto-js.js" dest="chrome-extension/lib/crypto-js.js" />
     </target>
+
+    <target name="build" depends="update-changelog, updategit, zip" />
 
     <target name="build-info">
         <echo message="build dir: ${build-dir}" />

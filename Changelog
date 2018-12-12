@@ -1,3 +1,6 @@
+1.9.7
+add1167 #28 add ip checking
+
 1.9.6
 de15aec fix version...
 2b4dd61 remove empty line at end
@@ -40,6 +43,7 @@ d66ea7b smaller symbols in popup
 f18fea6 also commit updated manifest after automatic version bump
 f3d2bdc 'version bump for manifest'
 d257af7 manifest version update
+        
         
         
         
