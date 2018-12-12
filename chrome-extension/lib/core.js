@@ -163,7 +163,6 @@ DomainService._setDomainname = function _setDomainname(domain) {
 
     // if it's an IP we just skip the domain handling
     if (this._isIp4(domainparts)) {
-console.log('this is an IP: ' + domainname);
         this._domainName = domainname;
         return;
     }
