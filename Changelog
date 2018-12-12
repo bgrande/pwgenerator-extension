@@ -1,4 +1,11 @@
 1.9.7
+9ca3848 Merge pull request #31 from bgrande/fix-ip-over-dns-detection
+0bc97e9 complete IP4 recognition
+d8bce06 add firefox target changes; split prepare and add build command; use build command as default
+8c0644a use another port
+65de50e #28 improve IP4 recognition
+
+1.9.7
 add1167 #28 add ip checking
 
 1.9.6
@@ -43,6 +50,7 @@ d66ea7b smaller symbols in popup
 f18fea6 also commit updated manifest after automatic version bump
 f3d2bdc 'version bump for manifest'
 d257af7 manifest version update
+        
         
         
         
