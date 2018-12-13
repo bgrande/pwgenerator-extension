@@ -189,12 +189,8 @@ DomainService._isIp4 = function _isIp4(domainparts) {
         return false;
     }
 
-    if (parseInt(domainparts[0]) <= 0 || parseInt(domainparts[3]) <= 0) {
-        return false;
-    }
-
     for (var i = 1, l = domainparts.length; i < l; i++) {
-        if (parseInt(domainparts[i]) < 0 || parseInt(domainparts[i]) >= 255) {
+        if (parseInt(domainparts[i]) < 0 || parseInt(domainparts[i]) > 255) {
             return false;
         }
     }
