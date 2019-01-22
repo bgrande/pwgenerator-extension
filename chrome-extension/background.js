@@ -51,6 +51,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             break;
 
         case 'passwordFields':
+                // @todo we might not need this
                 // @todo update popup object with list of passwords, we have to mark the currently active as well (on message sender end)
             break;
 

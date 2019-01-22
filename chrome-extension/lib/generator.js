@@ -1,7 +1,7 @@
 'use strict';
 
 var Generator = {
-    generatorSettings: {},
+    _saltGenerator: null,
     _vaultSettings: {},
     _domainService: null
 };
@@ -45,41 +45,12 @@ Generator.getDomainname = function () {
     return this._domainService.getDomainname();
 };
 
-Generator.getServicename = function (servicename, loginField) {
-    var domainname = this.getDomainname();
-
-    switch (this.generatorSettings.servicename) {
-        case 'login':
-            if (loginField === undefined) {
-               // do nothing
-            } else if (loginField.value) {
-                return loginField.value;
-            } else if (loginField.textContent && loginField.textContent.length <= 30) {
-                return loginField.textContent;
-            }
-
-            return domainname;
-
-            break;
-
-        case 'prefix':
-            if (this.generatorSettings.defServicename) {
-                return this.generatorSettings.defServicename + domainname;
-            }
-            break;
-
-        case 'suffix':
-            if (this.generatorSettings.defServicename) {
-                return domainname + this.generatorSettings.defServicename;
-            }
-            break;
-    }
-
-    return false;
+Generator.getServicename = function () {
+    return this._saltGenerator.getServicename();
 };
 
 Generator._setVaultSettings = function (settings) {
-    var vaultSettings = {}, i, n;
+    let vaultSettings = {}, i, n;
 
     vaultSettings.length = settings.length;
     vaultSettings.repeat = settings.repeat;
@@ -93,29 +64,14 @@ Generator._setVaultSettings = function (settings) {
     this._vaultSettings = vaultSettings;
 };
 
-Generator._setGeneratorSettings = function (settings) {
-    var generatorSettings = {};
-
-    generatorSettings.autosend = settings.autosend;
-    generatorSettings.servicename = settings.servicename;
-    generatorSettings.defServicename = settings.defServicename;
-    generatorSettings.isVaultCompatible = settings.isVaultCompatible;
-
-    this.generatorSettings = generatorSettings;
-};
-
-Generator._initSettings = function (settings) {
-    this._setVaultSettings(settings);
-    this._setGeneratorSettings(settings);
-};
-
-Generator.init = function (settings, domainService) {
-    if (!domainService || !settings) {
+Generator.init = function (settings, domainService, saltGenerator) {
+    if (!domainService || !settings || !saltGenerator) {
         return false;
     }
 
     this._domainService = domainService;
-    this._initSettings(settings);
+    this._saltGenerator = saltGenerator;
+    this._setVaultSettings(settings);
 
     return this;
 };

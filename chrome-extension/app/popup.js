@@ -149,8 +149,17 @@ Popup.generate = function generate () {
 };
 
 Popup.setActiveField = function setActiveField(fieldId) {
+    let field = {
+        id: fieldId
+    };
     this._activeField = fieldId;
-    //this._passwordField = Object.create(PasswordField).init($(fieldId)); // @todo this probably does not work (missing scope), so we either should send the object or do not use the pw field here at all
+    this._passwordField = Object.create(PasswordField).init(field);
+    return this;
+};
+
+Popup.setServicename = function setServicename(serviceName) {
+    this._getServicenameField().value = serviceName;
+    return this;
 };
 
 Popup.init = function (settings, passwordField, loginField, generator) {
@@ -257,7 +266,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 let activePasswordField = request.fieldId ? request.fieldId : '';
 
                 setTimeout(function () {
-                    popup.setActiveField(activePasswordField);
+                    popup.setActiveField(activePasswordField).setServicename(request.serviceName);
                 }, 100);
 
                 break;

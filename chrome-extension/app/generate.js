@@ -11,7 +11,7 @@ if (!generatorOverlays) {
 
 chrome.storage.sync.get('settings', function (items) {
     try {
-        var password = Helper.getElementFromList(DEFAULT_SETTINGS.pwFieldList),
+        let password = Helper.getElementFromList(DEFAULT_SETTINGS.pwFieldList),
             passwords = document.querySelectorAll("input[type=password]"),
             settings = (undefined !== items.settings) ? Helper.mergeObject(DEFAULT_SETTINGS, JSON.parse(items.settings)) : DEFAULT_SETTINGS,
             pwLength = passwords.length, i;
@@ -44,8 +44,13 @@ chrome.storage.sync.get('settings', function (items) {
                     if (passwords[i].hasAttribute('id')) {
                         fieldId = passwords[i].getAttribute('id');
                     }
+
+                    let domainService = Object.create(DomainService).init(settings.serviceExceptions),
+                        loginField = Object.create(LoginField).init(settings.userFieldList),
+                        saltGenerator = Object.create(SaltGenerator).init(settings, domainService, loginField);
+
                     on(passwords[i], 'click', function (e) {
-                        chrome.runtime.sendMessage({event: 'activePasswordField', fieldId: fieldId});
+                        chrome.runtime.sendMessage({event: 'activePasswordField', fieldId: fieldId, serviceName: saltGenerator.getServicename()});
                     });
 
                     generatorOverlays[i] = passwords[i];
