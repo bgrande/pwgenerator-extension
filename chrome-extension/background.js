@@ -69,6 +69,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             chrome.tabs.executeScript(null, { file: "lib/crypto-js.js", allFrames: true }, function () {});
             chrome.tabs.executeScript(null, { file: "lib/vault.js", allFrames: true }, function () {});
             chrome.tabs.executeScript(null, { file: "lib/core.js", allFrames: true }, function () {});
+            chrome.tabs.executeScript(null, { file: "lib/saltGenerator.js", allFrames: true }, function () {});
             chrome.tabs.executeScript(null, { file: "lib/generator.js", allFrames: true }, function () {});
             chrome.tabs.executeScript(null, { file: "app/overlay.js", allFrames: true }, function () {});
             chrome.tabs.executeScript(null, { file: "app/fields.js", allFrames: true }, function () {});

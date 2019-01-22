@@ -107,7 +107,6 @@ Popup._submit = function _submit() {
     let passPhrase = this._getPassphraseField(),
         serviceSalt = this._getServicenameField(),
         newPassword,
-        // loginFormNumber,
         overwriteSettings;
 
     if (this._settingsOverwrite) {
@@ -125,7 +124,7 @@ Popup.generate = function generate () {
         pwField = this._passwordField;
 
     let type = (this._showPassword) ? 'text' : 'password',
-        autoSubmit = this._generator.generatorSettings.autosend && !this._showPassword;
+        autoSubmit = this._generator.getSettings().autosend && !this._showPassword;
 
     pwField.type = type;
     pwField.value = newPassword;
@@ -180,7 +179,7 @@ Popup.init = function (settings, passwordField, loginField, generator) {
     return this;
 };
 
-let popup;
+var popup;
 
 (function () {
     let closeWindow = function () {
@@ -232,9 +231,10 @@ let popup;
             let domainService = Object.create(DomainService).init(settings.serviceExceptions),
                 loginField = Object.create(LoginField).init(settings.userFieldList),
                 passwordField = Object.create(PasswordField).init(defaultPwField),
-                generator = Object.create(Generator).init(settings, domainService);
+                saltGenerator = Object.create(SaltGenerator).init(settings, domainService, loginField),
+                generator = Object.create(Generator).init(settings, domainService, saltGenerator);
 
-                popup = Object.create(Popup).init(settings, passwordField, loginField, generator);
+            popup = Object.create(Popup).init(settings, passwordField, loginField, generator);
 
             let closeButtonTitle = chrome.i18n.getMessage("close"),
                 serviceNameLabel = chrome.i18n.getMessage("serviceNameLabel"),
@@ -242,11 +242,9 @@ let popup;
 
             setTimeout(function () {
                 on($(BASE_NAME_POPUP + 'generate-pass'), 'click', function (e) {
-                    if (popup) {
-                        popup.generate();
-                    }
+                    popup.generate();
                 });
-            }, 150);
+            }, 100);
 
             /*
             $(BASE_NAME_POPUP + 'close-pass').setAttribute('title', closeButtonTitle);
@@ -267,7 +265,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
                 setTimeout(function () {
                     popup.setActiveField(activePasswordField).setServicename(request.serviceName);
-                }, 100);
+                }, 150);
 
                 break;
 

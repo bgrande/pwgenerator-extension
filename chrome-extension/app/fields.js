@@ -63,20 +63,15 @@ PasswordField.init = function (pwField) {
 };
 
 var LoginField = {
-    _id: null
+    _id: ''
 };
 
 LoginField.init = function (userFieldList) {
     var login = Helper.getElementFromList(userFieldList);
 
-    if (!login) {
-        this._id = null;
-        return false;
-    }
-
-    if (login.id) {
+    if (login && login.id) {
         this._id = login.id;
-    } else if (login.name) {
+    } else if (login && login.name) {
         this._id = login.name;
         login.id = login.name;
     }
@@ -89,5 +84,5 @@ LoginField.getField = function () {
         return $(this._id);
     }
 
-    return null;
+    return $('');
 };
