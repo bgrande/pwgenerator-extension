@@ -27,7 +27,6 @@ body, input {
 
 .item-container {
     padding: 5px;
-    margin-left: auto;
     margin-right: .5em;
 }
 
@@ -41,11 +40,15 @@ body, input {
 
 .topbar-item {
     width: auto;
-
+    margin-left: 0;
 }
 
 .left-item {
     margin-left: 1em;
+}
+
+.right-item {
+    margin-left: auto;
 }
 
 .topbar-item img, .topbar-item svg {
