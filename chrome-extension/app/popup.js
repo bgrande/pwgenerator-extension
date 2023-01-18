@@ -236,6 +236,7 @@ chrome.runtime.onMessage.addListener(async function(request, sender, sendRespons
     if (request.event) {
         switch (request.event) {
             case 'activePasswordField':
+                console.log('active field', request.fieldId);
                 let activePasswordField = request.fieldId ? request.fieldId : '';
 
                 const settings = await getSettings();
@@ -259,13 +260,10 @@ chrome.runtime.onMessage.addListener(async function(request, sender, sendRespons
 
                     const popup = Object.create(Popup).init(settings, passwordField, loginField, generator);
 
-                    setTimeout(function () {
-                        on($(BASE_NAME_POPUP + 'generate-pass'), 'click', function (e) {
-                            popup.generate();
-                        });
-                    }, 100);
+                    on($(BASE_NAME_POPUP + 'generate-pass'), 'click', function (e) {
+                        popup.generate();
+                    });
 
-                    // @todo initially the field value is still empty although we have the correct value already!
                     popup.setActiveField(activePasswordField).setServicename(request.serviceName);
                 }
 

@@ -3,12 +3,14 @@
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     console.log('here we are');
 
-    if (!request.hasOwnProperty(event)) {
+    if (!request.hasOwnProperty('event')) {
+        console.log('event property not found!', request, sender, sendResponse);
         return;
     }
 
     switch (request.event) {
         case "updatePassword":
+            console.log(request);
             let passwordData = request.data;
 
             let $pwField = $(passwordData.fieldId);

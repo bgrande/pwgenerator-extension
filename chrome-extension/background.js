@@ -55,14 +55,20 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 // @todo update popup object with list of passwords, we have to mark the currently active as well (on message sender end)
             break;
 
-        case 'updatePassword':
-            console.log('meee');
-            console.log(request.data);
-            break;
-
         case 'activePasswordField':
-            // chrome.browserAction. -- @todo check if popup already open
-            chrome.browserAction.openPopup(function () {});
+            var views = chrome.extension.getViews({ type: "popup" });
+            if (views.length === 0) {
+                chrome.browserAction.openPopup(function (window) {
+                    console.log(window);
+                    setTimeout(function () {
+                        //data..setActiveField(activePasswordField).setServicename(request.serviceName);
+
+                        // @todo initially the field value is still empty although we have the correct value already!
+                    }, 100);
+                    // update the fields
+                });
+            }
+
             break;
 
         case 'reload':
